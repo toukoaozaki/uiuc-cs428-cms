@@ -10,4 +10,10 @@ class DefaultController extends Controller
     {
         return $this->render('UiucCmsUserBundle:Default:index.html.twig', array('name' => $name));
     }
+
+    public function loginAction()
+    {
+        return $this->render('UiucCmsUserBundle:Default:login.html.twig');
+ 
+    }
 }

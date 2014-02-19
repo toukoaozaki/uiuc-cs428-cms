@@ -1,0 +1,7 @@
+uiuc_cms_placeholder_homepage:
+    pattern: /
+    defaults: { _controller: UiucCmsPlaceholderBundle:Default:index }
+
+uiuc_cms_placeholder_hello:
+    pattern:  /hello/{name}
+    defaults: { _controller: UiucCmsPlaceholderBundle:Default:hello }

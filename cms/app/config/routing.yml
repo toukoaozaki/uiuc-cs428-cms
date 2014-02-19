@@ -1,1 +1,3 @@
-
+uiuc_cms_placeholder:
+    resource: "@UiucCmsPlaceholderBundle/Resources/config/routing.yml"
+    prefix:   /

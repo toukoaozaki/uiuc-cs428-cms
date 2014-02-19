@@ -1,3 +1,8 @@
 uiuc_cms_user_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: UiucCmsUserBundle:Default:index }
+
+uiuc_test_user_page:
+    pattern:    /
+    defaults: { _controller: UiucCmsUserBundle:Default:login }
+

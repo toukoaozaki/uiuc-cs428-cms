@@ -1,0 +1,4 @@
+uiuc_railtec:
+    resource: "@uiucRailtecBundle/Resources/config/routing.yml"
+    prefix:   /uiuc
+

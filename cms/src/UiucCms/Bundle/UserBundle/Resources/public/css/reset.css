@@ -1,0 +1,137 @@
+/*Reset*/
+* {
+   padding:0;
+   margin:0;
+}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, sub, sup, tt, var, dd, dl, dt, li, ol, ul, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td
+{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-family: inherit;
+	font-size: 100%;
+	text-align: center;
+	vertical-align: baseline;
+	list-style-type: none
+}
+html, body, div, p, li,span{
+	text-align: left;
+  }
+.p_paragraph {	
+	text-indent:12px;
+}
+.central {	
+	text-align: center;
+}
+.lefty {	
+	text-align: left;
+}
+.righty {	
+	text-align: right;
+}
+
+h1,h2,h3,h4,h5,h6{
+	font-weight:normal;
+	display:block
+}
+
+span{
+	line-height: 20px;
+}
+
+em,small{
+	text-transform:uppercase;
+	font-size:11px;
+}
+em{
+	font-style:italic
+}
+p{
+	line-height:20px;
+	margin:0 0 15px 0
+}
+body{
+	background-color:#f1f1f1;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:13px;
+	color:#787878  
+}
+a:link,a:visited{
+	text-decoration:none;
+	color:#c41d23
+}
+a:hover{
+	text-decoration:underline
+}
+a:active{
+	color:#999
+}
+input:focus,input:active,input:hover,textarea:focus,textarea:active,textarea:hover,a:active{
+	outline:none
+}
+	
+a img {border:none;}
+
+table {border-collapse: collapse;border-spacing:1px}
+q:before, q:after, blockquote:before, blockquote:after {content: "";}
+
+h1{
+	font-size:30px;
+	margin:20px 0;
+	line-height:30px
+}
+h2{
+	font-size:24px;
+	margin:18px 0;
+	line-height:30px
+}
+h3{
+	font-size:20px;
+	margin:15px 0;
+}
+h4{
+	font-size:18px;
+	margin:10px 0
+}
+h5{
+	font-size:16px;
+	margin:5px 0
+}
+h6{
+	font-size:14px;
+	margin:5px 0
+}
+.full-width-wrapper #body-content #content .post.entry-content dl .boldblue {
+	font-family: Courier New, Courier, monospace;
+}
+.full-width-wrapper #body-content #content .post.entry-content dl .boldblue {
+	font-family: Verdana, Geneva, sans-serif;
+}
+.full-width-wrapper #body-content #content .post.entry-content dl .boldblue {
+	font-family: Georgia, Times New Roman, Times, serif;
+}
+.full-width-wrapper #body-content #content .post.entry-content dl .boldblue {
+	font-family: Tahoma, Geneva, sans-serif;
+}
+.full-width-wrapper #body-content #content .post.entry-content dl .boldblue {
+	font-family: Georgia, Times New Roman, Times, serif;
+}
+.full-width-wrapper #body-content #content .post.entry-content dl .boldblue {
+	font-size: large;
+}
+.full-width-wrapper #body-content #content .post.entry-content dl .boldblue {
+	color: #CC0000;
+}
+.full-width-wrapper #body-content #content .post.entry-content dl .boldblue {
+	font-family: "MS Serif", "New York", serif;
+	color: #999999;
+}
+.full-width-wrapper #body-content #content .post.entry-content dl .boldblue strong {
+	color: #FF0000;
+}
+.full-width-wrapper #body-content #content .post.entry-content .listbold strong {
+	color: #FF0000;
+}

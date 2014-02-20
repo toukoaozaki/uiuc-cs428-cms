@@ -1,0 +1,12 @@
+@charset "utf-8";
+/* CSS Document for IE 7 */
+button.black{
+	*border:none;
+	*padding:6px 5px 6px;
+}
+#navigation-bar{
+	*height:43px;
+}
+#g-search input{
+	*padding:6px 5px ;
+}

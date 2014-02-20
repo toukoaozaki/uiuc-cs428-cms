@@ -1,47 +1,26 @@
 <!DOCTYPE html>
 <html>
     <head>
-		<!--link rel="icon" sizes="48x48" href="{{ asset('uiuc/images/icon.png') }}" /-->
-		{% image '@UiucCmsUserBundle/Resources/public/images/logo.png' %}
-			<img src="{{ asset_url }}" alt="logo" />
-		{% endimage %}
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>{% block title %}UIUC RailTEC{% endblock %}</title>
+		<!--link rel="icon" sizes="48x48" href="{{ asset('/images/favicon.png') }}" /-->
+		{% block stylesheets %}
+			{% stylesheets '@UiucCmsUserBundle/Resources/public/css/*' filter='cssrewrite' %} 
+				<link rel="stylesheet" href="{{ asset_url }}" />
+			{% endstylesheets %}
+		{% endblock %}
+		
+			{% javascripts debug=true '@UiucCmsUserBundle/Resources/public/js/*' %}
+				<script type="text/javascript" src="{{ asset_url }}"></script>
+			{% endjavascripts %}
+		
+		{% include 'UiucCmsUserBundle:Default:header.html.php'%}
     </head>
     <body>
-        <div id="sidebar">
-			<ul>
-            {% block sidebar %}
-				<li><a href="/uiuc">Home</a></li>
-            {% endblock %}
-				<li><a href="/uiuc/login">Login</a></li>
-				<li><a href="/uiuc/register">Register</a></li>
-			</ul>
-        </div>
-
         <div id="content">
             {% block body %}{% endblock %}
         </div>
 		
-		<!--Footer Copyright-->
-		<div class="full-width-wrapper" id="footer-extra-wrapper" >
-			<div class="fixed-width-wrapper" style="position:relative; top:-13px;">
-			  <div id="copyright">
-				<ul>
-					<li style="color:#bbb; font-size:14px">UIUC RailTEC (C) 2014 All rights reserved </li>
-					<li style="color:#bbb; font-size:14px"><a href="http://ict.uiuc.edu/railroad/contactus.php" title="">Contact Us</a></li>
-					<li style="color:#bbb; font-size:14px"><a href="http://ict.uiuc.edu/railroad/RailTECsitemap.php" title="">Site Map</a></li>
-					<li style="color:#bbb; font-size:14px"><a href="mailto:lbfrye@illinois.edu">Webmaster</a></li>
-				</ul>
-				<p style="color:#bbb; font-size:14px"><a href="#" class="back-to-top sprite" title="Back to top">Back to Top</a></p>
-				<ul>
-				  <li style="color:#bbb; font-size:14px; text-align:center">RailTEC is part of the <a href="http://cee.illinois.edu/">Department of Civil and Environmental Engineering</a> at the <a href="http://www.illinois.edu" target="_blank">University of Illinois at Urbana-Champaign</a> </li>
-				</ul>
-			  </div>
-				
-			</div>
-		</div>
-		<!--/Footer Copyright-->
-
+		{% include 'UiucCmsUserBundle:Default:copyright.html.php' %}
     </body>
 </html>

@@ -1,11 +1,6 @@
 {% extends 'UiucCmsUserBundle::base.html.twig' %}
 
-{% block title %}Profile{% endblock %}
-
-{% block sidebar %}
-		{{ parent() }}
-		<li><a href="/uiuc">Logout</a></li>
-{% endblock %}
+{% block title %}{% endblock %}
 
 {% block body %}
 		<li>Name: {{ user.name }}</li>

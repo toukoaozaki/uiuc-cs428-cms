@@ -5,22 +5,24 @@
         <title>{% block title %}UIUC RailTEC{% endblock %}</title>
 		<!--link rel="icon" sizes="48x48" href="{{ asset('/images/favicon.png') }}" /-->
 		{% block stylesheets %}
-			{% stylesheets '@UiucCmsUserBundle/Resources/public/css/*' filter='cssrewrite' %} 
+			{% stylesheets '../app/Resources/css/*' filter='cssrewrite' %} 
 				<link rel="stylesheet" href="{{ asset_url }}" />
 			{% endstylesheets %}
 		{% endblock %}
 		
-			{% javascripts debug=true '@UiucCmsUserBundle/Resources/public/js/*' %}
+		{% block javascripts %}
+			{% javascripts debug=true '../app/Resources/js/*' %}
 				<script type="text/javascript" src="{{ asset_url }}"></script>
 			{% endjavascripts %}
+		{% endblock %}
 		
-		{% include 'UiucCmsUserBundle:Default:header.html.php'%}
+		{% include 'UiucCmsUserBundle:Default:header.html.twig' %}
     </head>
     <body>
         <div id="content">
             {% block body %}{% endblock %}
         </div>
 		
-		{% include 'UiucCmsUserBundle:Default:copyright.html.php' %}
+		{% include 'UiucCmsUserBundle:Default:copyright.html.twig' %}
     </body>
 </html>

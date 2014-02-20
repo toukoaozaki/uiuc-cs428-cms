@@ -1,0 +1,11 @@
+uiuc_test_user_index:
+    pattern:    /
+    defaults: { _controller: UiucCmsUserBundle:Default:index }
+
+uiuc_cms_user_login:
+    pattern:  /login/
+    defaults: { _controller: UiucCmsUserBundle:Default:login }
+
+uiuc_cms_user_profile:
+    pattern: /profile/
+    defaults: { _controller: UiucCmsUserBundle:Default:profile }

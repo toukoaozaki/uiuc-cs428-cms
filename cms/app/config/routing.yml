@@ -1,4 +1,8 @@
-uiuc_railtec:
-    resource: "@uiucRailtecBundle/Resources/config/routing.yml"
-    prefix:   /uiuc
+uiuc_cms_placeholder:
+    resource: "@UiucCmsPlaceholderBundle/Resources/config/routing.yml"
+    prefix:   /
+
+uiuc_cms_user:
+    resource: "@UiucCmsUserBundle/Resources/config/routing.yml"
+    prefix:   /user
 

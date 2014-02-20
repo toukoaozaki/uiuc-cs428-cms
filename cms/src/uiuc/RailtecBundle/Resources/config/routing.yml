@@ -1,6 +1,0 @@
-uiuc_railtec_homepage:
-    pattern:  /
-    defaults: { _controller: uiucRailtecBundle:Default:index }
-uiuc_railtec_about:
-    pattern: /about
-    defaults: { _controller: uiucRailtecBundle:About:about }

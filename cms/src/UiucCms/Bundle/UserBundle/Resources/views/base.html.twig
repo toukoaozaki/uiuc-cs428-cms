@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-		<link rel="icon" sizes="48x48" href="{{ asset('uiuc/images/icon.png') }}" />
-		{% image '@uiucRailtecBundle/Resources/images/logo.png' %}
+		<!--link rel="icon" sizes="48x48" href="{{ asset('uiuc/images/icon.png') }}" /-->
+		{% image '@UiucCmsUserBundle/Resources/public/images/logo.png' %}
 			<img src="{{ asset_url }}" alt="logo" />
 		{% endimage %}
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -10,13 +10,13 @@
     </head>
     <body>
         <div id="sidebar">
+			<ul>
             {% block sidebar %}
-                <ul>
-                      <li><a href="/uiuc">Home</a></li>
-					  <li><a href="/uiuc/login">Login</a></li>
-                      <li><a href="/uiuc/register">Register</a></li>
-                </ul>
+				<li><a href="/uiuc">Home</a></li>
             {% endblock %}
+				<li><a href="/uiuc/login">Login</a></li>
+				<li><a href="/uiuc/register">Register</a></li>
+			</ul>
         </div>
 
         <div id="content">

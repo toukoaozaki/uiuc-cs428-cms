@@ -34,11 +34,46 @@ class User
      */
     protected $plainPassword;
 
+	protected $first_name;
+	protected $last_name;
+	protected $phone;
+	
+	public function getPhone()
+	{
+		return $this->phone;
+	}
+	
+	public function setPhone($phone)
+	{
+		$this->phone = $phone;
+	}
+	
+	public function getFirstName()
+	{
+		return $this->first_name;
+	}
+	
+	public function setFirstName($name)
+	{
+		$this->first_name = $name;
+	}
+	
+	public function getLastName()
+	{
+		return $this->last_name;
+	}
+	
+	public function setLastName($name)
+	{
+		$this->last_name = $name;
+	}
+	
     public function getId()
     {
         return $this->id;
     }
 
+	
     public function getEmail()
     {
         return $this->email;

@@ -1,8 +1,47 @@
 {% extends 'UiucCmsUserBundle::base.html.twig' %}
 
+{% block stylesheets %}
+			{{ parent() }}
+
+
+{% endblock %}
+
 {% block body %}
-		<li>Name: {{ user.name }}</li>
-		<li>Company: {{ user.company }}</li>
-		<li>Phone: {{ user.phone }}</li>
-		<li>Email: {{ user.email }}</li>
+<div class="full-width-wrapper">
+   	  <div class="fixed-width-wrapper" id="body-content">
+        	<!--Content-->
+   	    <div id="content" class="float-left content-left">
+           	<div class="header-text">
+			   <h1 class="first-word double-color sp">Information view and search</h1>
+            </div>
+	    
+		<li><span class="fieldName">Name:</span> {{ user.name }}</li>
+		<li><span class="fieldName">Company: </span> {{ user.company }}</li>
+		<li><span class="fieldName">Phone: </span> {{ user.phone }}</li>
+		<li><span class="fieldName">Email: </span> {{ user.email }}</li>
+	
+	
+	    <div class="post entry-content sp"></div>
+        <div class="clear"></div>
+		</div>
+	
+		 <div id="sidebar" class="float-right">
+         <!--box-->
+       	    <div class="box">
+            <h6>Welcome</h6>
+                 <h2 class="first-word double-color sp">Links</h2>
+                 <ul class="list cat">
+                        <li class="current">View Information</li>
+						<li>View Previous Conferences</li>
+						<li>Conference Settings</li>
+                        
+
+
+				</ul>
+		    </div>
+
+		</div> 
+	</div>
+</div>		
+		  
 {% endblock %}

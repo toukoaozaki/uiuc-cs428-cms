@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <style type="text/css">
+            div.error {
+                color: red;
+            }
+        </style>
+    </head>
     <body>
-    
     <div>
             </div>
 
@@ -12,26 +18,27 @@
             </h1>
                     
             {% if error %}
-                <div>
-                    <font color="red">
-                        {{ error.message }}
-                    </font>
+                <div class="error">
+                    {{ error.message }}
                 </div>
             {% endif %}
-    
-            <!-- TODO: Add last username upon failure -->
+ 
+            <!-- TODO(roh7): add CSRF tokens -->
+            <!-- TODO(roh7): add redirection logic -->   
 
             <form action="{{ path('uiuc_cms_user_login_check') }}" method="POST">
-                <input class="form-control" type="text" name="username" placeholder="Username" style="margin-bottom:5px;" required autofocus>
-                  {{ last_username }}
-                </input>
-                <input class="form-control" type="password" name="password" placeholder="Password" style="margin-bottom:5px;" required>
+                <input class="form-control" type="text" name="_username"
+                    placeholder="Username" style="margin-bottom:5px;" required autofocus
+                    value="{{ last_username }}"
+                />
+                <input class="form-control" type="password" name="_password"
+                    placeholder="Password" style="margin-bottom:5px;" required>
                 <button type="submit" class="btn">Sign in</button>
             </form>
 
             <div>
                 <!-- This will eventually point to register page. -->
-                <a class="btn" href="">Don't have an account? Register here!</a>
+                <a class="btn" href="{{ path('uiuc_cms_user_register') }}">Don't have an account? Register here!</a>
             </div>
         </div>
 

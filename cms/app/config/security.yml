@@ -29,13 +29,15 @@ security:
             form_login:
                 check_path: uiuc_cms_user_login_check
                 login_path: uiuc_cms_user_login
+                always_use_default_target_path: false
+                default_target_path: uiuc_cms_user_profile
             logout:
-                path:   _demo_logout
-                target: _demo
-            #anonymous: ~
+                path:   uiuc_cms_user_logout
+                target: /
             #http_basic:
             #    realm: "Secured Demo Area"
 
     access_control:
         - { path: ^/user/$, roles: ROLE_USER } #, requires_channel: https }
         - { path: ^/user/login/$, roles: IS_AUTHENTICATED_ANONYMOUSLY } #, requires_channel: https }
+        - { path: ^/user/register/$, roles: IS_AUTHENTICATED_ANONYMOUSLY } #, requires_channel: https }

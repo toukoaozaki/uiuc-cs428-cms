@@ -33,4 +33,10 @@ class SecurityController extends Controller
             )
         );
     }
+
+    public function registerAction() {
+        return $this->render(
+            'UiucCmsUserBundle:Security:register.html.twig'
+        );
+    }
 }

@@ -4,6 +4,9 @@
 
 namespace UiucCms\Bundle\UserBundle\Controller;
 
+use UiucCms\Bundle\UserBundle\Form\Type\UserType;
+use UiucCms\Bundle\UserBundle\Entity\User;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 
@@ -35,8 +38,20 @@ class SecurityController extends Controller
     }
 
     public function registerAction() {
+		$User = new User();
+        $form = $this->createForm(new UserType(), $User, array(
+            
+        ));
+
+        return $this->render(
+            'UiucCmsUserBundle:Security:register.html.twig',
+            array('form' => $form->createView())
+        );
+		
+		/**
         return $this->render(
             'UiucCmsUserBundle:Security:register.html.twig'
         );
+		*/
     }
 }

@@ -18,6 +18,8 @@
                     </font>
                 </div>
             {% endif %}
+    
+            <!-- TODO: Add last username upon failure -->
 
             <form action="{{ path('uiuc_cms_user_login_check') }}" method="POST">
                 <input class="form-control" type="text" name="username" placeholder="Username" style="margin-bottom:5px;" required autofocus>
@@ -28,14 +30,14 @@
             </form>
 
             <div>
-                <!-- This will eventually point to register page -->
+                <!-- This will eventually point to register page. -->
                 <a class="btn" href="">Don't have an account? Register here!</a>
             </div>
         </div>
 
     </body>
    
-    <!-- Bootstrap stuff. Not sure if we want to keep this. -->
+    <!-- Bootstrap stuff. Not sure if we want to keep this. TODO: Figure out what styles we want to use -->
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 

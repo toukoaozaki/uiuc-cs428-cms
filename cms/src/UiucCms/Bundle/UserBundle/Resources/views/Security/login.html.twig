@@ -8,43 +8,42 @@
         </style>
     </head>
     <body>
-    <div>
-            </div>
-
-        <div class="container" style="text-align:center; width:300px">
-
-            <h1>
-                Bootstrap Conference
-            </h1>
-                    
-            {% if error %}
-                <div class="error">
-                    {{ error.message }}
+        <div>
                 </div>
-            {% endif %}
- 
-            <!-- TODO(roh7): add CSRF tokens -->
-            <!-- TODO(roh7): add redirection logic -->   
 
-            <form action="{{ path('uiuc_cms_user_login_check') }}" method="POST">
-                <input class="form-control" type="text" name="_username"
-                    placeholder="Username" style="margin-bottom:5px;" required autofocus
-                    value="{{ last_username }}"
-                />
-                <input class="form-control" type="password" name="_password"
-                    placeholder="Password" style="margin-bottom:5px;" required>
-                <button type="submit" class="btn">Sign in</button>
-            </form>
+            <div class="container" style="text-align:center; width:300px">
 
-            <div>
-                <!-- This will eventually point to register page. -->
-                <a class="btn" href="{{ path('uiuc_cms_user_register') }}">Don't have an account? Register here!</a>
+                <h1>
+                    Bootstrap Conference
+                </h1>
+                        
+                {% if error %}
+                    <div class="error">
+                        {{ error.message }}
+                    </div>
+                {% endif %}
+     
+                <!-- TODO(roh7): add CSRF tokens -->
+                <!-- TODO(roh7): add redirection logic -->   
+               
+                <form action="{{ path('uiuc_cms_user_login_check') }}" method="POST">
+                    <input class="form-control" type="text" name="_username"
+                        placeholder="Username" style="margin-bottom:5px;" required autofocus
+                        value="{{ last_username }}"
+                    />
+                    <input class="form-control" type="password" name="_password"
+                        placeholder="Password" style="margin-bottom:5px;" required>
+                    <button type="submit" class="btn">Sign in</button>
+                </form>
+
+                <div>
+                    <a class="btn" href="{{ path('uiuc_cms_user_register') }}">Don't have an account? Register here!</a>
+                </div>
             </div>
-        </div>
 
     </body>
    
-    <!-- Bootstrap stuff. Not sure if we want to keep this. TODO: Figure out what styles we want to use -->
+    <!-- Bootstrap stuff. Not sure if we want to keep this. TODO(dlquach2): Figure out what styles we want to use -->
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 

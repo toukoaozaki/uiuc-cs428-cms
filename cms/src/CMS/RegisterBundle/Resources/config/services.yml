@@ -1,7 +1,0 @@
-parameters:
-#    cms_register.example.class: CMS\RegisterBundle\Example
-
-services:
-#    cms_register.example:
-#        class: %cms_register.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]

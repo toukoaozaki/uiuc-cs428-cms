@@ -1,3 +1,0 @@
-cms_register_homepage:
-    pattern:  /register/{name}
-    defaults: { _controller: CMSRegisterBundle:Register:index }

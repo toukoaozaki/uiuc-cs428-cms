@@ -1,0 +1,28 @@
+UiucCms\Bundle\ConferenceBundle\Entity\Conference:
+    type: entity
+    table: null
+    repositoryClass: UiucCms\Bundle\ConferenceBundle\Entity\ConferenceRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        year:
+            type: integer
+        city:
+            type: string
+            length: 255
+        registerBeginDate:
+            type: datetimetz
+            column: register_begin_date
+        registerEndDate:
+            type: datetimetz
+            column: register_end_date
+        topics:
+            type: array
+    lifecycleCallbacks: {  }

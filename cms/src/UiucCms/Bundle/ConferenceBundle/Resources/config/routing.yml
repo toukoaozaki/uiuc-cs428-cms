@@ -1,3 +1,11 @@
 uiuc_cms_conference_homepage:
-    pattern:  /hello/{name}
+    pattern:  /conf/
     defaults: { _controller: UiucCmsConferenceBundle:Default:index }
+
+uiuc_cms_conference_create:
+    pattern: /conf/create
+    defaults: { _controller: UiucCmsConferenceBundle:Default:create }
+
+uiuc_cms_conference_submit:
+    pattern: /conf/create/submit
+    defaults: { _controller: UiucCmsConferenceBundle:Default:submit }

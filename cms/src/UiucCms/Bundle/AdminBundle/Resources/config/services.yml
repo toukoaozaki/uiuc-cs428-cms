@@ -1,0 +1,7 @@
+parameters:
+#    uiuc_cms_admin.example.class: UiucCms\Bundle\AdminBundle\Example
+
+services:
+#    uiuc_cms_admin.example:
+#        class: %uiuc_cms_admin.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

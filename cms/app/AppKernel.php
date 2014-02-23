@@ -18,6 +18,8 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new UiucCms\Bundle\UserBundle\UiucCmsUserBundle(),
             new UiucCms\Bundle\PlaceholderBundle\UiucCmsPlaceholderBundle(),
+            new UiucCms\Bundle\AdminBundle\UiucCmsAdminBundle(),
+            new UiucCms\Bundle\ConferenceBundle\UiucCmsConferenceBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

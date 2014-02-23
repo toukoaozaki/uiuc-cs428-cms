@@ -1,0 +1,7 @@
+parameters:
+#    uiuc_cms_conference.example.class: UiucCms\Bundle\ConferenceBundle\Example
+
+services:
+#    uiuc_cms_conference.example:
+#        class: %uiuc_cms_conference.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

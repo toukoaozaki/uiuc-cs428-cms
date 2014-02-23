@@ -1,13 +1,28 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>{% block title %}UIUC RailTEC{% endblock %}</title>
+		<!--link rel="icon" sizes="48x48" href="{{ asset('/images/favicon.png') }}" /-->
+		{% block stylesheets %}
+			{% stylesheets '../app/Resources/css/*' filter='cssrewrite' %} 
+				<link rel="stylesheet" href="{{ asset_url }}" />
+			{% endstylesheets %}
+		{% endblock %}
+		
+		{% block javascripts %}
+			{% javascripts debug=true '../app/Resources/js/*' %}
+				<script type="text/javascript" src="{{ asset_url }}"></script>
+			{% endjavascripts %}
+		{% endblock %}
+		
+		{% include 'header.html.twig' %}
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        <div id="content">
+            {% block body %}{% endblock %}
+        </div>
+		
+		{% include 'copyright.html.twig' %}
     </body>
 </html>

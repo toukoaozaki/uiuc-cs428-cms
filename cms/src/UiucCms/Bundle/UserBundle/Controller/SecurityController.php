@@ -10,6 +10,10 @@ use UiucCms\Bundle\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+
 class SecurityController extends Controller
 {
     public function loginAction()
@@ -37,21 +41,30 @@ class SecurityController extends Controller
         );
     }
 
-    public function registerAction() {
+    public function registerAction() 
+    {
 		$User = new User();
-        $form = $this->createForm(new UserType(), $User, array(
-            
-        ));
+        $form = $this->createForm(new UserType(), $User, array('action' => $this->generateUrl('uiuc_cms_user_submit'),));
 
         return $this->render(
             'UiucCmsUserBundle:Security:register.html.twig',
             array('form' => $form->createView())
         );
-		
-		/**
-        return $this->render(
-            'UiucCmsUserBundle:Security:register.html.twig'
-        );
-		*/
     }
+
+    public function submitAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();             
+        $form = $this->createForm(new UserType(), new User());
+        $form->handleRequest($request);
+
+        $user = $form->getData();
+
+        $em->persist($user);
+        $em->flush();
+        return new Response('Successfully added element '.$user->getId().' to database.');
+    }
+
+ 
+
 }

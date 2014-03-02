@@ -19,3 +19,14 @@ uiuc_cms_user_register:
 uiuc_cms_user_profile:
     pattern:  /profile/
     defaults: { _controller: UiucCmsUserBundle:Default:profile }
+
+uiuc_cms_user_submit:
+    pattern:  /register/submit
+    defaults: { _controller: UiucCmsUserBundle:Security:submit }
+
+
+
+
+
+
+

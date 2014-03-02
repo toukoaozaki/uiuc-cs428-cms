@@ -29,7 +29,6 @@ class DefaultController extends Controller
         $em->flush();
 
         return new Response('Created product id'.$conference->getId());
-        // return $this->render('UiucCmsConferenceBundle:Default:index.html.twig', array('name' => $name));
     }
 
     public function createAction() 
@@ -63,6 +62,22 @@ class DefaultController extends Controller
         $em->persist($conference);
         $em->flush();
         return new Response('Successfully added element '.$conference->getId().' to database.');
+    }
+
+    public function displayAction($id)
+    {
+        $conference = $this->getDoctrine()
+                            ->getRepository('UiucCmsConferenceBundle:Conference')
+                            ->find($id);
+        if (!$conference) {
+            throw $this->createNotFoundException('No conference found with id: '.$id);
+        }
+
+        else {
+            return $this->render('UiucCmsConferenceBundle:Default:display.html.twig', array('name' => $conference->getName(), 
+                                                                                            'year' => $conference->getYear(), 
+                                                                                            'city' => $conference->getCity()));
+        }
     }
 
 }

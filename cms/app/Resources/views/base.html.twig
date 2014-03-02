@@ -23,6 +23,8 @@
             {% block body %}{% endblock %}
         </div>
 		
-		{% include 'copyright.html.twig' %}
+        {% block footer %}
+            {% include 'copyright.html.twig' %}
+        {% endblock footer %}
     </body>
 </html>

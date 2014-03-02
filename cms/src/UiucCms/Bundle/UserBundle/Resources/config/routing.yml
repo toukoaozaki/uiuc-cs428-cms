@@ -2,20 +2,24 @@ uiuc_cms_user_index:
     pattern:    /
     defaults: { _controller: UiucCmsUserBundle:Default:index }
 
-uiuc_cms_user_login:
-    pattern: /login/
-    defaults: { _controller: UiucCmsUserBundle:Security:login }
+#uiuc_cms_user_profile:
+#    pattern:  /profile/
+#    defaults: { _controller: UiucCmsUserBundle:Default:profile }
 
-uiuc_cms_user_login_check:
-    pattern:  /login_check/
+#uiuc_cms_user_login:
+#    pattern: /login/
+#    defaults: { _controller: UiucCmsUserBundle:Security:login }
 
-uiuc_cms_user_logout:
-    pattern: /logout/
+#uiuc_cms_user_login_check:
+#    pattern:  /login_check/
 
-uiuc_cms_user_register:
-    pattern: /register/
-    defaults: { _controller: UiucCmsUserBundle:Security:register }
+#uiuc_cms_user_logout:
+#    pattern: /logout/
 
-uiuc_cms_user_profile:
-    pattern:  /profile/
-    defaults: { _controller: UiucCmsUserBundle:Default:profile }
+#uiuc_cms_user_register:
+#    pattern: /register/
+#    defaults: { _controller: UiucCmsUserBundle:Security:register }
+
+#uiuc_cms_user_register_check:
+#    pattern: /register_check/
+#    defaults: { _controller: UiucCmsUserBundle:Security:registerCheck }

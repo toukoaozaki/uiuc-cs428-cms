@@ -1,57 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <style type="text/css">
-            div.error {
-                color: red;
-            }
-        </style>
-    </head>
-    <body>
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+<div class="container" style="text-align:center; width:300px">
+    {% if error %}
+        <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
+    {% endif %}
+
+    <form action="{{ path("fos_user_security_check") }}" method="POST">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+        <input class="form-control" type="text" id="username" name="_username"
+            style="margin-bottom: 5px;"
+            placeholder="{{ 'security.login.username'|trans({}, 'FOSUserBundle')|trim(':') }}"
+            value="{{ last_username }}" required autofocus />
+
+        <input class="form-control" type="password" id="password" name="_password"
+            style="margin-bottom: 5px;"
+            placeholder="{{ 'security.login.password'|trans({}, 'FOSUserBundle')|trim(':') }}"
+            required />
+
+        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+        <label for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
+
+        <button type="submit" class="btn" id="_submit" name="_submit">
+            {{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}
+        </button>
         <div>
-                </div>
-
-            <div class="container" style="text-align:center; width:300px">
-
-                <h1>
-                    Bootstrap Conference
-                </h1>
-                        
-                {% if error %}
-                    <div class="error">
-                        {{ error.message }}
-                    </div>
-                {% endif %}
-     
-                <!-- TODO(roh7): add CSRF tokens -->
-                <!-- TODO(roh7): add redirection logic -->   
-               
-                <form action="{{ path('uiuc_cms_user_login_check') }}" method="POST">
-                    <input class="form-control" type="text" name="_username"
-                        placeholder="Username" style="margin-bottom:5px;" required autofocus
-                        value="{{ last_username }}"
-                    />
-                    <input class="form-control" type="password" name="_password"
-                        placeholder="Password" style="margin-bottom:5px;" required>
-                    <button type="submit" class="btn">Sign in</button>
-                </form>
-
-                <div>
-                    <a class="btn" href="{{ path('uiuc_cms_user_register') }}">Don't have an account? Register here!</a>
-                </div>
-            </div>
-
-    </body>
-   
-    <!-- Bootstrap stuff. Not sure if we want to keep this. TODO(dlquach2): Figure out what styles we want to use -->
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-
-
-</html>
+            <a class="btn" href="{{ path('fos_user_registration_register') }}">
+                Don't have an account? Register here!
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock fos_user_content %}

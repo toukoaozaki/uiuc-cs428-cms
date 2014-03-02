@@ -2,16 +2,14 @@
 // src/UiucCms/UserBundle/Entity/User.php
 namespace UiucCms\Bundle\UserBundle\Entity;
 
-use Symfony\Component\Security\Core\User\UserInterface;
+use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
- * @UniqueEntity(fields="email", message="Email already taken")
+ * @ORM\Table(name="fos_user")
  */
-class User
+class User extends BaseUser
 {
     /**
      * @ORM\Id
@@ -22,76 +20,18 @@ class User
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\Email()
      */
-    protected $email;
+    protected $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\Length(max = 4096)
      */
-    protected $plainPassword;
+    protected $lastName;
 
-	protected $first_name;
-	protected $last_name;
-	protected $phone;
-	
-	public function getPhone()
-	{
-		return $this->phone;
-	}
-	
-	public function setPhone($phone)
-	{
-		$this->phone = $phone;
-	}
-	
-	public function getFirstName()
-	{
-		return $this->first_name;
-	}
-	
-	public function setFirstName($name)
-	{
-		$this->first_name = $name;
-	}
-	
-	public function getLastName()
-	{
-		return $this->last_name;
-	}
-	
-	public function setLastName($name)
-	{
-		$this->last_name = $name;
-	}
-	
-    public function getId()
+    public function __construct()
     {
-        return $this->id;
-    }
-
-	
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
-
-    public function getPlainPassword()
-    {
-        return $this->plainPassword;
-    }
-
-    public function setPlainPassword($password)
-    {
-        $this->plainPassword = $password;
+        parent::__construct();
+        // TODO(roh7): add logic here
     }
 }
 ?>

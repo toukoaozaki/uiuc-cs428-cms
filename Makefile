@@ -1,12 +1,13 @@
 SYMFONY_ROOT=cms
 COMPOSER=composer.phar
+PHPUNIT=phpunit
 TEST_LOG_PATH=build/test-reports/phpunit.xml
 
-.PHONY: all
+.PHONY: all install update test server
 
 all: update install
 
-install: update
+install:
 	cd $(SYMFONY_ROOT); $(COMPOSER) install
 
 update:
@@ -16,4 +17,4 @@ server:
 	cd $(SYMFONY_ROOT); app/console server:run
 
 test:
-	phpunit --log-junit $(TEST_LOG_PATH) -c cms/app/
+	$(PHPUNIT) --log-junit $(TEST_LOG_PATH) -c cms/app/

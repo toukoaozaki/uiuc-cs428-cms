@@ -11,12 +11,6 @@ class DefaultController extends Controller
         return $this->render('UiucCmsUserBundle:Default:index.html.twig');
     }
 
-    public function loginAction()
-    {
-        return $this->render('UiucCmsUserBundle:Default:login.html.twig');
- 
-    }
-	
     public function profileAction()
 	  {
         $user['name'] = 'Eunsoo Roh';

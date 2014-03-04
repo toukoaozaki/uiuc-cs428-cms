@@ -72,3 +72,6 @@ fos_user:
     db_driver: orm
     firewall_name: secured_area
     user_class: UiucCms\Bundle\UserBundle\Entity\User
+    registration:
+        form:
+            type: uiuc_cms_user_registration

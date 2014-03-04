@@ -1,7 +1,9 @@
-parameters:
+#parameters:
 #    uiuc_cms_user.example.class: UiucCms\Bundle\UserBundle\Example
 
 services:
-#    uiuc_cms_user.example:
-#        class: %uiuc_cms_user.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    uiuc_cms_user.registration.form.type:
+        class: UiucCms\Bundle\UserBundle\Form\Type\RegistrationFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: uiuc_cms_user_registration }

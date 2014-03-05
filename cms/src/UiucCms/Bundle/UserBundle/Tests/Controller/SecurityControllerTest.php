@@ -6,11 +6,23 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class SecurityControllerTest extends WebTestCase
 {
-    public function testLogin()
+    public function testLoginPage()
     {
         $client = static::createClient();
-
-        $crawler = $client->request('GET', '/login');
+        $router = $client->getContainer()->get('router');
+        $login_url = $router->generate('fos_user_security_login');
+        $crawler = $client->request('GET', $login_url);
+        // the page must be accessible (HTTP 200)
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        // login page must have username and password fields
+        $this->assertEquals(
+            1,
+            $crawler->filter('input[name=_username]')->count()
+        );
+        $this->assertEquals(
+            1,
+            $crawler->filter('input[name=_password]')->count()
+        );
     }
 
 }

@@ -28,23 +28,25 @@ class DefaultControllerTest extends WebTestCase
 	
 	//test that submit successfully added to database
 	public function testSubmit()
-    {
-        $client = static::createClient();
-		$crawler = $client->request('GET', '/conf/create');
-		$form = $crawler->selectButton('Create')->form(); 
-		
-		$form["conference[name]"] = 'Test';
-		$form["conference[year]"] = 2014;
-		$form["conference[city]"] = 'Champaign';
-		$form["conference[register_begin_date]"] = new DateTime("2014-02-31 11:00:15.00");
-		$form["conference[register_end_date]"] = new DateTime("2014-02-31 11:00:15.00");
-		
-		$crawler = $client->submit($form);
-		
-		$this->assertTrue($this->client->getResponse()->isSuccessful());
-		$this->assertTrue($crawler->filter('html:contains("Created product id")')->count() > 0);
-		
-        
-    }
+  {
+      $client = static::createClient();
+      $crawler = $client->request('GET', '/conf/create');
+      $form = $crawler->selectButton('Create')->form(); 
+      
+      $form["conference[name]"] = 'Test';
+      $form["conference[year]"] = 2014;
+      $form["conference[city]"] = 'Champaign';
+      $form["conference[register_begin_date][date][year]"] = "2014";
+      $form["conference[register_begin_date][date][month]"] = "2";
+      $form["conference[register_begin_date][date][day]"] = "31";
+      $form["conference[register_end_date][date][year]"] = "2014";
+      $form["conference[register_end_date][date][month]"] = "2";
+      $form["conference[register_end_date][date][day]"] = "31";
+
+      $crawler = $client->submit($form);
+      
+      $this->assertTrue($client->getResponse()->isSuccessful());
+      $this->assertTrue($crawler->filter('html:contains("Successfully added element")')->count() > 0);
+  }
 	
 }

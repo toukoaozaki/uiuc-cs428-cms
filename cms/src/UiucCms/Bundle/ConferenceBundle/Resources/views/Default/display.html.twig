@@ -1,12 +1,16 @@
 <!DOCTYPE html>
     <h3>
-        Conference:
+        Details for {{ name }}
     </h3>
-
     <div>
-        Name: {{name}} <br>
-        Year: {{year}} <br>
-        City: {{city}} <br>
+		Year: {{ year }} <br>
+		City: {{ city }} <br>
+		Registery Begins: {{ begin.format('Y-m-d:i:s') }} <br>
+		Registery Ends: {{ end.format('Y-m-d:i:s') }} <br>
     </div>
+
+	<div>
+		<li><a href="../list">Back</li>
+	</div> 
 
 </html>

@@ -1,5 +1,5 @@
 <?php
-namespace UiucCms\Bundle\UserBundle\DataFixtures\ORM\Test;
+namespace UiucCms\Bundle\UserBundle\DataFixtures\ORM\Common;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;

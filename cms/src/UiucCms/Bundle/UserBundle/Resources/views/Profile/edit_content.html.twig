@@ -1,0 +1,12 @@
+{% form_theme form 'UiucCmsUserBundle:Form:fields.html.twig' %}
+
+<div class="container" style="text-align: center; width: 300px;">
+   <form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit">
+       {{ form_widget(form) }}
+       <div>
+           <button type="submit" class="btn" id="_submit" name="_submit">
+              {{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}
+           </button>
+       </div>
+   </form>
+</div>

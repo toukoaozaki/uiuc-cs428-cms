@@ -4,6 +4,7 @@
 /app/cache/*
 /app/config/parameters.yml
 /app/logs/*
+/app/sqlite.db.cache
 !app/cache/.gitkeep
 !app/logs/.gitkeep
 /build/
@@ -11,3 +12,5 @@
 /bin/
 /composer.phar
 *.swp
+.DS_Store
+/composer.lock

@@ -1,8 +1,16 @@
-<html>
-    <body>
-       <ul>
-         <li><a href="{{ path('fos_user_profile_show') }}">Profile</a>
-         <li><a href="{{ path('fos_user_security_logout') }}">Logout</a>
-       </ul>
-    </body>
-</html>
+{% extends 'UiucCmsUserBundle::layout_nav.html.twig' %}
+
+{% block fos_user_content %}
+	<div class="container" style="text-alignment:center; width:300px">
+		<h1>Hello, {{ user.firstName }}!</h1>
+		<div>
+			<li>
+          {% if admin == true %}
+          <li><a href="{{ path('uiuc_cms_create_conf') }}">Create a conference</a>
+          {% else %}
+          <li><a href="{{ path('uiuc_cms_join_conf') }}">Join a conference</a>
+          {% endif %}
+		</div>
+	</div>
+{% endblock fos_user_content %}
+

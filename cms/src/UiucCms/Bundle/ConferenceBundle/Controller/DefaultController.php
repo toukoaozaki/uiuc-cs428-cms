@@ -63,9 +63,25 @@ class DefaultController extends Controller
         }
 
         else {
-            return $this->render('UiucCmsConferenceBundle:Default:display.html.twig', array('name' => $conference->getName(), 
-                                                                                            'year' => $conference->getYear(), 
-                                                                                            'city' => $conference->getCity()));
+            return $this->render('UiucCmsConferenceBundle:Default:display.html.twig', array('name'  => $conference->getName(), 
+                                                                                            'year'  => $conference->getYear(), 
+                                                                                            'city'  => $conference->getCity(),
+																							'begin' => $conference->getRegisterBeginDate(),
+																							'end'   => $conference->getRegisterEndDate()));
+        }
+    }
+
+    public function listAction()
+    {
+        $conferences = $this->getDoctrine()
+                            ->getRepository('UiucCmsConferenceBundle:Conference')
+                            ->findAll();
+        if (!$conferences) {
+            throw $this->createNotFoundException('No conferences found.');
+        }
+
+        else {
+            return $this->render('UiucCmsConferenceBundle:Default:list.html.twig', array('conferences' => $conferences, ));
         }
     }
 

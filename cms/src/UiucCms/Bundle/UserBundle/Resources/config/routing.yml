@@ -1,3 +1,11 @@
 uiuc_cms_user_index:
     pattern:    /
     defaults: { _controller: UiucCmsUserBundle:Default:index }
+
+uiuc_cms_create_conf:
+    pattern:  /conf/create
+    defaults: { _controller: UiucCmsConferenceBundle:Default:create }
+
+uiuc_cms_join_conf:
+    pattern:  /conf/list
+    defaults: { _controller: UiucCmsConferenceBundle:Default:list }

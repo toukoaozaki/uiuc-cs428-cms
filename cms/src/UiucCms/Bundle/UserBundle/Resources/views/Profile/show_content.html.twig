@@ -1,7 +1,16 @@
-<div class="fos_user_user_show">
-    <p>{{ 'profile.show.username'|trans({}, 'FOSUserBundle') }}: {{ user.username }}</p>
-    <p>{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}: {{ user.email }}</p>
-    <p>First name: {{ user.firstName }}</p>
-    <p>Last name: {{ user.lastName }}</p>
-    <p><a href="{{ url('fos_user_profile_edit') }}">Edit profile</a></p>
+<div class="container fos_user_user_show" style="text-align: center; width: 300px;">
+    <div class="panel panel-default">
+       <div class="panel-heading">{{ 'profile.show.username'|trans({}, 'FOSUserBundle') }}</div>
+       <div class="panel-body">{{ user.username }}</div>
+       <div class="panel-heading">{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}</div>
+       <div class="panel-body">{{ user.email }}</div>
+       <div class="panel-heading">First name</div>
+       <div class="panel-body">{{ user.firstName }}</div>
+       <div class="panel-heading">Last name</div>
+       <div class="panel-body">{{ user.lastName }}</div>
+       <div class="panel-footer">
+          <a href="{{ url('fos_user_profile_edit') }}">
+             Edit profile
+          </div>
+    </div>
 </div>

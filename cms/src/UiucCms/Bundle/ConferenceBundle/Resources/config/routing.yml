@@ -10,9 +10,14 @@ uiuc_cms_conference_submit:
     pattern: /conf/create/submit
     defaults: { _controller: UiucCmsConferenceBundle:Default:submit }
 
+uiuc_cms_conference_list:
+    pattern: /conf/list/
+    defaults: { _controller: UiucCmsConferenceBundle:Default:list }
+
 uiuc_cms_conference_display:
     pattern: /conf/display/{id}
     defaults: { _controller: UiucCmsConferenceBundle:Default:display }
+
 
 
 

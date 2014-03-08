@@ -11,3 +11,5 @@
 /bin/
 /composer.phar
 *.swp
+.DS_Store
+/composer.lock

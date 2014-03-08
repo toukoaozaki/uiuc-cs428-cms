@@ -1,4 +1,4 @@
-<div class="container fos_user_user_show" style="text-align: center; width: 300px;">
+<div class="container fos_user_user_show" style="text-align: center; width: 400px;">
     <div class="panel panel-default">
        <div class="panel-heading">{{ 'profile.show.username'|trans({}, 'FOSUserBundle') }}</div>
        <div class="panel-body">{{ user.username }}</div>
@@ -9,8 +9,14 @@
        <div class="panel-heading">Last name</div>
        <div class="panel-body">{{ user.lastName }}</div>
        <div class="panel-footer">
-          <a href="{{ url('fos_user_profile_edit') }}">
-             Edit profile
-          </div>
+          <ul class="nav nav-pills">
+             <li>
+               <a href="{{ url('fos_user_profile_edit') }}">Edit profile</a>
+             </li>
+             <li>
+               <a href="{{ url('fos_user_change_password') }}">Change password</a>
+             </li>
+          </ul>
+       </div>
     </div>
 </div>

@@ -10,12 +10,21 @@ use Symfony\Component\Validator\Validation;
 
 class RegistrationFormTypeTest extends TypeTestCase
 {
-    // Tests Symfony form object
-    public function testSubmitValidData()
+    private $data;
+    private $form;
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->setUpValidData();
+    }
+
+    protected function setUpValidData()
     {
         // password is not included; it should be tested with web-based
         // functional tests involving controllers.
-        $formData = array(
+        $this->data = array(
             'firstName' => 'John',
             'lastName' => 'Doe',
             'username' => 'johndoe01',
@@ -25,15 +34,33 @@ class RegistrationFormTypeTest extends TypeTestCase
         $form = $this->factory->create($formType);
 
         // test submission handling; in the app, this happens in the controller
-        $form->submit($formData);
+        $form->submit($this->data);
         // check errors on data transformation
         $this->assertTrue($form->isSynchronized());
+        $this->form = $form;
+    }
+
+    // Tests Symfony form object
+    public function testSubmitValidData()
+    {
         // check whether data matches expected
-        $result = $form->getData();
-        $this->assertEquals($formData['firstName'], $result->getFirstName());
-        $this->assertEquals($formData['lastName'], $result->getLastName());
-        $this->assertEquals($formData['username'], $result->getUsername());
-        $this->assertEquals($formData['email'], $result->getEmail());
+        $result = $this->form->getData();
+        $this->assertEquals($this->data['firstName'], $result->getFirstName());
+        $this->assertEquals($this->data['lastName'], $result->getLastName());
+        $this->assertEquals($this->data['username'], $result->getUsername());
+        $this->assertEquals($this->data['email'], $result->getEmail());
+    }
+
+    // Tests FormView object
+    public function testViewValidData()
+    {
+        $view = $this->form->createView();
+        $children = $view->children;
+        // test whether FormView contains required fields
+        foreach (array_keys($this->data) as $key) {
+            $this->assertArrayHasKey($key, $children);
+        }
+        $this->assertArrayHasKey('plainPassword', $children);
     }
 
     protected function getExtensions()

@@ -1,5 +1,5 @@
 <?php
-namespace UiucCms\Bundle\UserBundle\DataFixtures\ORM;
+namespace UiucCms\Bundle\UserBundle\DataFixtures\ORM\Test;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -8,6 +8,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class LoadTestUser implements FixtureInterface, ContainerAwareInterface
 {
+    const TEST_USERNAME = 'test';
+    const TEST_EMAIL = 'test@uiuc.edu';
+    const TEST_PASSWORD = 'unsecure';
+    const TEST_FIRST_NAME = 'John';
+    const TEST_LAST_NAME = 'Doe';
+
     /**
      * @var ContainerInterface
      */
@@ -28,12 +34,12 @@ class LoadTestUser implements FixtureInterface, ContainerAwareInterface
 
         // Create a new user
         $user = $userManager->createUser();
-        $user->setUsername('test');
-        $user->setEmail('test@uiuc.edu');
-        $user->setPlainPassword('unsecure');
+        $user->setUsername(self::TEST_USERNAME);
+        $user->setEmail(self::TEST_EMAIL);
+        $user->setPlainPassword(self::TEST_PASSWORD);
+        $user->setFirstName(self::TEST_FIRST_NAME);
+        $user->setLastName(self::TEST_LAST_NAME);
         $user->setEnabled(true);
-        $user->setFirstName('John');
-        $user->setLastName('Doe');
 
         $manager->persist($user);
         $manager->flush();

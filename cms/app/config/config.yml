@@ -74,3 +74,6 @@ fos_user:
     registration:
         form:
             type: uiuc_cms_user_registration
+    profile:
+        form:
+            type: uiuc_cms_user_profile

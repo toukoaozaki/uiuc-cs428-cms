@@ -8,6 +8,19 @@ framework:
     profiler:
         collect: false
 
+# Doctrine Configuration for testing
+doctrine:
+    dbal:
+        driver:   pdo_sqlite
+        #memory:   true
+        user:     test
+        path:     "%kernel.root_dir%/sqlite.db.cache"
+        charset:  utf8
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        auto_mapping: true
+
 web_profiler:
     toolbar: false
     intercept_redirects: false

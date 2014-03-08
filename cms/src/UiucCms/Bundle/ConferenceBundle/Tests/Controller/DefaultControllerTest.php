@@ -31,7 +31,7 @@ class DefaultControllerTest extends WebTestCase
     {
         $client = static::createClient();
 		$crawler = $client->request('GET', '/conf/create');
-		$form = $crawler->selectButtion('submit')->form(); 
+		$form = $crawler->selectButton('Create')->form(); 
 		
 		$form['name'] = 'Test';
 		$form['year'] = 2014;

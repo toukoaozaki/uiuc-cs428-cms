@@ -36,18 +36,7 @@ class DefaultController extends Controller
         $conference = new Conference();
 
         $form = $this->createForm(new ConferenceType(), $conference, array('action' => $this->generateUrl('uiuc_cms_conference_submit'),));
-
-       /* 
-        $form = $this->createFormBuilder($conference)
-                    ->add('name', 'text')
-                    ->add('year', 'integer')
-                    ->add('city', 'text')
-                    ->add('register_begin_date', 'datetime')
-                    ->add('register_end_date', 'datetime')
-                    ->add('topics', 'collection', array('type' => 'text'))
-                    ->add('create', 'submit')
-                    ->getForm();
-                */        
+     
         return $this->render('UiucCmsConferenceBundle:Default:create.html.twig', array( 'form' => $form->createView(),));
     }
 

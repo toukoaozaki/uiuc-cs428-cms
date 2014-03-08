@@ -26,7 +26,10 @@ class ProfileControllerTest extends WebTestCase
             array(),
             true);
         $this->profile_url = $this->router->generate('fos_user_profile_show');
-        $this->profile_edit_url = $this->router->generate('fos_user_profile_edit');
+        $this->profile_edit_url = $this->router->generate(
+            'fos_user_profile_edit',
+            array(),
+            true);
     }
 
     public function testProfilePageProtected()

@@ -1,0 +1,13 @@
+{% extends 'UiucCmsUserBundle::layout.html.twig' %}
+
+{% block navigation %}
+  <ul class="nav nav-pills">
+    <li class="{% if user_active_menu is not defined or user_active_menu == 'index' %}active{% endif %}">
+      <a href="{{ path('uiuc_cms_user_index') }}">Home</a>
+    </li>
+    <li class="{% if user_active_menu is defined and user_active_menu == 'profile' %}active{% endif %}">
+      <a href="{{ path('fos_user_profile_show') }}">Profile</a>
+    </li>
+    <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
+  </ul>
+{% endblock navigation %}

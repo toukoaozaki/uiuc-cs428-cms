@@ -1,8 +1,7 @@
-<html>
-    <body>
-       <ul>
-         <li><a href="{{ path('fos_user_profile_show') }}">Profile</a>
-         <li><a href="{{ path('fos_user_security_logout') }}">Logout</a>
-       </ul>
-    </body>
-</html>
+{% extends 'UiucCmsUserBundle::layout_nav.html.twig' %}
+
+{% block fos_user_content %}
+   <div class="container" style="text-alignment:center; width:300px">
+      <h1>Hello, {{ user.firstName }}!</h1>
+   </div>
+{% endblock fos_user_content %}

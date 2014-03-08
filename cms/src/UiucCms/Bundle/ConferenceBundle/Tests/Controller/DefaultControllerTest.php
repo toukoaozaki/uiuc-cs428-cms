@@ -33,11 +33,12 @@ class DefaultControllerTest extends WebTestCase
 		$crawler = $client->request('GET', '/conf/create');
 		$form = $crawler->selectButton('Create')->form(); 
 		
-		$form['name'] = 'Test';
-		$form['year'] = 2014;
-		$form['registerBeginDate'] = new DateTime("2014-02-31 11:00:15.00");
-		$form['registerEndDate'] = new DateTime("2014-02-31 11:00:15.00");
-		$form['topics'] = [];
+		$form['Name'] = 'Test';
+		$form['Year'] = 2014;
+		$form['City'] = "Something";
+		$form['Register begin date'] = new DateTime("2014-02-31 11:00:15.00");
+		$form['Register end date'] = new DateTime("2014-02-31 11:00:15.00");
+		$form['Topics'] = [];
 		
 		$crawler = $client->submit($form);
 		

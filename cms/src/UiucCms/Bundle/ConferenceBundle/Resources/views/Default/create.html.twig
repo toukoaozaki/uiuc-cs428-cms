@@ -1,6 +1,10 @@
+{% form_theme form 'UiucCmsUserBundle:Form:fields.html.twig' %}
 {% extends 'UiucCmsConferenceBundle::base.html.twig' %}
 
+
 {% block body %}
-	Create a new conference:
-	{{ form(form) }}
+	<div class="container" style="text-align:center; width:300px">
+        Create a new conference:
+        {{ form(form) }}
+	</div>
 {% endblock %}

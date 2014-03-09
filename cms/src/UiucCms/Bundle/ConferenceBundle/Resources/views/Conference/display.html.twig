@@ -1,0 +1,23 @@
+{% extends 'UiucCmsConferenceBundle::base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="page-header" style="text-align:left">
+        <h1>
+            Details for {{ name }}
+        </h1>
+    </div>
+    <p class="lead">
+        Year: {{ year }} <br>
+        City: {{ city }} <br>
+        Registery Begins: {{ begin.format('Y-m-d:i:s') }} <br>
+        Registery Ends: {{ end.format('Y-m-d:i:s') }} <br>
+    </p>
+    <p>
+		<li><a href="../list">Back</li>
+    </p>
+</div>
+{% endblock %}
+
+   
+

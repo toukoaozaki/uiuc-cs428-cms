@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use \DateTime;
 
-class DefaultController extends Controller
+class ConferenceController extends Controller
 {
     public function indexAction()
     {
@@ -37,7 +37,7 @@ class DefaultController extends Controller
 
         $form = $this->createForm(new ConferenceType(), $conference, array('action' => $this->generateUrl('uiuc_cms_conference_submit'),));
      
-        return $this->render('UiucCmsConferenceBundle:Default:create.html.twig', array( 'form' => $form->createView(),));
+        return $this->render('UiucCmsConferenceBundle:Conference:create.html.twig', array( 'form' => $form->createView(),));
     }
 
     public function submitAction(Request $request)
@@ -63,7 +63,7 @@ class DefaultController extends Controller
         }
 
         else {
-            return $this->render('UiucCmsConferenceBundle:Default:display.html.twig', array('name'  => $conference->getName(), 
+            return $this->render('UiucCmsConferenceBundle:Conference:display.html.twig', array('name'  => $conference->getName(), 
                                                                                             'year'  => $conference->getYear(), 
                                                                                             'city'  => $conference->getCity(),
 																							'begin' => $conference->getRegisterBeginDate(),
@@ -81,7 +81,7 @@ class DefaultController extends Controller
         }
 
         else {
-            return $this->render('UiucCmsConferenceBundle:Default:list.html.twig', array('conferences' => $conferences, ));
+            return $this->render('UiucCmsConferenceBundle:Conference:list.html.twig', array('conferences' => $conferences, ));
         }
     }
 

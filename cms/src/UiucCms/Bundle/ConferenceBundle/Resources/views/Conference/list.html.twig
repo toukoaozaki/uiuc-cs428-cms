@@ -1,0 +1,18 @@
+{% extends 'UiucCmsConferenceBundle::base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="page-header" style="text-align:left">
+        <h1>
+            Conferences:
+        </h1>
+    </div>
+    <p class="lead">
+        {% for conference in conferences %}
+            <li><a href="{{ path('uiuc_cms_conference_display', {'id': conference.getId()}) }}">{{ conference.getName() }}</li><br>
+        {% endfor %}
+    </p>
+</div>
+{% endblock %}
+
+ 

@@ -1,16 +1,20 @@
 {% extends 'UiucCmsUserBundle::layout_nav.html.twig' %}
 
 {% block fos_user_content %}
-	<div class="container" style="text-alignment:center; width:450px">
-		<h1>Hello, {{ user.firstName }}!</h1>
-		<div>
-			<li>
-          {% if admin == true %}
+
+<div class="container">
+    <div class="page-header" style="text-align:left">
+        <h1>
+            Hello, {{ user.firstName }}!
+        </h1>
+    </div>
+    <p class="lead">
+        {% if admin == true %}
           <li><a href="{{ path('uiuc_cms_create_conf') }}">Create a conference</a>
           {% else %}
           <li><a href="{{ path('uiuc_cms_join_conf') }}">Join a conference</a>
-          {% endif %}
-		</div>
-	</div>
+        {% endif %}
+    </p>
+</div>
 {% endblock fos_user_content %}
 

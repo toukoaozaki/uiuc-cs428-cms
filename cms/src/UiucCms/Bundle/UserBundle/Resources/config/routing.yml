@@ -4,8 +4,8 @@ uiuc_cms_user_index:
 
 uiuc_cms_create_conf:
     pattern:  /conf/create
-    defaults: { _controller: UiucCmsConferenceBundle:Default:create }
+    defaults: { _controller: UiucCmsConferenceBundle:Conference:create }
 
 uiuc_cms_join_conf:
     pattern:  /conf/list
-    defaults: { _controller: UiucCmsConferenceBundle:Default:list }
+    defaults: { _controller: UiucCmsConferenceBundle:Conference:list }

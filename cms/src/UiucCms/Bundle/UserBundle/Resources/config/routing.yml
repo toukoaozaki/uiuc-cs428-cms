@@ -9,3 +9,8 @@ uiuc_cms_create_conf:
 uiuc_cms_join_conf:
     pattern:  /conf/list
     defaults: { _controller: UiucCmsConferenceBundle:Conference:list }
+
+	
+uiuc_cms_promote_user:
+    pattern:  /admin/promote
+    defaults: { _controller: UiucCmsAdminBundle:Default:promote }

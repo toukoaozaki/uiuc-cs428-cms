@@ -10,4 +10,9 @@ class DefaultController extends Controller
     {
         return $this->render('UiucCmsAdminBundle:Default:index.html.twig', array('name' => $name));
     }
+	
+	public function promoteAction()
+	{
+		return $this->render('UiucCmsAdminBundle:Default:index.html.twig', array('name' => 'Jason'));
+	}
 }

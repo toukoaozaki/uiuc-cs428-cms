@@ -16,7 +16,7 @@ security:
             security: false
 
         secured_area:
-            pattern:  ^/(user|conference)/
+            pattern:  ^/(user|conf)/
             form_login:
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider

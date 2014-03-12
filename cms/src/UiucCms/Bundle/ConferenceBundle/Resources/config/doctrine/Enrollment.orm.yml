@@ -1,0 +1,16 @@
+UiucCms\Bundle\ConferenceBundle\Entity\Enrollment:
+    type: entity
+    table: null
+    repositoryClass: UiucCms\Bundle\ConferenceBundle\Entity\EnrollmentRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        conferenceId:
+            type: integer
+        attendeeId:
+            type: integer
+    lifecycleCallbacks: {  }

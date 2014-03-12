@@ -5,6 +5,7 @@ namespace UiucCms\Bundle\ConferenceBundle\Controller;
 use UiucCms\Bundle\ConferenceBundle\Form\Type\ConferenceType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use UiucCms\Bundle\ConferenceBundle\Entity\Conference;
+use UiucCms\Bundle\ConferenceBundle\Entity\Enrollment;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -63,12 +64,28 @@ class ConferenceController extends Controller
         }
 
         else {
-            return $this->render('UiucCmsConferenceBundle:Conference:display.html.twig', array('name'  => $conference->getName(), 
-                                                                                            'year'  => $conference->getYear(), 
-                                                                                            'city'  => $conference->getCity(),
-																							'begin' => $conference->getRegisterBeginDate(),
-																							'end'   => $conference->getRegisterEndDate()));
+            return $this->render('UiucCmsConferenceBundle:Conference:display.html.twig', array('name'   => $conference->getName(), 
+                                                                                               'year'   => $conference->getYear(), 
+                                                                                               'city'   => $conference->getCity(),
+																							   'begin'  => $conference->getRegisterBeginDate(),
+																							   'end'    => $conference->getRegisterEndDate(),
+                                                                                               'confId' => $id));
         }
+    }
+
+    public function enrollAction($id)
+    {
+        $userId = $this->getUser()->getId();
+        
+        $enrollment = new Enrollment();
+        $enrollment->setConferenceId($id);
+        $enrollment->setAttendeeId($userId);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($enrollment);
+        $em->flush();
+
+        return $this->displayAction($id);
     }
 
     public function listAction()

@@ -13,6 +13,12 @@ class DefaultController extends Controller
 	
 	public function promoteAction()
 	{
-		return $this->render('UiucCmsAdminBundle:Default:index.html.twig', array('name' => 'Jason'));
+		$users = $this->getDoctrine()->getRepository('UiucCmsUserBundle:User')->findAll();
+		if(!$users) {
+			throw $this->createNotFoundException('No users found.');
+		}
+		else {
+			return $this->render('UiucCmsAdminBundle:Default:index.html.twig', array('users' => $users, ));
+		}
 	}
 }

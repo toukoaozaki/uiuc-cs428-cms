@@ -18,7 +18,7 @@ class DefaultController extends Controller
 			throw $this->createNotFoundException('No users found.');
 		}
 		else {
-			return $this->render('UiucCmsAdminBundle:Default:index.html.twig', array('users' => $users, ));
+			return $this->render('UiucCmsAdminBundle:Default:users.html.twig', array('users' => $users, ));
 		}
 	}
 }

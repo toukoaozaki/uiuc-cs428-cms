@@ -19,7 +19,7 @@ uiuc_cms_conference_display:
     defaults: { _controller: UiucCmsConferenceBundle:Conference:display }
 
 uiuc_cms_conference_enroll:
-    pattern: /display/{id}/enroll
+    pattern: /enroll/{id}/
     defaults: { _controller: UiucCmsConferenceBundle:Conference:enroll }
 
 

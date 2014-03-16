@@ -49,7 +49,7 @@ class DefaultControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', '/user/admin/show');
 		$proCount = $crawler->filter('html:contains("Promote")')->count();
 		$link = $crawler->filter('a:contains("Promote")')->eq(0)->link();
-		$crawler = $client->click($link);
+		$crawler = $this->client->click($link);
         $this->assertTrue($crawler->filter('html:contains("Promote")')->count() == $proCount - 1);	
 	}
 	

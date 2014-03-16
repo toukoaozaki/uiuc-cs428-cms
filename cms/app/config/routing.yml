@@ -1,6 +1,6 @@
 uiuc_cms_conference:
     resource: "@UiucCmsConferenceBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /conf
 
 uiuc_cms_admin:
     resource: "@UiucCmsAdminBundle/Resources/config/routing.yml"

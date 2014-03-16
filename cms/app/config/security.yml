@@ -32,9 +32,12 @@ security:
             #    realm: "Secured Demo Area"
 
     access_control:
+        - { path: ^/user$, roles: ROLE_USER } #, requires_channel: https }
         - { path: ^/user/$, roles: ROLE_USER } #, requires_channel: https }
+        - { path: ^/conf$, roles: ROLE_USER } 
         - { path: ^/conf/$, roles: ROLE_USER } 
-        - { path: ^/conf/create/$, roles: ROLE_USER } # This still doesn't stop people from going straight to the create conf page 
+        - { path: ^/conf/create$, roles: ROLE_ADMIN } # This still doesn't stop people from going straight to the create conf page 
+        - { path: ^/conf/create/, roles: ROLE_ADMIN } # This still doesn't stop people from going straight to the create conf page 
         - { path: ^/user/login/$, roles: IS_AUTHENTICATED_ANONYMOUSLY } #, requires_channel: https }
         - { path: ^/user/register/$, roles: IS_AUTHENTICATED_ANONYMOUSLY } #, requires_channel: https }
         - { path: ^/user/reset/$, roles: IS_AUTHENTICATED_ANONYMOUSLY } #, requires_channel: https }

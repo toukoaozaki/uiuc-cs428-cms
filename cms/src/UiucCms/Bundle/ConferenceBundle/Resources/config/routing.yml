@@ -1,25 +1,25 @@
 uiuc_cms_conference_homepage:
-    pattern:  /conf/
+    pattern:  /
     defaults: { _controller: UiucCmsConferenceBundle:Conference:index }
 
 uiuc_cms_conference_create:
-    pattern: /conf/create
+    pattern: /create
     defaults: { _controller: UiucCmsConferenceBundle:Conference:create }
 
 uiuc_cms_conference_submit:
-    pattern: /conf/create/submit
+    pattern: /create/submit
     defaults: { _controller: UiucCmsConferenceBundle:Conference:submit }
 
 uiuc_cms_conference_list:
-    pattern: /conf/list/
+    pattern: /list
     defaults: { _controller: UiucCmsConferenceBundle:Conference:list }
 
 uiuc_cms_conference_display:
-    pattern: /conf/display/{id}
+    pattern: /display/{id}
     defaults: { _controller: UiucCmsConferenceBundle:Conference:display }
 
 uiuc_cms_conference_enroll:
-    pattern: /conf/display/{id}/enroll
+    pattern: /display/{id}/enroll
     defaults: { _controller: UiucCmsConferenceBundle:Conference:enroll }
 
 

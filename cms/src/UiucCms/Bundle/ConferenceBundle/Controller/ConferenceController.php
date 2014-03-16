@@ -36,9 +36,15 @@ class ConferenceController extends Controller
     {
         $conference = new Conference();
 
-        $form = $this->createForm(new ConferenceType(), $conference, array('action' => $this->generateUrl('uiuc_cms_conference_submit'),));
+        $form = $this->createForm(
+            new ConferenceType(),
+            $conference,
+            array('action' => $this->generateUrl('uiuc_cms_conference_submit'),)
+        );
      
-        return $this->render('UiucCmsConferenceBundle:Conference:create.html.twig', array( 'form' => $form->createView(),));
+        return $this->render(
+            'UiucCmsConferenceBundle:Conference:create.html.twig',
+            array( 'form' => $form->createView(),));
     }
 
     public function submitAction(Request $request)
@@ -51,25 +57,30 @@ class ConferenceController extends Controller
 
         $em->persist($conference);
         $em->flush();
-        return new Response('Successfully added element '.$conference->getId().' to database.');
+        return new Response(
+            'Successfully added element '.$conference->getId().' to database.');
     }
 
     public function displayAction($id)
     {
         $conference = $this->getDoctrine()
-                            ->getRepository('UiucCmsConferenceBundle:Conference')
-                            ->find($id);
+                           ->getRepository('UiucCmsConferenceBundle:Conference')
+                           ->find($id);
         if (!$conference) {
-            throw $this->createNotFoundException('No conference found with id: '.$id);
+            throw $this->createNotFoundException(
+                'No conference found with id: '.$id);
         }
 
         else {
-            return $this->render('UiucCmsConferenceBundle:Conference:display.html.twig', array('name'   => $conference->getName(), 
-                                                                                               'year'   => $conference->getYear(), 
-                                                                                               'city'   => $conference->getCity(),
-																							   'begin'  => $conference->getRegisterBeginDate(),
-																							   'end'    => $conference->getRegisterEndDate(),
-                                                                                               'confId' => $id));
+            return $this->render(
+                'UiucCmsConferenceBundle:Conference:display.html.twig', 
+                array('name'   => $conference->getName(), 
+                      'year'   => $conference->getYear(), 
+                      'city'   => $conference->getCity(),
+                      'begin'  => $conference->getRegisterBeginDate(),
+                      'end'    => $conference->getRegisterEndDate(),
+                      'confId' => $id)
+            );
         }
     }
 
@@ -98,7 +109,9 @@ class ConferenceController extends Controller
         }
 
         else {
-            return $this->render('UiucCmsConferenceBundle:Conference:list.html.twig', array('conferences' => $conferences, ));
+            return $this->render(
+                'UiucCmsConferenceBundle:Conference:list.html.twig', 
+                array('conferences' => $conferences, ));
         }
     }
 

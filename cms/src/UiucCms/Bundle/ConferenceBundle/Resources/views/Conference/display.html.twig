@@ -14,8 +14,13 @@
         Registery Ends: {{ end.format('Y-m-d:i:s') }} <br>
     </p>
     <p>
-        <li><a href="{{ path('uiuc_cms_conference_enroll', {'id': confId }) }}">Enroll in this conference</a>
-		<li><a href="{{ path('uiuc_cms_conference_homepage') }}">Back to listings</li>
+        {% if enrolled == false %}
+            <li><a href="{{ path('uiuc_cms_conference_enroll', {'id': confId }) }}">Enroll in this conference</a>
+        {% else %}
+            You have already enrolled in this conference.
+        {% endif %}
+        
+        <li><a href="{{ path('uiuc_cms_conference_homepage') }}">Back to listings</li>
     </p>
 </div>
 {% endblock %}

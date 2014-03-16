@@ -64,6 +64,27 @@ class ConferenceController extends Controller
         $conference = $this->getDoctrine()
                            ->getRepository('UiucCmsConferenceBundle:Conference')
                            ->find($id);
+        
+        $enrollments = $this->getDoctrine()
+                            ->getRepository('UiucCmsConferenceBundle:Enrollment');
+        
+        // We want to see if the user has already enrolled in this particular conference.
+        
+        $userId = $this->getUser()->getId();
+        
+        $query = $enrollments->createQueryBuilder('e')
+                             ->where('e.conferenceId = '.$id)
+                             ->where('e.attendeeId = '.$userId)
+                             ->getQuery();
+
+        $enrollment = $query->getOneOrNullResult();
+
+        $enrolled = false;
+
+        if ($enrollment) {
+            $enrolled = true;
+        }
+
         if (!$conference) {
             throw $this->createNotFoundException(
                 'No conference found with id: '.$id);
@@ -72,12 +93,13 @@ class ConferenceController extends Controller
         else {
             return $this->render(
                 'UiucCmsConferenceBundle:Conference:display.html.twig', 
-                array('name'   => $conference->getName(), 
-                      'year'   => $conference->getYear(), 
-                      'city'   => $conference->getCity(),
-                      'begin'  => $conference->getRegisterBeginDate(),
-                      'end'    => $conference->getRegisterEndDate(),
-                      'confId' => $id)
+                array('name'     => $conference->getName(), 
+                      'year'     => $conference->getYear(), 
+                      'city'     => $conference->getCity(),
+                      'begin'    => $conference->getRegisterBeginDate(),
+                      'end'      => $conference->getRegisterEndDate(),
+                      'confId'   => $id,
+                      'enrolled' => $enrolled)
             );
         }
     }

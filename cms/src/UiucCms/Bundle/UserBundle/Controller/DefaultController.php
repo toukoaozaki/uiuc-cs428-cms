@@ -9,8 +9,10 @@ class DefaultController extends Controller
     public function indexAction()
     {
 		$admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
-        return $this->render('UiucCmsUserBundle:Default:index.html.twig', array('admin' => $admin,
-																				'user'  => $this->getUser()));
+        return $this->render(
+            'UiucCmsUserBundle:Default:index.html.twig', 
+            array('admin' => $admin,
+            'user'  => $this->getUser()));
     }
 
     public function profileAction()

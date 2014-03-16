@@ -15,7 +15,7 @@
             <th>Promote</th>
         </tr>
         {% for user in users %}
-            {% if user.hasRole("ROLE_ADMIN") == false and if (user.hasRole("ROLE_SUPER_ADMIN") == false %} 
+            {% if (user.hasRole("ROLE_ADMIN") == false) and (user.hasRole("ROLE_SUPER_ADMIN") == false) %} 
                 <tr>
                     <td>{{ user.getUserName() }}</td>
                     <td>{{ user.getEmail }}</td> 

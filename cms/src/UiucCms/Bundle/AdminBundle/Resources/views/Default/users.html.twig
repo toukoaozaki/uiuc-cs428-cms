@@ -1,4 +1,4 @@
-{% extends "UiucCmsAdminBundle::base.html.twig" %}
+{% extends "UiucCmsUserBundle::layout_nav.html.twig" %}
 
 {% block body %}
 <div class="container">
@@ -8,9 +8,22 @@
         </h1>
     </div>
     <p class="lead">
+    <table border="1" style="width:500px">
+        <tr>
+            <th>User Name</th>
+            <th>User Email</th>
+            <th>Promote</th>
+        </tr>
         {% for user in users %}
-            <li>{{ user.getUserName() }} {{ user.getEmail }} </li><br>
+            {% if user.hasRole("ROLE_ADMIN") == false %} 
+                <tr>
+                    <td>{{ user.getUserName() }}</td>
+                    <td>{{ user.getEmail }}</td> 
+                    <td> <a href="{{ path('uiuc_cms_admin_promote', {'id': user.getId()}) }}">Promote </td>
+                </tr>
+            {% endif %}
         {% endfor %}
+    </table>
     </p>
 </div>
 {% endblock %}

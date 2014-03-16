@@ -11,5 +11,5 @@ uiuc_cms_join_conf:
     defaults: { _controller: UiucCmsConferenceBundle:Conference:index}
 
 uiuc_cms_promote_user:
-    pattern:  /admin/promote
-    defaults: { _controller: UiucCmsAdminBundle:Default:promote }
+    pattern:  /admin/show
+    defaults: { _controller: UiucCmsAdminBundle:Default:show }

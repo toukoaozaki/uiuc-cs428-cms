@@ -31,6 +31,6 @@ class DefaultController extends Controller
         $em->persist($user);
         $em->flush();
         
-        return showAction();
+        return $this->redirect($this->generateUrl('uiuc_cms_promote_user'));;
     }
 }

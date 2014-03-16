@@ -3,6 +3,10 @@
 namespace UiucCms\Bundle\AdminBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use UiucCms\Bundle\UserBundle\DataFixtures\ORM\Test\LoadTestUser;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
+use Doctrine\Common\DataFixtures\Loader;
 
 class DefaultControllerTest extends WebTestCase
 {

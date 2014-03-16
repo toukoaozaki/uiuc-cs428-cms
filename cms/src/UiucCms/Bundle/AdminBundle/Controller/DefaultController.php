@@ -31,12 +31,6 @@ class DefaultController extends Controller
         $em->persist($user);
         $em->flush();
         
-        $users = $this->getDoctrine()->getRepository('UiucCmsUserBundle:User')->findAll();
-		if(!$users) {
-			throw $this->createNotFoundException('No users found.');
-		}
-		else {
-			return $this->render('UiucCmsAdminBundle:Default:users.html.twig', array('users' => $users, ));
-		}
+        return showAction();
     }
 }

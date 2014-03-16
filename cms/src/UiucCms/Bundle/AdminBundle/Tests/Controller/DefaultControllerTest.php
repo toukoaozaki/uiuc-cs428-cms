@@ -18,7 +18,7 @@ class DefaultControllerTest extends WebTestCase
 	/*
 		test that super admin will not be displayed in the list of users that can be promoted
 	*/
-	public function testShow()
+	public function testShowSuper()
 	{
 		$client = static::createClient();
 
@@ -31,7 +31,7 @@ class DefaultControllerTest extends WebTestCase
 		test that admin will not be displayed 
 	*/
 	
-	public function testShow()
+	public function testShowAdmin()
 	{
 		$client = static::createClient();
 

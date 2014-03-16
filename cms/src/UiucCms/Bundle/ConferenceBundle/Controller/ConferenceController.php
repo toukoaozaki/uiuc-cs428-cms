@@ -16,20 +16,18 @@ class ConferenceController extends Controller
 {
     public function indexAction()
     {
-        $conference = new Conference();
-        $conference->setName('Test Conference');
-        $conference->setYear(2014);
-        $conference->setCity('Champaign');
-        $conference->setRegisterBeginDate(new DateTime("2014-02-31 11:00:15.00"));
-        $conference->setRegisterEndDate(new DateTime("2014-02-31 11:00:15.00"));
-        $conference->setTopics([]);
+        $conferences = $this->getDoctrine()
+                            ->getRepository('UiucCmsConferenceBundle:Conference')
+                            ->findAll();
+        if (!$conferences) {
+            throw $this->createNotFoundException('No conferences found.');
+        }
 
-        // These three lines add objects to the database.
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($conference); 
-        $em->flush();
-
-        return new Response('Created product id'.$conference->getId());
+        else {
+            return $this->render(
+                'UiucCmsConferenceBundle:Conference:index.html.twig', 
+                array('conferences' => $conferences, ));
+        }
     }
 
     public function createAction() 
@@ -97,22 +95,6 @@ class ConferenceController extends Controller
         $em->flush();
 
         return $this->displayAction($id);
-    }
-
-    public function listAction()
-    {
-        $conferences = $this->getDoctrine()
-                            ->getRepository('UiucCmsConferenceBundle:Conference')
-                            ->findAll();
-        if (!$conferences) {
-            throw $this->createNotFoundException('No conferences found.');
-        }
-
-        else {
-            return $this->render(
-                'UiucCmsConferenceBundle:Conference:list.html.twig', 
-                array('conferences' => $conferences, ));
-        }
     }
 
 }

@@ -6,11 +6,22 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase
 {
+
+	private $client;
+    private $router;
+	
+	protected function setUp()
+    {
+        $this->client = static::createClient();
+        $this->container = $this->client->getContainer();
+        $this->setupFixtures($this->container);
+        $this->router = $this->container->get('router');
+	
+	}
     public function testIndex()
     {
-        $client = static::createClient();
 
-        $crawler = $client->request('GET', '/hello/Fabien');
+        $crawler = $this->client->request('GET', '/hello/Fabien');
 
         $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
     }
@@ -20,9 +31,7 @@ class DefaultControllerTest extends WebTestCase
 	*/
 	public function testShowSuper()
 	{
-		$client = static::createClient();
-
-        $crawler = $client->request('GET', '/user/admin/show');
+        $crawler = $this->client->request('GET', '/user/admin/show');
 
         $this->assertTrue($crawler->filter('html:contains("admin@domain.com")')->count() == 0);	
 	}
@@ -31,12 +40,28 @@ class DefaultControllerTest extends WebTestCase
 		test that admin will not be displayed 
 	*/
 	
-	public function testShowAdmin()
+	public function testPromote()
 	{
-		$client = static::createClient();
-
-        $crawler = $client->request('GET', '/user/admin/show');
-
-        $this->assertTrue($crawler->filter('html:contains("test@uiuc.edu")')->count() == 0);	
+        $crawler = $this->client->request('GET', '/user/admin/show');
+		$proCount = $crawler->filter('html:contains("Promote")')->count();
+		$link = $crawler->filter('a:contains("Promote")')->eq(0)->link();
+		$crawler = $client->click($link);
+        $this->assertTrue($crawler->filter('html:contains("Promote")')->count() == $proCount - 1);	
 	}
+	
+	private function setupFixtures($container)
+    {
+        // get entity manager
+        $em = $container->get('doctrine')->getManager();
+        $purger = new ORMPurger($em);
+        $executor = new ORMExecutor($em, $purger);
+        // purge fixtures
+        $executor->purge();
+        // load fixtures
+        $loader = new Loader();
+        $fixtures = new LoadTestUser();
+        $fixtures->setContainer($container);
+        $loader->addFixture($fixtures);
+        $executor->execute($loader->getFixtures());
+    }
 }

@@ -1,0 +1,3 @@
+uiuc_cms_site_homepage:
+    pattern: /
+    defaults: { _controller: UiucCmsSiteBundle:Default:index }

@@ -10,8 +10,8 @@ uiuc_cms_admin:
     resource: "@UiucCmsAdminBundle/Resources/config/routing.yml"
     prefix:   /
 
-uiuc_cms_placeholder:
-    resource: "@UiucCmsPlaceholderBundle/Resources/config/routing.yml"
+uiuc_cms_site:
+    resource: "@UiucCmsSiteBundle/Resources/config/routing.yml"
     prefix:   /
 
 fos_user_security:

@@ -19,7 +19,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new UiucCms\Bundle\UserBundle\UiucCmsUserBundle(),
-            new UiucCms\Bundle\PlaceholderBundle\UiucCmsPlaceholderBundle(),
+            new UiucCms\Bundle\SiteBundle\UiucCmsSiteBundle(),
             new UiucCms\Bundle\AdminBundle\UiucCmsAdminBundle(),
             new UiucCms\Bundle\ConferenceBundle\UiucCmsConferenceBundle(),
             new UiucCms\Bundle\PaymentBundle\UiucCmsPaymentBundle(),

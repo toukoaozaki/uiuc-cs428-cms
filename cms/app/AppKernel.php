@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new UiucCms\Bundle\PlaceholderBundle\UiucCmsPlaceholderBundle(),
             new UiucCms\Bundle\AdminBundle\UiucCmsAdminBundle(),
             new UiucCms\Bundle\ConferenceBundle\UiucCmsConferenceBundle(),
+            new UiucCms\Bundle\PaymentBundle\UiucCmsPaymentBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test', 'dev_sqlite'))) {

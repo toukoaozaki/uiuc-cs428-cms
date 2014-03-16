@@ -1,3 +1,7 @@
+uiuc_cms_payment:
+    resource: "@UiucCmsPaymentBundle/Resources/config/routing.yml"
+    prefix:   /payment
+
 uiuc_cms_conference:
     resource: "@UiucCmsConferenceBundle/Resources/config/routing.yml"
     prefix:   /conf

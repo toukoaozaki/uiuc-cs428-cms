@@ -11,7 +11,7 @@ class DefaultController extends Controller
         return $this->render('UiucCmsAdminBundle:Default:index.html.twig', array('name' => $name));
     }
 	
-	public function promoteAction()
+	public function showAction()
 	{
 		$users = $this->getDoctrine()->getRepository('UiucCmsUserBundle:User')->findAll();
 		if(!$users) {
@@ -21,4 +21,22 @@ class DefaultController extends Controller
 			return $this->render('UiucCmsAdminBundle:Default:users.html.twig', array('users' => $users, ));
 		}
 	}
+    
+    public function promoteAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getDoctrine()->getRepository('UiucCmsUserBundle:User')->find($id);
+        $user->addRole("ROLE_ADMIN");
+        
+        $em->persist($user);
+        $em->flush();
+        
+        $users = $this->getDoctrine()->getRepository('UiucCmsUserBundle:User')->findAll();
+		if(!$users) {
+			throw $this->createNotFoundException('No users found.');
+		}
+		else {
+			return $this->render('UiucCmsAdminBundle:Default:users.html.twig', array('users' => $users, ));
+		}
+    }
 }

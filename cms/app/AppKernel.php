@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new JMS\Payment\CoreBundle\JMSPaymentCoreBundle(),
             new UiucCms\Bundle\UserBundle\UiucCmsUserBundle(),
             new UiucCms\Bundle\SiteBundle\UiucCmsSiteBundle(),
             new UiucCms\Bundle\AdminBundle\UiucCmsAdminBundle(),

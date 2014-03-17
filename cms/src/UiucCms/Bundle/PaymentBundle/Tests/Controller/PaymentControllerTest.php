@@ -6,12 +6,23 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class PaymentControllerTest extends WebTestCase
 {
-    public function testIndex()
+    protected function setUp()
     {
-        $client = static::createClient();
+        $this->client = static::createClient();
+        $this->container = $this->client->getContainer();
+        $this->router = $this->container->get('router');
+    }
 
-        $crawler = $client->request('GET', '/hello/Fabien');
+    public function testPaymentCaptureForbidden()
+    {
+        $crawler = $this->client->request(
+            'GET',
+            $this->router->generate('uiuc_cms_payment_capture')
+        );
 
-        $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
+        $code = $this->client->getResponse()->getStatusCode();
+        $this->assertTrue(
+            $this->client->getResponse()->isForbidden(),
+            "$code is not 403 Forbidden");
     }
 }

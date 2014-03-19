@@ -10,6 +10,10 @@ uiuc_cms_join_conf:
     pattern:  /conf/
     defaults: { _controller: UiucCmsConferenceBundle:Conference:index}
 
+uiuc_cms_view_conf:
+    pattern:  /conf/enrolled
+    defaults: { _controller: UiucCmsConferenceBundle:Conference:enrolledIn}
+
 uiuc_cms_promote_user:
     pattern:  /admin/show
     defaults: { _controller: UiucCmsAdminBundle:Default:show }

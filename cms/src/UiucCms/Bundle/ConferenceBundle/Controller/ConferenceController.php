@@ -68,21 +68,23 @@ class ConferenceController extends Controller
         $enrollments = $this->getDoctrine()
                             ->getRepository('UiucCmsConferenceBundle:Enrollment');
         
-        // We want to see if the user has already enrolled in this particular conference.
+        // We want to see if the user has already enrolled in this particular 
+        // conference.
         
         $userId = $this->getUser()->getId();
         
         $query = $enrollments->createQueryBuilder('e')
-                             ->where('e.conferenceId = '.$id)
-                             ->where('e.attendeeId = '.$userId)
+                             ->where('e.conferenceId = :confId')
+                             ->andWhere('e.attendeeId = :userId')
+                             ->setParameters(['userId' => $userId, 'confId' => $id])
                              ->getQuery();
 
         $enrollment = $query->getOneOrNullResult();
+       
+        $enrolled = true;
 
-        $enrolled = false;
-
-        if ($enrollment) {
-            $enrolled = true;
+        if ($enrollment == null) {
+            $enrolled = false;
         }
 
         if (!$conference) {
@@ -117,6 +119,42 @@ class ConferenceController extends Controller
         $em->flush();
 
         return $this->displayAction($id);
+    }
+
+    public function enrolledInAction()
+    {
+        $conferences = $this->getDoctrine()
+                            ->getRepository('UiucCmsConferenceBundle:Conference')
+                            ->findAll();
+       
+        $enrollments = $this->getDoctrine()
+                            ->getRepository('UiucCmsConferenceBundle:Enrollment');
+        
+        $userId = $this->getUser()->getId();
+        
+        $enrolledConferences = array();
+
+        foreach ($conferences as $key => $conference) {
+            $confId = $conference->getId();
+            $query = $enrollments->createQueryBuilder('e')
+                             ->where('e.conferenceId = :confId')
+                             ->andWhere('e.attendeeId = :userId')
+                             ->setParameters(['userId' => $userId, 'confId' => $confId])
+                             ->getQuery();
+
+            $enrollment = $query->getOneOrNullResult();
+
+            if ($enrollment != null) {
+                array_push($enrolledConferences, $conference);
+            }
+        }
+
+       
+
+        return $this->render(
+            'UiucCmsConferenceBundle:Conference:index.html.twig', 
+            array('conferences' => $enrolledConferences, ));
+
     }
 
 }

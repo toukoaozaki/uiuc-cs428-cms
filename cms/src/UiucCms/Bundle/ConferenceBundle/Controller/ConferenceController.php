@@ -156,4 +156,17 @@ class ConferenceController extends Controller
             array('conferences' => $enrolledConferences, ));
     }
 
+    public function viewCreatedAction()
+    {
+        $conferences = $this->getDoctrine()
+                            ->getRepository('UiucCmsConferenceBundle:Conference')
+                            ->findByCreatedBy($this->getUser()->getId());
+        
+        return $this->render(
+            'UiucCmsConferenceBundle:Conference:view_created.html.twig',
+            array('conferences' => $conferences, ));
+
+
+    }
+
 }

@@ -1,7 +1,20 @@
 parameters:
     uiuc_cms.payment.controller.class: UiucCms\Bundle\PaymentBundle\Controller\PaymentController
+    uiuc_cms.payment.dummy_plugin.class: JMS\Payment\CoreBundle\Plugin\SuccessfulTransactionPlugin
+    uiuc_cms.payment.form.dummy_plugin_type.class: UiucCms\Bundle\PaymentBundle\Form\DummyPluginType
 
 services:
     uiuc_cms.payment.controller:
         class: %uiuc_cms.payment.controller.class%
-        #arguments: [@service_id, "plain_value", %parameter%]
+        arguments: ["@form.factory", "@payment.plugin_controller"]
+
+    uiuc_cms.payment.dummy_plugin:
+        class: %uiuc_cms.payment.dummy_plugin.class%
+        tags:
+            - { name: payment.plugin }
+
+    uiuc_cms.payment.form.dummy_plugin_type:
+        class: %uiuc_cms.payment.form.dummy_plugin_type.class%
+        tags:
+            - { name: payment.method_form_type }
+            - { name: form.type, alias: uiuc_cms_payment_dummy }

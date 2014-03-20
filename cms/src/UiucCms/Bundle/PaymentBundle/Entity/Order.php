@@ -39,6 +39,12 @@ class Order
     private $amount;
 
     /**
+     * @ORM\Column(type="string", length=3)
+     * @Assert\NotBlank()
+     */
+    private $currency;
+
+    /**
      * Construct an order.
      */
     public function __construct($orderNumber, $amount, $originalAmount = null)

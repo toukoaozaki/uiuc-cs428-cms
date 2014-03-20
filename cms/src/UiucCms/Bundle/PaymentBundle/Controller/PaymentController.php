@@ -31,15 +31,14 @@ class PaymentController
     /**
      * @Template
      */
-    public function choosePaymentAction(Request $request, $order)
+    public function choosePaymentAction(Request $request, Order $order)
     {
         $form = $this->formFactory->create(
             'jms_choose_payment_method',
             null,
             array(
-                # TODO: get the data from order
-                'amount' => '100.50',
-                'currency' => 'USD'
+                'amount' => $order->getAmount(),
+                'currency' => $order->getCurrency()
             )
         );
 
@@ -55,7 +54,7 @@ class PaymentController
                 $this->em->flush($order);
                 return new RedirectResponse(
                     $this->router->generate(
-                        'payment_complete',
+                        'uiuc_cms_payment_complete',
                         array('order' => $order)
                     )
                 );
@@ -66,6 +65,11 @@ class PaymentController
             'order' => $order,
             'form' => $form->createView()
         );
+    }
+
+    public function completePaymentAction(Request $request, Order $order)
+    {
+        throw new AccessDeniedHttpException('invalid access');
     }
 
     public function capturePaymentAction(Request $request)

@@ -18,11 +18,13 @@
         <h2>
             Attendees:
         </h2>
-
-        {% for attendee in attendees %}
-            <p> {{ attendee.getFirstName() }} {{ attendee.getLastName() }}
-        {% endfor %}
-
+        {% if attendees is empty %}
+            No one has enrolled for this conference yet.
+        {% else %}
+            {% for attendee in attendees %}
+                <p> {{ attendee.getFirstName() }} {{ attendee.getLastName() }}
+            {% endfor %}
+        {% endif %}
     </p>
     <p>
         <li><a href="{{ path('uiuc_cms_conference_view_created') }}">Back to your conferences</li>

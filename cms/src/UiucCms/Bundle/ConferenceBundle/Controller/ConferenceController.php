@@ -57,8 +57,7 @@ class ConferenceController extends Controller
 
         $em->persist($conference);
         $em->flush();
-        return new Response(
-            'Successfully added element '.$conference->getId().' to database.');
+        return $this->manageAction($conference->getId());
     }
 
     public function displayAction($id)

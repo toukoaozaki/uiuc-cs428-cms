@@ -8,6 +8,9 @@
     <li class="{% if user_active_menu is defined and user_active_menu == 'profile' %}active{% endif %}">
       <a href="{{ path('fos_user_profile_show') }}">Profile</a>
     </li>
+    <li class="{% if user_active_menu is defined and user_active_menu == 'conf' %}active{% endif %}">
+      <a href="{{ path('uiuc_cms_conference_homepage') }}">Conferences</a>
+    </li>
     <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
   </ul>
 {% endblock navigation %}

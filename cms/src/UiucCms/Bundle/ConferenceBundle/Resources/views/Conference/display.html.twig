@@ -1,6 +1,6 @@
-{% extends 'UiucCmsConferenceBundle::base.html.twig' %}
+{% extends 'UiucCmsConferenceBundle::layout_nav.html.twig' %}
 
-{% block body %}
+{% block content %}
 <div class="container">
     <div class="page-header" style="text-align:left">
         <h1>
@@ -23,7 +23,4 @@
         <li><a href="{{ path('uiuc_cms_conference_homepage') }}">Back to listings</li>
     </p>
 </div>
-{% endblock %}
-
-   
-
+{% endblock content %}

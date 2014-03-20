@@ -151,7 +151,8 @@ class ConferenceController extends Controller
                 array_push($enrolledConferences, $conference);
             }
         }
-
+        
+        // This could probably use its own page one day
         return $this->render(
             'UiucCmsConferenceBundle:Conference:index.html.twig', 
             array('conferences' => $enrolledConferences, ));

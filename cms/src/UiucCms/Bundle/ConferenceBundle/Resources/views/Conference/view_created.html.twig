@@ -8,9 +8,15 @@
         </h1>
     </div>
     <p class="lead">
-        {% for conference in conferences %}
-            <li><a href="{{ path('uiuc_cms_conference_manage', {'id': conference.getId()}) }}">{{ conference.getName() }}</li><br>
-        {% endfor %}
+        {% if conferences is empty %}
+            <h3>
+                There are no conferences.
+            </h3>
+        {% else %}  
+            {% for conference in conferences %}
+                <li><a href="{{ path('uiuc_cms_conference_manage', {'id': conference.getId()}) }}">{{ conference.getName() }}</li><br>
+            {% endfor %}
+        {% endif %}
     </p>
 </div>
 {% endblock content %}

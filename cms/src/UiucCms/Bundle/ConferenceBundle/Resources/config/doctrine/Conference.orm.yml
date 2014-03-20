@@ -27,5 +27,6 @@ UiucCms\Bundle\ConferenceBundle\Entity\Conference:
             type: datetimetz
             column: register_end_date
         topics:
-            type: array
+            type: string
+            length: 255
     lifecycleCallbacks: {  }

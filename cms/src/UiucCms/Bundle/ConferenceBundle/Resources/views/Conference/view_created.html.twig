@@ -14,7 +14,11 @@
             </h3>
         {% else %}  
             {% for conference in conferences %}
-                <li><a href="{{ path('uiuc_cms_conference_manage', {'id': conference.getId()}) }}">{{ conference.getName() }}</li><br>
+                <li>
+                    <a href="{{ path('uiuc_cms_conference_manage', 
+                                {'id': conference.getId()}) }}">
+                        {{ conference.getName() }}
+                </li><br>
             {% endfor %}
         {% endif %}
     </p>

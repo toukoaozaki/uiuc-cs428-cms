@@ -9,6 +9,9 @@ UiucCms\Bundle\ConferenceBundle\Entity\Conference:
             generator:
                 strategy: AUTO
     fields:
+        createdBy:
+            type: integer
+            column: created_by
         name:
             type: string
             length: 255

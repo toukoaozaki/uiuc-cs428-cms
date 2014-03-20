@@ -192,4 +192,32 @@ class Conference
     {
         return $this->topics;
     }
+    /**
+     * @var integer
+     */
+    private $createdBy;
+
+
+    /**
+     * Set createdBy
+     *
+     * @param integer $createdBy
+     * @return Conference
+     */
+    public function setCreatedBy($createdBy)
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * Get createdBy
+     *
+     * @return integer 
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
+    }
 }

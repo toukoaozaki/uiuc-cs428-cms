@@ -1,0 +1,34 @@
+{% extends 'UiucCmsConferenceBundle::base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="page-header" style="text-align:left">
+        <h1>
+            Details for {{ name }}
+        </h1>
+    </div>
+    <!-- TODO: Refactor this section in a template all similar pages can use -->
+    <p class="lead">
+        Year: {{ year }} <br>
+        City: {{ city }} <br>
+        Registery Begins: {{ begin.format('Y-m-d:i:s') }} <br>
+        Registery Ends: {{ end.format('Y-m-d:i:s') }} <br>
+    </p>
+    <p>
+        <h2>
+            Attendees:
+        </h2>
+
+        {% for attendee in attendees %}
+            <p> {{ attendee.getFirstName() }} {{ attendee.getLastName() }}
+        {% endfor %}
+
+    </p>
+    <p>
+        <li><a href="{{ path('uiuc_cms_conference_view_created') }}">Back to your conferences</li>
+    </p>
+</div>
+{% endblock %}
+
+   
+

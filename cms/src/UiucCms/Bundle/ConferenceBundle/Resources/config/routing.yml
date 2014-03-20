@@ -32,7 +32,7 @@ uiuc_cms_conference_view_created:
 
 uiuc_cms_conference_manage:
     pattern:  /manage/{id}
-    defaults: { _controller: UiucCmsConferenceBundle:Conference:manage}
+    defaults: { _controller: UiucCmsConferenceBundle:Conference:manage }
 
 
 

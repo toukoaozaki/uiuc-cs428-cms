@@ -22,4 +22,20 @@ uiuc_cms_conference_enroll:
     pattern: /enroll/{id}/
     defaults: { _controller: UiucCmsConferenceBundle:Conference:enroll }
 
+uiuc_cms_conference_create:
+    pattern:  /conf/create
+    defaults: { _controller: UiucCmsConferenceBundle:Conference:create }
+
+uiuc_cms_conference_join:
+    pattern:  /conf/
+    defaults: { _controller: UiucCmsConferenceBundle:Conference:index}
+
+uiuc_cms_conference_view:
+    pattern:  /conf/enrolled
+    defaults: { _controller: UiucCmsConferenceBundle:Conference:enrolledIn}
+
+uiuc_cms_conference_manage:
+    pattern:  /conf/manage
+    defaults: { _controller: UiucCmsConferenceBundle:Conference:manage}
+
 

@@ -1,0 +1,5 @@
+# UiucCmsPaymentBundle:messages.en.yml
+
+form.choose_payment.title: "Choose payment method"
+form.choose_payment.submit: "Continue"
+form.label.uofi_ipay: "University of Illinois iPay"

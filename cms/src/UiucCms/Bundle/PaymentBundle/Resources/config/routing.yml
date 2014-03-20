@@ -1,3 +1,7 @@
 uiuc_cms_payment_capture:
     pattern:  /capture/
     defaults: { _controller: uiuc_cms.payment.controller:capturePaymentAction }
+
+uiuc_cms_payment_start:
+    pattern:  /start/{order}
+    defaults: { _controller: uiuc_cms.payment.controller:choosePaymentAction }

@@ -12,17 +12,4 @@ class PaymentControllerTest extends WebTestCase
         $this->container = $this->client->getContainer();
         $this->router = $this->container->get('router');
     }
-
-    public function testPaymentCaptureForbidden()
-    {
-        $crawler = $this->client->request(
-            'GET',
-            $this->router->generate('uiuc_cms_payment_capture')
-        );
-
-        $code = $this->client->getResponse()->getStatusCode();
-        $this->assertTrue(
-            $this->client->getResponse()->isForbidden(),
-            "$code is not 403 Forbidden");
-    }
 }

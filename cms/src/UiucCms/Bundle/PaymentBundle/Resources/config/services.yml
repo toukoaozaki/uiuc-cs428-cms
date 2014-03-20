@@ -1,20 +1,24 @@
 parameters:
     uiuc_cms.payment.controller.class: UiucCms\Bundle\PaymentBundle\Controller\PaymentController
-    uiuc_cms.payment.dummy_plugin.class: JMS\Payment\CoreBundle\Plugin\SuccessfulTransactionPlugin
-    uiuc_cms.payment.form.dummy_plugin_type.class: UiucCms\Bundle\PaymentBundle\Form\DummyPluginType
+    uiuc_cms.payment.uofi_ipay_dummy_plugin.class: UiucCms\Bundle\PaymentBundle\Plugin\UofiIpayDummyPlugin
+    uiuc_cms.payment.form.uofi_ipay_type.class: UiucCms\Bundle\PaymentBundle\Form\UofiIpayType
 
 services:
     uiuc_cms.payment.controller:
         class: %uiuc_cms.payment.controller.class%
-        arguments: ["@form.factory", "@payment.plugin_controller"]
+        arguments:
+            - "@router"
+            - "@form.factory"
+            - "@payment.plugin_controller"
+            - "@doctrine.orm.entity_manager"
 
-    uiuc_cms.payment.dummy_plugin:
-        class: %uiuc_cms.payment.dummy_plugin.class%
+    uiuc_cms.payment.uofi_ipay_dummy_plugin:
+        class: %uiuc_cms.payment.uofi_ipay_dummy_plugin.class%
         tags:
             - { name: payment.plugin }
 
-    uiuc_cms.payment.form.dummy_plugin_type:
-        class: %uiuc_cms.payment.form.dummy_plugin_type.class%
+    uiuc_cms.payment.form.uofi_ipay_type:
+        class: %uiuc_cms.payment.form.uofi_ipay_type.class%
         tags:
             - { name: payment.method_form_type }
-            - { name: form.type, alias: uiuc_cms_payment_dummy }
+            - { name: form.type, alias: uofi_ipay }

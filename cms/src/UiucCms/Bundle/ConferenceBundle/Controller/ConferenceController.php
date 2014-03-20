@@ -95,6 +95,7 @@ class ConferenceController extends Controller
         }
 
         else {
+            // This can be refactored to just pass the conference into the page..
             return $this->render(
                 'UiucCmsConferenceBundle:Conference:display.html.twig', 
                 array('name'     => $conference->getName(), 
@@ -165,8 +166,35 @@ class ConferenceController extends Controller
         return $this->render(
             'UiucCmsConferenceBundle:Conference:view_created.html.twig',
             array('conferences' => $conferences, ));
-
-
     }
 
+    public function manageAction($id)
+    {
+        $conference = $this->getDoctrine()
+                           ->getRepository('UiucCmsConferenceBundle:Conference')
+                           ->find($id);
+        
+        $users = $this->getDoctrine()
+                      ->getRepository('UiucCmsUserBundle:User');
+
+        $enrollments = $this->getDoctrine()
+                            ->getRepository('UiucCmsConferenceBundle:Enrollment')
+                            ->findByConferenceId($id);
+        
+        $attendees = array();
+        
+        foreach ($enrollments as $enrollment) {
+            $attendee = $users->find($enrollment->getAttendeeId());
+            array_push($attendees, $attendee);
+        }
+
+        return $this->render('UiucCmsConferenceBundle:Conference:manage.html.twig',
+            array('name'      => $conference->getName(), 
+                  'year'      => $conference->getYear(), 
+                  'city'      => $conference->getCity(),
+                  'begin'     => $conference->getRegisterBeginDate(),
+                  'end'       => $conference->getRegisterEndDate(),
+                  'attendees' => $attendees));
+    }
+    
 }

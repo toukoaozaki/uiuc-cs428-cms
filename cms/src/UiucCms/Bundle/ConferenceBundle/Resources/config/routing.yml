@@ -26,10 +26,6 @@ uiuc_cms_conference_create:
     pattern:  /conf/create
     defaults: { _controller: UiucCmsConferenceBundle:Conference:create }
 
-uiuc_cms_conference_join:
-    pattern:  /conf/
-    defaults: { _controller: UiucCmsConferenceBundle:Conference:index}
-
 uiuc_cms_conference_view:
     pattern:  /conf/enrolled
     defaults: { _controller: UiucCmsConferenceBundle:Conference:enrolledIn}

@@ -11,7 +11,7 @@ use JMS\Payment\CoreBundle\Entity\PaymentInstruction;
  * e.g. cover fee.
  *
  * @ORM\Entity
- * @ORM\Table(name="order")
+ * @ORM\Table(name="cms_order")
  */
 class Order
 {

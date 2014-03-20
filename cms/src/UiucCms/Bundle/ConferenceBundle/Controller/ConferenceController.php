@@ -53,6 +53,8 @@ class ConferenceController extends Controller
 
         $conference = $form->getData();
 
+        $conference->setCreatedBy($this->getUser()->getId());
+
         $em->persist($conference);
         $em->flush();
         return new Response(
@@ -149,12 +151,9 @@ class ConferenceController extends Controller
             }
         }
 
-       
-
         return $this->render(
             'UiucCmsConferenceBundle:Conference:index.html.twig', 
             array('conferences' => $enrolledConferences, ));
-
     }
 
 }

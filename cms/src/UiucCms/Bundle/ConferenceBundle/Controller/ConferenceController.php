@@ -10,6 +10,9 @@ use UiucCms\Bundle\ConferenceBundle\Entity\Enrollment;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Length;
+
 use \DateTime;
 
 class ConferenceController extends Controller
@@ -52,6 +55,33 @@ class ConferenceController extends Controller
         $form->handleRequest($request);
 
         $conference = $form->getData();
+
+        // TODO: get built in validator to work for whole objects.
+
+        $notBlank = new NotBlank();
+        $minLength3 = new Length(array('min' => 3));
+    
+        // These forms also need highlighting eventually.
+        $notBlank->message = 'Please complete all forms.';
+        $minLength3->minMessage = 'Please enter a name of minimum length 3.';
+    
+        $validator = $this->get('validator');
+
+        $errorList = array( $validator->validateValue($conference->getName(), $notBlank),
+                            $validator->validateValue($conference->getName(), $minLength3),
+                            $validator->validateValue($conference->getYear(), $notBlank),
+                            $validator->validateValue($conference->getCity(), $notBlank),
+                            $validator->validateValue($conference->getTopics(), $notBlank)
+                          );
+       
+        foreach ($errorList as $error) {
+            if (count($error) != 0) {
+                return $this->render(
+                    'UiucCmsConferenceBundle:Conference:create.html.twig',
+                    array( 'form'  => $form->createView(),
+                           'error' => $error[0]->getMessage()));
+            }
+        }
 
         $conference->setCreatedBy($this->getUser()->getId());
 

@@ -5,3 +5,8 @@ uiuc_cms_admin_homepage:
 uiuc_cms_admin_promote:
     pattern:    /admin/promote/{id}
     defaults: { _controller: UiucCmsAdminBundle:Default:promote }
+
+uiuc_cms_admin_remove:
+    pattern:    /admin/remove/{id}
+    defaults: { _controller: UiucCmsAdminBundle:Default:remove }    
+    

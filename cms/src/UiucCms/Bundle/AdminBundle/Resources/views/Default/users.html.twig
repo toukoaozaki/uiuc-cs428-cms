@@ -13,13 +13,15 @@
             <th>User Name</th>
             <th>User Email</th>
             <th>Promote</th>
+            <th>Remove</th>
         </tr>
         {% for user in users %}
             {% if (user.hasRole("ROLE_ADMIN") == false) and (user.hasRole("ROLE_SUPER_ADMIN") == false) %} 
                 <tr>
                     <td>{{ user.getUserName() }}</td>
                     <td>{{ user.getEmail }}</td> 
-                    <td> <a href="{{ path('uiuc_cms_admin_promote', {'id': user.getId()}) }}">Promote </td>
+                    <td> <a href="{{ path('uiuc_cms_admin_promote', {'id': user.getId()}) }}">Promote</td>
+                    <td> <a href="{{ path('uiuc_cms_admin_remove', {'id': user.getId()}) }}">Remove</td>
                 </tr>
             {% endif %}
         {% endfor %}

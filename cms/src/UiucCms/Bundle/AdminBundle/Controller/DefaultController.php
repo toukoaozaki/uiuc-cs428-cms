@@ -33,4 +33,9 @@ class DefaultController extends Controller
         
         return $this->redirect($this->generateUrl('uiuc_cms_promote_user'));;
     }
+    
+    public function removeAction($id)
+    {   
+        return $this->redirect($this->generateUrl('uiuc_cms_promote_user'));;
+    }
 }

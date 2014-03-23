@@ -67,11 +67,12 @@ class ConferenceController extends Controller
     
         $validator = $this->get('validator');
 
-        $errorList = array( $validator->validateValue($conference->getName(), $notBlank),
-                            $validator->validateValue($conference->getName(), $minLength3),
-                            $validator->validateValue($conference->getYear(), $notBlank),
-                            $validator->validateValue($conference->getCity(), $notBlank),
-                            $validator->validateValue($conference->getTopics(), $notBlank)
+        $errorList = array( 
+            $validator->validateValue($conference->getName(), $notBlank),
+            $validator->validateValue($conference->getName(), $minLength3),
+            $validator->validateValue($conference->getYear(), $notBlank),
+            $validator->validateValue($conference->getCity(), $notBlank),
+            $validator->validateValue($conference->getTopics(), $notBlank)
                           );
        
         foreach ($errorList as $error) {

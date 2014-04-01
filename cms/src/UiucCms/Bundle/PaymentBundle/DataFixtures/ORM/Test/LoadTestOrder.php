@@ -31,6 +31,11 @@ class LoadTestOrder implements FixtureInterface, ContainerAwareInterface
         // Create a new order for testing
         $order = new Order(self::TEST_ORDER_CURRENCY, self::TEST_ORDER_AMOUNT);
         $order->setOrderNumber(self::TEST_ORDER_NUMBER);
+        // override id generator, so TEST_ORDER_NUMBER goes through
+        $metadata = $manager->getClassMetaData(get_class($order));
+        $metadata->setIdGeneratorType(
+            \Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE
+        );
         $manager->persist($order);
         $manager->flush();
     }

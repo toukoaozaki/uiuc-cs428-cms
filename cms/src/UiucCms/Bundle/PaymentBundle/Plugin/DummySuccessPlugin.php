@@ -5,12 +5,12 @@ namespace UiucCms\Bundle\PaymentBundle\Plugin;
 use JMS\Payment\CoreBundle\Plugin\SuccessfulTransactionPlugin;
 
 /**
- * Dummy plugin for U of I iPay payment system.
+ * Dummy plugin for testing purposes.
  */
-class UofiIpayDummyPlugin extends SuccessfulTransactionPlugin
+class DummySuccessPlugin extends SuccessfulTransactionPlugin
 {
     public function processes($paymentSystemName)
     {
-        return 'uofi_ipay' === $paymentSystemName;
+        return 'dummy_success' === $paymentSystemName;
     }
 }

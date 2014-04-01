@@ -5,7 +5,7 @@ namespace UiucCms\Bundle\PaymentBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class UofiIpayType extends AbstractType
+class DummyFailureType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -13,6 +13,6 @@ class UofiIpayType extends AbstractType
 
     public function getName()
     {
-        return 'uofi_ipay';
+        return 'dummy_failure';
     }
 }

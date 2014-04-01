@@ -7,10 +7,13 @@
             Order #{{ order.orderNumber }}
         </div>
         <div>
-            Payment amount:  {{ order.amount }} {{ order.currency }}
+            Payment amount:  {{ order.amount|number_format(2) }} {{ order.currency }}
         </div>
         <div>
-            {{ result }}
+            Status: {{ result.status }}
+        </div>
+        <div>
+            ReasonCode: {{ result.reasonCode }}
         </div>
     </div>
 {% endblock body %}

@@ -43,7 +43,6 @@ class DefaultControllerTest extends WebTestCase
 	/* 
 		test that admin will not be displayed 
 	*/
-	
 	public function testPromote()
 	{
         $crawler = $this->client->request('GET', '/user/admin/show');
@@ -53,6 +52,30 @@ class DefaultControllerTest extends WebTestCase
         $this->assertTrue($crawler->filter('html:contains("Promote")')->count() == $proCount - 1);	
 	}
 	
+    /*
+        test that demoted admin will be displayed in other admin
+    */
+    public function testDemote()
+    {
+        $crawler = $this->client->request('GET', '/user/admin/show');
+		$proCount = $crawler->filter('html:contains("Demote")')->count();
+		$link = $crawler->filter('a:contains("Demote")')->eq(0)->link();
+		$crawler = $this->client->click($link);
+        $this->assertTrue($crawler->filter('html:contains("Demote")')->count() == $proCount - 1);
+    }
+    
+    /*
+        test that deleted user will not be displayed
+    */
+    public function testRemove()
+    {
+        $crawler = $this->client->request('GET', '/user/admin/show');
+		$proCount = $crawler->filter('html:contains("Remove")')->count();
+		$link = $crawler->filter('a:contains("Remove")')->eq(0)->link();
+		$crawler = $this->client->click($link);
+        $this->assertTrue($crawler->filter('html:contains("Remove")')->count() == $proCount - 1);
+    }
+    
 	private function setupFixtures($container)
     {
         // get entity manager

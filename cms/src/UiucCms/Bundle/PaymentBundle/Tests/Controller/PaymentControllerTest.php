@@ -27,8 +27,7 @@ class PaymentControllerTest extends WebTestCase
                 array('order' => LoadTestOrder::TEST_ORDER_NUMBER)
             )
         );
-        // GET access is not allowed
-        $this->assertFalse($this->client->getResponse()->isSuccessful());
+        $this->assertTrue($this->client->getResponse()->isSuccessful());
     }
 
     public function testChoosePaymentMethodInvalidOrder()
@@ -50,18 +49,6 @@ class PaymentControllerTest extends WebTestCase
             )
         );
         $this->assertFalse($this->client->getResponse()->isSuccessful());
-    }
-
-    public function testChoosePaymentMethodPost()
-    {
-        $crawler = $this->client->request(
-            'POST',
-            $this->router->generate(
-                'uiuc_cms_payment_start',
-                array('order' => LoadTestOrder::TEST_ORDER_NUMBER)
-            )
-        );
-        $this->assertTrue($this->client->getResponse()->isSuccessful());
     }
 
     public function testPaymentSuccess()

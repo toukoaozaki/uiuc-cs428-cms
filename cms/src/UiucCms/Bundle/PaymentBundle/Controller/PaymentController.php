@@ -43,6 +43,7 @@ class PaymentController
      */
     public function choosePaymentAction(Request $request, Order $order)
     {
+        // TODO(roh7): figure out whether additional security is required
         $form = $this->getFormFactory()->create(
             'jms_choose_payment_method',
             null,

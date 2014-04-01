@@ -4,18 +4,18 @@
 <div class="container">
     <div class="page-header" style="text-align:left">
         <h1>
-            Details for {{ conference.getName() }}
+            Details for {{ conference.name }}
         </h1>
     </div>
     <p class="lead">
-        Year: {{ conference.getYear() }} <br>
-        City: {{ conference.getCity() }} <br>
-        Registery Begins: {{ conference.getRegisterBeginDate().format('Y-m-d:i:s') }} <br>
-        Registery Ends: {{ conference.getRegisterEndDate().format('Y-m-d:i:s') }} <br>
+        Year: {{ conference.year }} <br>
+        City: {{ conference.city }} <br>
+        Registration Begins: {{ conference.registerBeginDate|date('Y-m-d i:s') }} <br>
+        Registration Ends: {{ conference.registerEndDate|date('Y-m-d i:s') }} <br>
     </p>
     <p>
         {% if enrolled == false %}
-            <li><a href="{{ path('uiuc_cms_conference_enroll', {'id': conference.getId() }) }}">Enroll in this conference</a>
+            <li><a href="{{ path('uiuc_cms_conference_enroll', {'id': conference.id }) }}">Enroll in this conference</a>
         {% else %}
             You have already enrolled in this conference.
         {% endif %}

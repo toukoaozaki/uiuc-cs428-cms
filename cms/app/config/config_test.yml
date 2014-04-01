@@ -27,3 +27,7 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
+
+jms_payment_core:
+    # warning: changing this will render any existing payment data unreadable
+    secret: "%payment_secret%"

@@ -24,5 +24,9 @@ class UiucCmsPaymentExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+        $env = $container->getParameter('kernel.environment');
+        if (in_array($env, array("dev", "test"))) {
+            $loader->load('services_demo.yml');
+        }
     }
 }

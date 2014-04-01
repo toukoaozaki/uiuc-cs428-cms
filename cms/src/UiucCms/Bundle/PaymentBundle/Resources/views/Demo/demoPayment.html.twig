@@ -1,0 +1,20 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <!-- this is a hack; TODO: control this in form rendering -->
+    <style type="text/css">
+        div#jms_choose_payment_method div label.required {
+            display: none;
+        }
+    </style>
+    <div class="container" style="width:400px;">
+        <h3>Payment Demo</h3>
+        <span>{{ message }}</span>
+        <form {{ form_enctype(form) }} method="POST">
+            {{ form_widget(form) }}
+            <button type="submit" class="btn" id="_submit" name="_submit">
+                Place demo order
+            </button>
+        </form>
+    </div>
+{% endblock body %}

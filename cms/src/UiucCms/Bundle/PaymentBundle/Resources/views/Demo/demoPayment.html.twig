@@ -8,23 +8,12 @@
         }
     </style>
     <div class="container" style="width:400px;">
-        <h3>
-            Order details
-        </h3>
-        <div>
-            Order #{{ order.orderNumber }}
-        </div>
-        <div>
-            Payment amount:  {{ order.amount|number_format(2) }} {{ order.currency }}
-        </div>
-        <div>
-            {{ 'form.choose_payment.title'|trans }}
-        </div>
+        <h3>Payment Demo</h3>
+        <span>{{ message }}</span>
         <form {{ form_enctype(form) }} method="POST">
-            {{ form_widget(form.method) }}
             {{ form_widget(form) }}
             <button type="submit" class="btn" id="_submit" name="_submit">
-                {{ 'form.choose_payment.submit'|trans }}
+                Place demo order
             </button>
         </form>
     </div>

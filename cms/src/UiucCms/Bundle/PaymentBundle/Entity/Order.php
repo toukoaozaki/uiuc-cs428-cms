@@ -28,12 +28,12 @@ class Order
     private $paymentInstruction;
 
     /**
-     * @ORM\Column(type="decimal", precision=2)
+     * @ORM\Column(type="decimal", precision=19, scale=4)
      */
     private $originalAmount;
 
     /**
-     * @ORM\Column(type="decimal", precision=2)
+     * @ORM\Column(type="decimal", precision=19, scale=4)
      * @Assert\NotBlank()
      */
     private $amount;
@@ -47,12 +47,12 @@ class Order
     /**
      * Construct an order.
      */
-    public function __construct($orderNumber, $amount, $originalAmount = null)
+    public function __construct($currency, $amount, $originalAmount = null)
     {
+        $this->currency = $currency;
         $this->amount = $amount;
         $this->originalAmount = 
             ($originalAmount === null) ? $amount : $originalAmount;
-        $this->orderNumber = $orderNumber;
     }
 
     /**
@@ -76,6 +76,29 @@ class Order
     public function getOrderNumber()
     {
         return $this->orderNumber;
+    }
+
+    /**
+     * Set 3-letter currency type
+     *
+     * @param string $currency
+     * @return Order
+     */
+    public function setCurrency($currency)
+    {
+        $this->currency = $currency;
+
+        return $this;
+    }
+
+    /**
+     * Get 3-letter currency type
+     *
+     * @return string 
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
     }
 
     /**

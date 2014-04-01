@@ -4,4 +4,9 @@ parameters:
 services:
     uiuc_cms.payment.controller:
         class: %uiuc_cms.payment.controller.class%
-        #arguments: [@service_id, "plain_value", %parameter%]
+        arguments:
+            - "@templating"
+            - "@form.factory"
+            - "@router"
+            - "@payment.plugin_controller"
+            - "@doctrine.orm.entity_manager"

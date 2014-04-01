@@ -1,0 +1,19 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div class="container" style="width:400px;">
+        <h3>Payment failed</h3>
+        <div>
+            Order #{{ order.orderNumber }}
+        </div>
+        <div>
+            Payment amount:  {{ order.amount|number_format(2) }} {{ order.currency }}
+        </div>
+        <div>
+            Status: {{ result.status }}
+        </div>
+        <div>
+            ReasonCode: {{ result.reasonCode }}
+        </div>
+    </div>
+{% endblock body %}

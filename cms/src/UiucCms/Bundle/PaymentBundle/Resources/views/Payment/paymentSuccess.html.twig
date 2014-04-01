@@ -1,0 +1,19 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div class="container" style="width:400px;">
+        <h3>Payment success!</h3>
+        <div>
+            The following payment was successful.
+        </div>
+        <div>
+            Order #{{ order.orderNumber }}
+        </div>
+        <div>
+            Payment amount:  {{ order.amount|number_format(2) }} {{ order.currency }}
+        </div>
+        <a href="{{ return_url }}">
+            Return
+        </a>
+    </div>
+{% endblock body %}

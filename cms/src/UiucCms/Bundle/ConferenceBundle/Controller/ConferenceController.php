@@ -67,11 +67,12 @@ class ConferenceController extends Controller
     
         $validator = $this->get('validator');
 
-        $errorList = array( $validator->validateValue($conference->getName(), $notBlank),
-                            $validator->validateValue($conference->getName(), $minLength3),
-                            $validator->validateValue($conference->getYear(), $notBlank),
-                            $validator->validateValue($conference->getCity(), $notBlank),
-                            $validator->validateValue($conference->getTopics(), $notBlank)
+        $errorList = array( 
+            $validator->validateValue($conference->getName(), $notBlank),
+            $validator->validateValue($conference->getName(), $minLength3),
+            $validator->validateValue($conference->getYear(), $notBlank),
+            $validator->validateValue($conference->getCity(), $notBlank),
+            $validator->validateValue($conference->getTopics(), $notBlank)
                           );
        
         foreach ($errorList as $error) {
@@ -124,17 +125,10 @@ class ConferenceController extends Controller
         }
 
         else {
-            // This can be refactored to just pass the conference into the page..
             return $this->render(
-                'UiucCmsConferenceBundle:Conference:display.html.twig', 
-                array('name'     => $conference->getName(), 
-                      'year'     => $conference->getYear(), 
-                      'city'     => $conference->getCity(),
-                      'begin'    => $conference->getRegisterBeginDate(),
-                      'end'      => $conference->getRegisterEndDate(),
-                      'confId'   => $id,
-                      'enrolled' => $enrolled)
-            );
+                'UiucCmsConferenceBundle:Conference:display.html.twig',
+                array('conference' => $conference,
+                      'enrolled'   => $enrolled));
         }
     }
 
@@ -219,12 +213,8 @@ class ConferenceController extends Controller
         }
 
         return $this->render('UiucCmsConferenceBundle:Conference:manage.html.twig',
-            array('name'      => $conference->getName(), 
-                  'year'      => $conference->getYear(), 
-                  'city'      => $conference->getCity(),
-                  'begin'     => $conference->getRegisterBeginDate(),
-                  'end'       => $conference->getRegisterEndDate(),
-                  'attendees' => $attendees));
+            array('conference' => $conference, 
+                  'attendees'  => $attendees));
     }
     
 }

@@ -4,15 +4,15 @@
 <div class="container">
     <div class="page-header" style="text-align:left">
         <h1>
-            Details for {{ name }}
+            Details for {{ conference.name }}
         </h1>
     </div>
     <!-- TODO: Refactor this section in a template all similar pages can use -->
     <p class="lead">
-        Year: {{ year }} <br>
-        City: {{ city }} <br>
-        Registery Begins: {{ begin.format('Y-m-d:i:s') }} <br>
-        Registery Ends: {{ end.format('Y-m-d:i:s') }} <br>
+        Year: {{ conference.year }} <br>
+        City: {{ conference.city }} <br>
+        Registration Begins: {{ conference.getRegisterBeginDate|date('Y-m-d i:s') }} <br>
+        Registration Ends: {{ conference.getRegisterEndDate|date('Y-m-d i:s') }} <br>
     </p>
     <p>
         <h2>
@@ -22,7 +22,7 @@
             No one has enrolled for this conference yet.
         {% else %}
             {% for attendee in attendees %}
-                <p> {{ attendee.getFirstName() }} {{ attendee.getLastName() }}
+                <p> {{ attendee.firstName }} {{ attendee.lastName }}
             {% endfor %}
         {% endif %}
     </p>

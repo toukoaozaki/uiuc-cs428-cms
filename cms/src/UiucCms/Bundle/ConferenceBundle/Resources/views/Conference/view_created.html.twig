@@ -16,8 +16,8 @@
             {% for conference in conferences %}
                 <li>
                     <a href="{{ path('uiuc_cms_conference_manage', 
-                                {'id': conference.getId()}) }}">
-                        {{ conference.getName() }}
+                                {'id': conference.id}) }}">
+                        {{ conference.name }}
                 </li><br>
             {% endfor %}
         {% endif %}

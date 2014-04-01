@@ -52,25 +52,6 @@ class PaymentControllerTest extends WebTestCase
         $this->assertFalse($this->client->getResponse()->isSuccessful());
     }
 
-    public function testChoosePaymentMethodNoOrder()
-    {
-        // access without specifying order should not be allowed
-        $this->client->request(
-            'GET',
-            $this->router->generate(
-                'uiuc_cms_payment_start'
-            )
-        );
-        $this->assertFalse($this->client->getResponse()->isSuccessful());
-        $this->client->request(
-            'POST',
-            $this->router->generate(
-                'uiuc_cms_payment_start'
-            )
-        );
-        $this->assertFalse($this->client->getResponse()->isSuccessful());
-    }
-
     public function testChoosePaymentMethodPost()
     {
         $crawler = $this->client->request(
@@ -80,6 +61,7 @@ class PaymentControllerTest extends WebTestCase
                 array('order' => LoadTestOrder::TEST_ORDER_NUMBER)
             )
         );
+        $this->assertTrue($this->client->getResponse()->isSuccessful());
     }
 
     public function testPaymentSuccess()

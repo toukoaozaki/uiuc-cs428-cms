@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use UiucCms\Bundle\ConferenceBundle\Form\Type\ConferenceType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use UiucCms\Bundle\ConferenceBundle\Entity\Conference;
+use \Exception;
 
 use UiucCms\Bundle\UserBundle\DataFixtures\ORM\Test\LoadTestUser;
 use UiucCms\Bundle\UserBundle\DataFixtures\ORM\Common\LoadSuperuser;
@@ -22,6 +23,7 @@ class DefaultControllerTest extends WebTestCase
     private $router;
     private $login_url;
     private $profile_url;
+    private $index_url;
 
     private function setupFixtures($container)
     {
@@ -33,9 +35,12 @@ class DefaultControllerTest extends WebTestCase
         $executor->purge();
         // load fixtures
         $loader = new Loader();
-        $fixtures = new LoadTestUser();
-        $fixtures->setContainer($container);
-        $loader->addFixture($fixtures);
+        $userFixtures = new LoadTestUser();
+        $userFixtures->setContainer($container);
+        $adminFixtures = new LoadSuperuser();
+        $adminFixtures->setContainer($container);
+        $loader->addFixture($userFixtures);
+        $loader->addFixture($adminFixtures);
         $executor->execute($loader->getFixtures());
     }
 
@@ -49,50 +54,57 @@ class DefaultControllerTest extends WebTestCase
             'uiuc_cms_conference_homepage',
             array(),
             true);
+        $this->login_url = $this->router->generate(
+            'fos_user_security_login',
+            array(),
+            true);
+    }
+
+    
+    private function authenticate($type)
+    {
+        $crawler = $this->client->request('GET', $this->login_url);
+        $buttonNode = $crawler->selectButton('Login');
+        $form = $buttonNode->form();
+
+        if ($type == 'user') {
+            $form['_username'] = LoadTestUser::TEST_USERNAME;
+            $form['_password'] = LoadTestUser::TEST_PASSWORD;
+        }
+        else if ($type == 'admin') {
+            $form['_username'] = LoadSuperuser::USERNAME;
+            $form['_password'] = LoadSuperuser::PASSWORD;
+        }
+        else {
+            throw new Exception('Invalid authenticate parameter.');
+        }
+        
+        $this->client->submit($form);
+        
     }
 
     public function testIndex()
     {
+        $this->authenticate('user');
         $crawler = $this->client->request('GET', $this->index_url);
-        $this->assertEquals(
+        $this->assertGreaterThan(
             0,
-            $crawler->filter('html:contains("No conferences found.")')->count());
+            $crawler->filter('html:contains("Conferences:")')->count());
     }
 
     //test that create page exists
     public function testCreate()
     {
-        $client = static::createClient();
-
-        $crawler = $client->request('GET', '/conf/create');
-
-        //failing for some reason
-        //$this->assertTrue($crawler->filter('html:contains("Create a new conference")')->count() > 0);
+        $this->authenticate('admin');
+        $create_url = $this->router->generate(
+            'uiuc_cms_conference_create',
+            array(),
+            true);
+        $crawler = $this->client->request('GET', $create_url);
+        
+        $this->assertTrue(
+            $crawler->filter('html:contains("Create a new conference:")')->count() > 0);
     }
-
-    //test that submit successfully added to database
-    /*public function testSubmit()
-    {
-      $client = static::createClient();
-      $crawler = $client->request('GET', '/conf/create');
-      $form = $crawler->selectButton('Create')->form(); 
-      
-      $form["conference[name]"] = 'Test';
-      $form["conference[year]"] = 2014;
-      $form["conference[city]"] = 'Champaign';
-      $form["conference[register_begin_date][date][year]"] = "2014";
-      $form["conference[register_begin_date][date][month]"] = "2";
-      $form["conference[register_begin_date][date][day]"] = "31";
-      $form["conference[register_end_date][date][year]"] = "2014";
-      $form["conference[register_end_date][date][month]"] = "2";
-      $form["conference[register_end_date][date][day]"] = "31";
-
-      $crawler = $client->submit($form);
-      
-      $this->assertTrue($client->getResponse()->isSuccessful());
-      $this->assertTrue($crawler->filter('html:contains("Successfully added element")')->count() > 0);
-  } */
-
   
 
 }

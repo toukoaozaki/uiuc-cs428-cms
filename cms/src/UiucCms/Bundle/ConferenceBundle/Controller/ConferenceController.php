@@ -22,15 +22,9 @@ class ConferenceController extends Controller
         $conferences = $this->getDoctrine()
                             ->getRepository('UiucCmsConferenceBundle:Conference')
                             ->findAll();
-        if (!$conferences) {
-            throw $this->createNotFoundException('No conferences found.');
-        }
-
-        else {
-            return $this->render(
-                'UiucCmsConferenceBundle:Conference:index.html.twig', 
-                array('conferences' => $conferences, ));
-        }
+        return $this->render(
+            'UiucCmsConferenceBundle:Conference:index.html.twig', 
+            array('conferences' => $conferences, ));
     }
 
     public function createAction() 

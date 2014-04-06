@@ -16,7 +16,7 @@ security:
             security: false
 
         secured_area:
-            pattern:  ^/(user|conf)/
+            pattern:  ^/(user|conf|admin)/
             form_login:
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
@@ -35,7 +35,8 @@ security:
         - { path: ^/user$, roles: ROLE_USER } #, requires_channel: https }
         - { path: ^/user/$, roles: ROLE_USER } #, requires_channel: https }
         - { path: ^/conf$, roles: ROLE_USER } 
-        - { path: ^/conf/$, roles: ROLE_USER } 
+        - { path: ^/conf/$, roles: ROLE_USER }
+        - { path: ^/admin/$, roles: ROLE_ADMIN }     
         - { path: ^/conf/create$, roles: ROLE_ADMIN } # This still doesn't stop people from going straight to the create conf page 
         - { path: ^/conf/create/, roles: ROLE_ADMIN } # This still doesn't stop people from going straight to the create conf page 
         - { path: ^/user/login/$, roles: IS_AUTHENTICATED_ANONYMOUSLY } #, requires_channel: https }

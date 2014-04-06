@@ -1,0 +1,10 @@
+{% form_theme form 'UiucCmsUserBundle:Form:fields.html.twig' %}
+{% extends 'UiucCmsConferenceBundle::layout_nav.html.twig' %}
+
+{% block content %}
+	<div class="container" style="text-align:center; width:300px">
+
+        Send a mass email:
+        {{ form(form) }}
+	</div>
+{% endblock content %}

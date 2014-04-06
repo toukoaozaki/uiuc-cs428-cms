@@ -17,6 +17,9 @@ use \DateTime;
 
 class ConferenceController extends Controller
 {
+    /**
+     * Queries the database for all conferences and returns a page listing them.
+     */
     public function indexAction()
     {
         $conferences = $this->getDoctrine()
@@ -27,6 +30,9 @@ class ConferenceController extends Controller
             array('conferences' => $conferences, ));
     }
 
+    /**
+     * Generates a form with the necessary fields to create a conference.
+     */
     public function createAction() 
     {
         $conference = new Conference();
@@ -41,7 +47,13 @@ class ConferenceController extends Controller
             'UiucCmsConferenceBundle:Conference:create.html.twig',
             array( 'form' => $form->createView(),));
     }
-
+    
+    /**
+     * Validates the form's contents and submits the request to the database.
+     *
+     * If the validator fails, kicks the user back to the create conference page
+     * with an error telling them to fill out all forms.
+     */
     public function submitAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();             
@@ -85,6 +97,10 @@ class ConferenceController extends Controller
         return $this->manageAction($conference->getId());
     }
 
+    /**
+     * Displays a particular conference and all of its fields. Also checks whether or
+     * not a user has already enrolled in that particular conference.
+     */
     public function displayAction($id)
     {
         $conference = $this->getDoctrine()
@@ -126,6 +142,9 @@ class ConferenceController extends Controller
         }
     }
 
+    /**
+     * Submits an enrollment for a conference.
+     */
     public function enrollAction($id)
     {
         $userId = $this->getUser()->getId();
@@ -141,6 +160,9 @@ class ConferenceController extends Controller
         return $this->displayAction($id);
     }
 
+    /**
+     * Queries the database for all conferences that a user is currently enrolled in.
+     */
     public function enrolledInAction()
     {
         $conferences = $this->getDoctrine()
@@ -175,6 +197,9 @@ class ConferenceController extends Controller
             array('conferences' => $enrolledConferences, ));
     }
 
+    /**
+     * Shows all of the conferences that an admin has created.
+     */
     public function viewCreatedAction()
     {
         $conferences = $this->getDoctrine()
@@ -186,6 +211,9 @@ class ConferenceController extends Controller
             array('conferences' => $conferences, ));
     }
 
+    /**
+     * Allows an admin to view a particular conference and all of its attendees.
+     */
     public function manageAction($id)
     {
         $conference = $this->getDoctrine()

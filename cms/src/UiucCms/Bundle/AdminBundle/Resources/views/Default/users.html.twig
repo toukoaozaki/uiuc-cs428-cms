@@ -12,15 +12,32 @@
         <tr>
             <th>User Name</th>
             <th>User Email</th>
-            <th>Promote</th>
+            <th>Promote / Demote</th>
+            <th>Remove</th>
         </tr>
         {% for user in users %}
-            {% if (user.hasRole("ROLE_ADMIN") == false) and (user.hasRole("ROLE_SUPER_ADMIN") == false) %} 
-                <tr>
-                    <td>{{ user.getUserName() }}</td>
-                    <td>{{ user.getEmail }}</td> 
-                    <td> <a href="{{ path('uiuc_cms_admin_promote', {'id': user.getId()}) }}">Promote </td>
-                </tr>
+            {% if admin == true %}
+                {% if user.hasRole("ROLE_SUPER_ADMIN") == false %} 
+                    <tr>
+                        <td>{{ user.getUserName() }}</td>
+                        <td>{{ user.getEmail }}</td>
+                        {% if user.hasRole("ROLE_ADMIN") == false %}
+                            <td> <a href="{{ path('uiuc_cms_admin_promote', {'id': user.getId()}) }}">Promote</td>
+                        {% else %}
+                            <td> <a href="{{ path('uiuc_cms_admin_demote', {'id': user.getId()}) }}">Demote</td>
+                        {% endif %}
+                        <td> <a href="{{ path('uiuc_cms_admin_remove', {'id': user.getId()}) }}">Remove</td>
+                    </tr>
+                {% endif %}
+            {% else %}
+                {% if (user.hasRole("ROLE_SUPER_ADMIN") == false) and (user.hasRole("ROLE_ADMIN") == false) %} 
+                    <tr>
+                        <td>{{ user.getUserName() }}</td>
+                        <td>{{ user.getEmail }}</td> 
+                        <td> <a href="{{ path('uiuc_cms_admin_promote', {'id': user.getId()}) }}">Promote</td>
+                        <td> <a href="{{ path('uiuc_cms_admin_remove', {'id': user.getId()}) }}">Remove</td>
+                    </tr>
+                {% endif %}
             {% endif %}
         {% endfor %}
     </table>

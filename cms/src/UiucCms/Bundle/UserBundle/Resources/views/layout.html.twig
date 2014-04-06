@@ -1,10 +1,10 @@
-{% extends 'UiucCmsUserBundle::base.html.twig' %}
+{% extends 'UiucCmsSiteBundle::layout.html.twig' %}
 
-{% block body %}
-  {% block navigation %}
-  {% endblock navigation %}
-  {% block content %}
-    {% block fos_user_content %}
-    {% endblock fos_user_content %}
-  {% endblock content %}
-{% endblock body %}
+{% block footer %}
+    {{ parent() }}
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+{% endblock footer %}

@@ -1,0 +1,12 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    {% block navigation %}
+        {% include "UiucCmsSiteBundle:Default:navbar.html.twig" %}
+    {% endblock navigation %}
+    
+    {% block content %}
+        {% block fos_user_content %}
+        {% endblock fos_user_content %}
+    {% endblock content %}
+{% endblock body %}

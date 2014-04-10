@@ -24,6 +24,7 @@ class DefaultControllerTest extends WebTestCase
     private $login_url;
     private $profile_url;
     private $index_url;
+    private $create_conf_url;
 
     private function setupFixtures($container)
     {
@@ -58,6 +59,11 @@ class DefaultControllerTest extends WebTestCase
             'fos_user_security_login',
             array(),
             true);
+        $this->create_conf_url = $this->router->generate(
+            'uiuc_cms_conference_create',
+            array(),
+            true);
+      
     }
 
     
@@ -76,7 +82,7 @@ class DefaultControllerTest extends WebTestCase
             $form['_password'] = LoadSuperuser::PASSWORD;
         }
         else {
-            throw new Exception('Invalid authenticate parameter.');
+            throw new Exception('Invalid authenticate() parameter.');
         }
         
         $this->client->submit($form);
@@ -92,18 +98,49 @@ class DefaultControllerTest extends WebTestCase
             $crawler->filter('html:contains("Conferences:")')->count());
     }
 
-    //test that create page exists
-    public function testCreate()
+    public function testCreateAdmin()
     {
         $this->authenticate('admin');
-        $create_url = $this->router->generate(
-            'uiuc_cms_conference_create',
-            array(),
-            true);
-        $crawler = $this->client->request('GET', $create_url);
-        
+        $crawler = $this->client->request('GET', $this->create_conf_url);
         $this->assertTrue(
-            $crawler->filter('html:contains("Create a new conference:")')->count() > 0);
+            $crawler->filter(
+                'html:contains("Create a new conference:")')->count() > 0);
+    }
+    
+    public function testCreateUser()
+    {
+        $this->authenticate('user');
+        $crawler = $this->client->request('GET', $this->create_conf_url);
+        $this->assertFalse(
+            $crawler->filter(
+                'html:contains("Create a new conference:")')->count() > 0);
+    }
+
+    public function testShortNameValidator()
+    {
+        $shortName = 'ab';
+        $validYear = '1234';
+        $validCity = 'Champaign';
+        $validTopic = 'Nothing';
+
+        $this->authenticate('admin'); 
+        $crawler = $this->client->request('GET', $this->create_conf_url);
+        $buttonNode = $crawler->selectButton('Create');
+        $form = $buttonNode->form();
+
+        $form->disableValidation();
+
+        $form['conference[name]'] = $shortName;
+        $form['conference[year]'] = $validYear;
+        $form['conference[city]'] = $validCity;
+        $form['conference[topics]'] = $validTopic;
+
+        $crawler = $this->client->submit($form);
+
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("minimum length 3")')->count());
+
     }
   
 

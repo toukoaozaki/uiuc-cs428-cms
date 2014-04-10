@@ -26,6 +26,12 @@ class DefaultControllerTest extends WebTestCase
     private $index_url;
     private $create_conf_url;
 
+    private $validName = "RailTEC UIUC";
+    private $shortName = "Ra";
+    private $validYear = "2014";
+    private $validCity = "Champaign";
+    private $validTopic = "Trains";
+
     private function setupFixtures($container)
     {
         // get entity manager
@@ -116,13 +122,8 @@ class DefaultControllerTest extends WebTestCase
                 'html:contains("Create a new conference:")')->count() > 0);
     }
 
-    public function testShortNameValidator()
+    public function testSuccessfulValidator()
     {
-        $shortName = 'ab';
-        $validYear = '1234';
-        $validCity = 'Champaign';
-        $validTopic = 'Nothing';
-
         $this->authenticate('admin'); 
         $crawler = $this->client->request('GET', $this->create_conf_url);
         $buttonNode = $crawler->selectButton('Create');
@@ -130,10 +131,53 @@ class DefaultControllerTest extends WebTestCase
 
         $form->disableValidation();
 
-        $form['conference[name]'] = $shortName;
-        $form['conference[year]'] = $validYear;
-        $form['conference[city]'] = $validCity;
-        $form['conference[topics]'] = $validTopic;
+        $form['conference[name]'] = $this->validName;
+        $form['conference[year]'] = $this->validYear;
+        $form['conference[city]'] = $this->validCity;
+        $form['conference[topics]'] = $this->validTopic;
+
+        $crawler = $this->client->submit($form);
+
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("Details for")')->count());
+
+    }
+
+    public function testNoNameValidator()
+    {
+        $this->authenticate('admin'); 
+        $crawler = $this->client->request('GET', $this->create_conf_url);
+        $buttonNode = $crawler->selectButton('Create');
+        $form = $buttonNode->form();
+
+        $form->disableValidation();
+
+        $form['conference[year]'] = $this->validYear;
+        $form['conference[city]'] = $this->validCity;
+        $form['conference[topics]'] = $this->validTopic;
+
+        $crawler = $this->client->submit($form);
+
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("complete all forms")')->count());
+
+    }
+  
+    public function testShortNameValidator()
+    {
+        $this->authenticate('admin'); 
+        $crawler = $this->client->request('GET', $this->create_conf_url);
+        $buttonNode = $crawler->selectButton('Create');
+        $form = $buttonNode->form();
+
+        $form->disableValidation();
+
+        $form['conference[name]'] = $this->shortName;
+        $form['conference[year]'] = $this->validYear;
+        $form['conference[city]'] = $this->validCity;
+        $form['conference[topics]'] = $this->validTopic;
 
         $crawler = $this->client->submit($form);
 
@@ -142,6 +186,48 @@ class DefaultControllerTest extends WebTestCase
             $crawler->filter('html:contains("minimum length 3")')->count());
 
     }
-  
+
+    public function testNoYearValidator()
+    {
+        $this->authenticate('admin'); 
+        $crawler = $this->client->request('GET', $this->create_conf_url);
+        $buttonNode = $crawler->selectButton('Create');
+        $form = $buttonNode->form();
+
+        $form->disableValidation();
+
+        $form['conference[name]'] = $this->validName;
+        $form['conference[city]'] = $this->validCity;
+        $form['conference[topics]'] = $this->validTopic;
+
+        $crawler = $this->client->submit($form);
+
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("complete all forms")')->count());
+
+    }
+
+
+    public function testNoTopicValidator()
+    {
+        $this->authenticate('admin'); 
+        $crawler = $this->client->request('GET', $this->create_conf_url);
+        $buttonNode = $crawler->selectButton('Create');
+        $form = $buttonNode->form();
+
+        $form->disableValidation();
+
+        $form['conference[name]'] = $this->validName;
+        $form['conference[year]'] = $this->validYear;
+        $form['conference[city]'] = $this->validCity;
+
+        $crawler = $this->client->submit($form);
+
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("complete all forms")')->count());
+
+    }
 
 }

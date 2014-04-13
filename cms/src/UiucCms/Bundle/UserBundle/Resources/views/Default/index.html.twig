@@ -22,7 +22,7 @@
             <a href="{{ path('uiuc_cms_promote_user') }}">
                 Manage Users
             </a>
-		  {% else %}
+		  {% endif %}
           <li>
             <a href="{{ path('uiuc_cms_conference_homepage') }}">
                 Join a conference
@@ -31,7 +31,6 @@
             <a href="{{ path('uiuc_cms_conference_view') }}">
                 View enrolled conferences
             </a>
-        {% endif %}
     </p>
 </div>
 {% endblock fos_user_content %}

@@ -4,9 +4,13 @@ namespace UiucCms\Bundle\AdminBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use UiucCms\Bundle\UserBundle\DataFixtures\ORM\Test\LoadTestUser;
+use UiucCms\Bundle\UserBundle\DataFixtures\ORM\Common\LoadSuperuser;
+use UiucCms\Bundle\UserBundle\DataFixtures\ORM\Common\LoadConference;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
+
+use UiucCms\Bundle\AdminBundle\Controller\DefaultController;
 
 class DefaultControllerTest extends WebTestCase
 {
@@ -22,6 +26,12 @@ class DefaultControllerTest extends WebTestCase
         $this->router = $this->container->get('router');
 	
 	}
+    
+    public function testGetAttendeeEmails()
+    {
+    
+    }
+    
     public function testIndex()
     {
 
@@ -39,7 +49,52 @@ class DefaultControllerTest extends WebTestCase
 
         $this->assertTrue($crawler->filter('html:contains("admin@domain.com")')->count() == 0);	
 	}
+    
+    private function authenticate($type)
+    {
+        $crawler = $this->client->request('GET', $this->router->generate(
+            'fos_user_security_login',
+            array(),
+            true));
+        $buttonNode = $crawler->selectButton('Login');
+        $form = $buttonNode->form();
+
+        if ($type == 'user') {
+            $form['_username'] = LoadTestUser::TEST_USERNAME;
+            $form['_password'] = LoadTestUser::TEST_PASSWORD;
+        }
+        else if ($type == 'admin') {
+            $form['_username'] = LoadSuperuser::USERNAME;
+            $form['_password'] = LoadSuperuser::PASSWORD;
+        }
+        else {
+            throw new Exception('Invalid authenticate() parameter.');
+        }
+        
+        $this->client->submit($form);
+        
+    }
 	
+    public function testSendMail()
+    {
+        $this->authenticate('admin');
+    
+        $crawler = 
+            $this->client->request('GET', '/admin/mail/1');
+            
+        $buttonNode = $crawler->selectButton('Send');
+        $form = $buttonNode->form();
+        
+        $form['form[subject]'] = "Test Sub";
+        $form['form[body]'] = "Test Body";
+        
+        $crawler = $this->client->submit($form);
+        
+        $count = $crawler->filter('html:contains("Test Sub")')->count();
+        
+        $this->assertTrue($count > 0);
+    }
+    
 	/* 
 		test that admin will not be displayed 
 	*/
@@ -88,7 +143,18 @@ class DefaultControllerTest extends WebTestCase
         $loader = new Loader();
         $fixtures = new LoadTestUser();
         $fixtures->setContainer($container);
+        
+        $adminFixtures = new LoadSuperuser();
+        $adminFixtures->setContainer($container);
+        
+        $conferenceFixtures = new LoadConference();
+        $conferenceFixtures->setContainer($container);
+
+        $loader->addFixture($conferenceFixtures);
         $loader->addFixture($fixtures);
+        $loader->addFixture($adminFixtures);
+
+        
         $executor->execute($loader->getFixtures());
     }
 }

@@ -161,7 +161,7 @@ class DefaultControllerTest extends WebTestCase
 
         $this->assertGreaterThan(
             0,
-            $crawler->filter('html:contains("Please fill out a name")')->count());
+            $crawler->filter('html:contains("complete all forms")')->count());
 
     }
   
@@ -204,7 +204,7 @@ class DefaultControllerTest extends WebTestCase
 
         $this->assertGreaterThan(
             0,
-            $crawler->filter('html:contains("Please fill out a year")')->count());
+            $crawler->filter('html:contains("complete all forms")')->count());
 
     }
 
@@ -226,8 +226,7 @@ class DefaultControllerTest extends WebTestCase
 
         $this->assertGreaterThan(
             0,
-            $crawler->filter('html:contains("Please add at least one topic")')
-                ->count());
+            $crawler->filter('html:contains("complete all forms")')->count());
 
     }
 

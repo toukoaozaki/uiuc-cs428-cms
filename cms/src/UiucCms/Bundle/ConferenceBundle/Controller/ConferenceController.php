@@ -64,38 +64,29 @@ class ConferenceController extends Controller
 
         // TODO: get built in validator to work for whole objects.
 
-        $nameNotBlank = new NotBlank();
+        $notBlank = new NotBlank();
         $minLength3 = new Length(array('min' => 3));
-        $yearNotBlank = new NotBlank();
-        $cityNotBlank = new NotBlank();
-        $topicsNotBlank = new notBlank();
-
+    
         // These forms also need highlighting eventually.
-        $nameNotBlank->message = 'Please fill out a name.';
+        $notBlank->message = 'Please complete all forms.';
         $minLength3->minMessage = 'Please enter a name of minimum length 3.';
-        $yearNotBlank->message = 'Please fill out a year.';
-        $cityNotBlank->message = 'Please fill out a city.';
-        $topicsNotBlank->message = 'Please add at least one topic.';
-        
-        // TODO: validate topic format
-
+    
         $validator = $this->get('validator');
 
         $errorList = array( 
-            $validator->validateValue($conference->getName(), $nameNotBlank),
+            $validator->validateValue($conference->getName(), $notBlank),
             $validator->validateValue($conference->getName(), $minLength3),
-            $validator->validateValue($conference->getYear(), $yearNotBlank),
-            $validator->validateValue($conference->getCity(), $cityNotBlank),
-            $validator->validateValue($conference->getTopics(), $topicsNotBlank)
+            $validator->validateValue($conference->getYear(), $notBlank),
+            $validator->validateValue($conference->getCity(), $notBlank),
+            $validator->validateValue($conference->getTopics(), $notBlank)
                           );
        
-        // TODO: list all errors instead of just the first one that appears
         foreach ($errorList as $error) {
             if (count($error) != 0) {
                 return $this->render(
                     'UiucCmsConferenceBundle:Conference:create.html.twig',
                     array( 'form'  => $form->createView(),
-                           'errors' => $error));
+                           'error' => $error[0]->getMessage()));
             }
         }
 

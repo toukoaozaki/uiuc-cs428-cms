@@ -21,30 +21,46 @@
                         <a href="{{ path('fos_user_profile_show') }}">Profile</a>
                     </li>
                     <li class="{% if user_active_menu is defined and user_active_menu == 'conf' %}active{% endif %}">
-                        <a href="{{ path('uiuc_cms_conference_homepage') }}">Conferences</a>
+                    <li class="dropdown">
+                                <a href="{{ path('uiuc_cms_conference_homepage') }}" class="dropdown-toggle" data-toggle="dropdown">Conferences<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{{ path('uiuc_cms_conference_homepage') }}">Join a conference</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('uiuc_cms_conference_view') }}">View enrolled conferences</a>
+                                    </li>
+                                </ul>
+                    </li>            
                     </li>
+                    {% block admin_opt %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown">Admin<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('uiuc_cms_conference_create') }}">
+                                            Create a conference
+                                    </a></li>
+                                    <li><a href="{{ path('uiuc_cms_conference_view_created') }}">
+                                        Manage conferences
+                                    </a></li>
+                                    <li><a href="{{ path('uiuc_cms_promote_user') }}">
+                                        Manage Users
+                                    </a></li>
+                                    <li class="divider"></li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                    {% endblock admin_opt %}
                     <li>
                         <a href="{{ path('fos_user_security_logout') }}">Logout</a>
                     </li>
-                    {% block admin_opt %}
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown">Admin<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ path('uiuc_cms_conference_create') }}">
-                                    Create a conference
-                            </a></li>
-                            <li><a href="{{ path('uiuc_cms_conference_view_created') }}">
-                                Manage conferences
-                            </a></li>
-                            <li><a href="{{ path('uiuc_cms_promote_user') }}">
-                                Manage Users
-                            </a></li>
-                            <li class="divider"></li>
-                        </ul>
-                    </li>
-{% endblock admin_opt %}
                 </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
+
+{% block subnavigation %}
+{% endblock subnavigation %}
+
 {% endblock navigation %}

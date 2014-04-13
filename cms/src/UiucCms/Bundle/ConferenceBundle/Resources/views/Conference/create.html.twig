@@ -3,8 +3,13 @@
 
 {% block content %}
 	<div class="container" style="text-align:center; width:300px">
-        {% if error is defined %}
-            <div class="alert alert-danger"> {{ error }} </div>
+        {% if errors is defined %}
+                <div class="alert alert-danger"> 
+                    {% for error in errors %}
+                        {{ error.message }}<br> 
+                    {% endfor %}
+                </div>
+                     
         {% endif %}
         Create a new conference:
         {{ form(form) }}

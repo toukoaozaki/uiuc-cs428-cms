@@ -9,29 +9,6 @@
         </h1>
     </div>
     <p class="lead">
-        {% if admin == true %}
-          <li>
-            <a href="{{ path('uiuc_cms_conference_create') }}">
-                Create a conference
-            </a>
-          <li>
-            <a href="{{ path('uiuc_cms_conference_view_created') }}">
-                Manage conferences
-            </a>
-          <li>
-            <a href="{{ path('uiuc_cms_promote_user') }}">
-                Manage Users
-            </a>
-		  {% else %}
-          <li>
-            <a href="{{ path('uiuc_cms_conference_homepage') }}">
-                Join a conference
-            </a>
-          <li>
-            <a href="{{ path('uiuc_cms_conference_view') }}">
-                View enrolled conferences
-            </a>
-        {% endif %}
     </p>
 </div>
 {% endblock fos_user_content %}

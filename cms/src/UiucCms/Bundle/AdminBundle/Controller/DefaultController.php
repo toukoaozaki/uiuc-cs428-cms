@@ -78,9 +78,14 @@ class DefaultController extends Controller
         {
             //mailing stuffs here
             
-            return $this->render('UiucCmsAdminBundle:Default:index.html.twig', array('name' => 'name'));
+            $subject = $form["subject"]->getData();
+            $body = $form["body"]->getData();
+            
+            return $this->render('UiucCmsAdminBundle:Default:index.html.twig', array('name' => $subject));
         }
-        
+        //else 
+        //    return $this->render('UiucCmsAdminBundle:Default:index.html.twig', array('name' => 'failed'));
+            
         return $this->render('UiucCmsAdminBundle:Default:mail.html.twig', array('form' => $form->createView()));
     }
 	

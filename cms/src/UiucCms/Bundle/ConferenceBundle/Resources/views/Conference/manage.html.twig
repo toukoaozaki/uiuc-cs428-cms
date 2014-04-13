@@ -27,7 +27,7 @@
         {% endif %}
     </p>
     <p>
-        {% if attendees is empty %)
+        {% if attendees is empty %}
         {% else %}
             <li><a href="{{ path('uiuc_cms_admin_mail', {'id': conference.id}) }}">Send mass email</li>
         {% endif %}

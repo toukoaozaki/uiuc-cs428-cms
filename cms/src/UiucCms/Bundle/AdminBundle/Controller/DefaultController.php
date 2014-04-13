@@ -81,7 +81,7 @@ class DefaultController extends Controller
             $subject = $form["subject"]->getData();
             $body = $form["body"]->getData();
             
-            return $this->render('UiucCmsAdminBundle:Default:index.html.twig', array('name' => $subject));
+            return $this->render('UiucCmsAdminBundle:Default:sent.html.twig', array('name' => $subject));
         }
         //else 
         //    return $this->render('UiucCmsAdminBundle:Default:index.html.twig', array('name' => 'failed'));

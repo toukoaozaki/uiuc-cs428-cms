@@ -10,6 +10,8 @@ use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
 
+use UiucCms\Bundle\AdminBundle\Entity\Mail;
+
 use UiucCms\Bundle\AdminBundle\Controller\DefaultController;
 
 class DefaultControllerTest extends WebTestCase
@@ -75,6 +77,46 @@ class DefaultControllerTest extends WebTestCase
         
     }
 	
+    
+    /* test mail object
+     *
+     */
+    public function testMailObject()
+    {
+        $mail = new Mail();
+        
+        $to = array();
+        $to[] = "test@test.com";
+        
+        $from = "from@from.com";
+        $subject = "subject";
+        $body = "body";
+        
+        $mail->setTo($to);
+        $mail->setFrom($from);
+        $mail->setSubject($subject);
+        $mail->setBody($body);
+        
+        $this->assertTrue($mail->getSubject() == $subject);
+        $this->assertTrue($mail->getBody() == $body);
+    }
+    
+    /* test that "send mass email" is only
+     * displayed if there are attendees
+     */
+    public function testNoAttendees()
+    {
+        $this->authenticate('admin');
+        $crawler = 
+            $this->client->request('GET', '/conf/manage/1');
+    
+        $this->assertTrue($crawler->filter('html:contains("Send mass email")')->count() == 0);	
+
+    }
+    
+    /* test that email data is properly 
+     * passed from the form
+     */
     public function testSendMail()
     {
         $this->authenticate('admin');
@@ -90,7 +132,7 @@ class DefaultControllerTest extends WebTestCase
         
         $crawler = $this->client->submit($form);
         
-        $count = $crawler->filter('html:contains("Test Sub")')->count();
+        $count = $crawler->filter('html:contains("Success")')->count();
         
         $this->assertTrue($count > 0);
     }

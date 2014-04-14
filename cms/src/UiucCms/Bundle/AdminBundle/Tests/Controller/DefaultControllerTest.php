@@ -17,17 +17,17 @@ use UiucCms\Bundle\AdminBundle\Controller\DefaultController;
 class DefaultControllerTest extends WebTestCase
 {
 
-	private $client;
+    private $client;
     private $router;
-	
-	protected function setUp()
+    
+    protected function setUp()
     {
         $this->client = static::createClient();
         $this->container = $this->client->getContainer();
         $this->setupFixtures($this->container);
         $this->router = $this->container->get('router');
-	
-	}
+    
+    }
     public function testIndex()
     {
 
@@ -35,18 +35,18 @@ class DefaultControllerTest extends WebTestCase
 
         $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
     }
-		
-	/*
-		test that super admin will not be displayed in the list of users that can be promoted
-	*/
-	public function testShowSuper()
-	{
+        
+    /*
+        test that super admin will not be displayed in the list of users that can be promoted
+    */
+    public function testShowSuper()
+    {
         $crawler = $this->client->request('GET', '/user/admin/show');
 
-        $this->assertTrue($crawler->filter('html:contains("admin@domain.com")')->count() == 0);	
-	}
+        $this->assertTrue($crawler->filter('html:contains("admin@domain.com")')->count() == 0); 
+    }
 
-	private function authenticate($type)
+    private function authenticate($type)
     {
         $crawler = $this->client->request('GET', $this->router->generate(
             'fos_user_security_login',
@@ -70,11 +70,11 @@ class DefaultControllerTest extends WebTestCase
         $this->client->submit($form);
         
     }
-	//test mail failure
-	
-	public function testMailFail()
-	{
-		$this->authenticate('admin');
+    //test mail failure
+    
+    public function testMailFail()
+    {
+        $this->authenticate('admin');
     
         $crawler = 
             $this->client->request('GET', '/admin/mail/1');
@@ -86,26 +86,26 @@ class DefaultControllerTest extends WebTestCase
         $count = $crawler->filter('html:contains("Success")')->count();
         
         $this->assertTrue($count > 0);
-	}
-	
-	public function testMailFail2()
-	{
-		$this->authenticate('admin');
+    }
+    
+    public function testMailFail2()
+    {
+        $this->authenticate('admin');
     
         $crawler = 
             $this->client->request('GET', '/admin/mail/1');
             
         $buttonNode = $crawler->selectButton('Send');
         $form = $buttonNode->form();
-		
-		$form['form[subject]'] = "Test Sub";
-		
+        
+        $form['form[subject]'] = "Test Sub";
+        
         $crawler = $this->client->submit($form);
         
         $count = $crawler->filter('html:contains("Success")')->count();
         
         $this->assertTrue($count > 0);
-	}
+    }
     /* test mail object
      *
      */
@@ -138,7 +138,7 @@ class DefaultControllerTest extends WebTestCase
         $crawler = 
             $this->client->request('GET', '/conf/manage/1');
     
-        $this->assertTrue($crawler->filter('html:contains("Send mass email")')->count() == 0);	
+        $this->assertTrue($crawler->filter('html:contains("Send mass email")')->count() == 0);  
 
     }
     
@@ -165,27 +165,27 @@ class DefaultControllerTest extends WebTestCase
         $this->assertTrue($count > 0);
     }
 
-	/* 
-		test that admin will not be displayed 
-	*/
-	public function testPromote()
-	{
+    /* 
+        test that admin will not be displayed 
+    */
+    public function testPromote()
+    {
         $crawler = $this->client->request('GET', '/user/admin/show');
-		$proCount = $crawler->filter('html:contains("Promote")')->count();
-		$link = $crawler->filter('a:contains("Promote")')->eq(0)->link();
-		$crawler = $this->client->click($link);
-        $this->assertTrue($crawler->filter('html:contains("Promote")')->count() == $proCount - 1);	
-	}
-	
+        $proCount = $crawler->filter('html:contains("Promote")')->count();
+        $link = $crawler->filter('a:contains("Promote")')->eq(0)->link();
+        $crawler = $this->client->click($link);
+        $this->assertTrue($crawler->filter('html:contains("Promote")')->count() == $proCount - 1);  
+    }
+    
     /*
         test that demoted admin will be displayed in other admin
     */
     public function testDemote()
     {
         //$crawler = $this->client->request('GET', '/user/admin/show');
-		//$proCount = $crawler->filter('html:contains("Demote")')->count();
-		//$link = $crawler->filter('a:contains("Demote")')->eq(0)->link();
-		//$crawler = $this->client->click($link);
+        //$proCount = $crawler->filter('html:contains("Demote")')->count();
+        //$link = $crawler->filter('a:contains("Demote")')->eq(0)->link();
+        //$crawler = $this->client->click($link);
         //$this->assertTrue($crawler->filter('html:contains("Demote")')->count() == $proCount - 1);
     }
     
@@ -195,13 +195,13 @@ class DefaultControllerTest extends WebTestCase
     public function testRemove()
     {
         $crawler = $this->client->request('GET', '/user/admin/show');
-		$proCount = $crawler->filter('html:contains("Remove")')->count();
-		$link = $crawler->filter('a:contains("Remove")')->eq(0)->link();
-		$crawler = $this->client->click($link);
+        $proCount = $crawler->filter('html:contains("Remove")')->count();
+        $link = $crawler->filter('a:contains("Remove")')->eq(0)->link();
+        $crawler = $this->client->click($link);
         $this->assertTrue($crawler->filter('html:contains("Remove")')->count() == $proCount - 1);
     }
     
-	private function setupFixtures($container)
+    private function setupFixtures($container)
     {
         // get entity manager
         $em = $container->get('doctrine')->getManager();

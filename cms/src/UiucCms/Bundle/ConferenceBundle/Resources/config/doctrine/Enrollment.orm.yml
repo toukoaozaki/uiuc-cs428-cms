@@ -14,4 +14,8 @@ UiucCms\Bundle\ConferenceBundle\Entity\Enrollment:
         attendeeId:
             type: integer
             length: 50
+        enrollmentDate:
+            type: datetime
+        coverFeeStatus:
+            type: integer
     lifecycleCallbacks: {  }

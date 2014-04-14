@@ -18,5 +18,6 @@ server:
 
 test:
 	$(CONSOLE) cache:clear --env=test
-	$(CONSOLE) doctrine:schema:update --env=test --force
+	$(CONSOLE) doctrine:schema:drop --env=test --force
+	$(CONSOLE) doctrine:schema:create --env=test
 	$(PHPUNIT) --log-junit $(TEST_LOG_PATH) -c app/

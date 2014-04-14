@@ -10,12 +10,12 @@
     <p class="lead">
         Year: {{ conference.year }} <br>
         City: {{ conference.city }} <br>
-        Registration Begins: {{ conference.registerBeginDate|date('Y-m-d i:s') }} <br>
-        Registration Ends: {{ conference.registerEndDate|date('Y-m-d i:s') }} <br>
+        Registration Begins: {{ conference.registerBeginDate|date('Y-m-d h:i:s') }} <br>
+        Registration Ends: {{ conference.registerEndDate|date('Y-m-d h:i:s') }} <br>
     </p>
     <p>
         {% if enrollment %}
-            You have enrolled in this conference at {{ enrollment.enrollmentDate|date('Y-m-d i:s') }}.
+            You have enrolled in this conference at {{ enrollment.enrollmentDate|date('Y-m-d h:i:s') }}.
         {% else %}
             <li><a href="{{ path('uiuc_cms_conference_enroll', {'id': conference.id }) }}">Enroll in this conference</a>
         {% endif %}

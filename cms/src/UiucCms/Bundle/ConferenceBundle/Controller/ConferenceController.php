@@ -137,19 +137,45 @@ class ConferenceController extends Controller
     /**
      * Submits an enrollment for a conference.
      */
-    public function enrollAction($id)
+    public function enrollAction(Conference $conference)
     {
-        $userId = $this->getUser()->getId();
+        $user = $this->getUser();
+        $userId = $user->getId();
+        $confId = $conference->getId();
+        if (null === $this->getEnrollment($user, $conference)) {
+            
+            $enrollment = new Enrollment();
+            $enrollment->setConferenceId($confId);
+            $enrollment->setAttendeeId($userId);
+            $enrollment->updateEnrollmentDate();
+            $enrollment->setCoverFeeStatus(Enrollment::FEE_STATUS_UNPAID);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($enrollment);
+            $em->flush();
+        }
+
+        return $this->redirect(
+            $this->generateUrl(
+                'uiuc_cms_conference_display',
+                array('id' => $confId)
+            )
+        );
+    }
+
+    private function getEnrollment($user, $conference)
+    {
+        $enrollments = $this->getDoctrine()
+                            ->getRepository('UiucCmsConferenceBundle:Enrollment');
         
-        $enrollment = new Enrollment();
-        $enrollment->setConferenceId($id);
-        $enrollment->setAttendeeId($userId);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($enrollment);
-        $em->flush();
-
-        return $this->displayAction($id);
+        $confId = $conference->getId();
+        $userId = $user->getId();
+        $query = $enrollments->createQueryBuilder('e')
+                         ->where('e.conferenceId = :confId')
+                         ->andWhere('e.attendeeId = :userId')
+                         ->setParameters(['userId' => $userId, 'confId' => $confId])
+                         ->getQuery();
+        return $query->getOneOrNullResult();
     }
 
     /**
@@ -161,22 +187,12 @@ class ConferenceController extends Controller
                             ->getRepository('UiucCmsConferenceBundle:Conference')
                             ->findAll();
        
-        $enrollments = $this->getDoctrine()
-                            ->getRepository('UiucCmsConferenceBundle:Enrollment');
-        
-        $userId = $this->getUser()->getId();
+        $user = $this->getUser();
         
         $enrolledConferences = array();
 
         foreach ($conferences as $key => $conference) {
-            $confId = $conference->getId();
-            $query = $enrollments->createQueryBuilder('e')
-                             ->where('e.conferenceId = :confId')
-                             ->andWhere('e.attendeeId = :userId')
-                             ->setParameters(['userId' => $userId, 'confId' => $confId])
-                             ->getQuery();
-
-            $enrollment = $query->getOneOrNullResult();
+            $enrollment = $this->getEnrollment($user, $conference);
 
             if ($enrollment != null) {
                 array_push($enrolledConferences, $conference);

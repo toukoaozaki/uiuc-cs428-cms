@@ -41,8 +41,6 @@ class Enrollment
 
     public function __construct()
     {
-        $this->setCoverFeeStatus(Enrollment::FEE_STATUS_UNPAID);
-        $this->updateEnrollmentDate();
     }
 
     /**

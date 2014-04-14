@@ -123,23 +123,15 @@ class ConferenceController extends Controller
 
         $enrollment = $query->getOneOrNullResult();
        
-        $enrolled = true;
-
-        if ($enrollment == null) {
-            $enrolled = false;
-        }
-
         if (!$conference) {
             throw $this->createNotFoundException(
                 'No conference found with id: '.$id);
         }
 
-        else {
-            return $this->render(
-                'UiucCmsConferenceBundle:Conference:display.html.twig',
-                array('conference' => $conference,
-                      'enrolled'   => $enrolled));
-        }
+        return $this->render(
+            'UiucCmsConferenceBundle:Conference:display.html.twig',
+            array('conference' => $conference,
+                  'enrollment' => $enrollment));
     }
 
     /**
@@ -152,6 +144,7 @@ class ConferenceController extends Controller
         $enrollment = new Enrollment();
         $enrollment->setConferenceId($id);
         $enrollment->setAttendeeId($userId);
+        $enrollment->setCoverFeeStatus(Enrollment::FEE_STATUS_UNPAID);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($enrollment);

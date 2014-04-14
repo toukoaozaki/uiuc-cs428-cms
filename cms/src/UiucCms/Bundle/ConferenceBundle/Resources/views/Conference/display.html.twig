@@ -14,10 +14,10 @@
         Registration Ends: {{ conference.registerEndDate|date('Y-m-d i:s') }} <br>
     </p>
     <p>
-        {% if enrolled == false %}
-            <li><a href="{{ path('uiuc_cms_conference_enroll', {'id': conference.id }) }}">Enroll in this conference</a>
-        {% else %}
+        {% if enrollment %}
             You have already enrolled in this conference.
+        {% else %}
+            <li><a href="{{ path('uiuc_cms_conference_enroll', {'id': conference.id }) }}">Enroll in this conference</a>
         {% endif %}
         
         <li><a href="{{ path('uiuc_cms_conference_homepage') }}">Back to listings</li>

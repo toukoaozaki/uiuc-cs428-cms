@@ -85,7 +85,7 @@ class DefaultControllerTest extends WebTestCase
         
         $count = $crawler->filter('html:contains("Success")')->count();
         
-        $this->assertTrue($count == 0);
+        $this->assertTrue($count > 0);
 	}
 	
 	public function testMailFail2()
@@ -104,7 +104,7 @@ class DefaultControllerTest extends WebTestCase
         
         $count = $crawler->filter('html:contains("Success")')->count();
         
-        $this->assertTrue($count == 0);
+        $this->assertTrue($count > 0);
 	}
     /* test mail object
      *

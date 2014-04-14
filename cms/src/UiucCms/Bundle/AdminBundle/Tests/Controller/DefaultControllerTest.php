@@ -4,6 +4,8 @@ namespace UiucCms\Bundle\AdminBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use UiucCms\Bundle\UserBundle\DataFixtures\ORM\Test\LoadTestUser;
+use UiucCms\Bundle\UserBundle\DataFixtures\ORM\Common\LoadSuperuser;
+use UiucCms\Bundle\UserBundle\DataFixtures\ORM\Common\LoadConference;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
@@ -175,8 +177,16 @@ class DefaultControllerTest extends WebTestCase
         // load fixtures
         $loader = new Loader();
         $fixtures = new LoadTestUser();
-        $fixtures->setContainer($container);
+        $adminFixtures = new LoadSuperuser();
+        $adminFixtures->setContainer($container);
+        
+        $conferenceFixtures = new LoadConference();
+        $conferenceFixtures->setContainer($container);
+
+        $loader->addFixture($conferenceFixtures);
         $loader->addFixture($fixtures);
+        $loader->addFixture($adminFixtures);
+
         $executor->execute($loader->getFixtures());
     }
 }

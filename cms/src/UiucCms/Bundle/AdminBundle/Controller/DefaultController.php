@@ -13,6 +13,7 @@ class DefaultController extends Controller
         return $this->render('UiucCmsAdminBundle:Default:index.html.twig', array('name' => $name));
     }
     
+	//gets email of current logged in user
     private function getUserEmail()
     {
         $userId = $this->getUser()->getId();
@@ -25,6 +26,7 @@ class DefaultController extends Controller
         return $user->getEmail();
     }
     
+	//get emails of all attendees of the conference
     private function getAttendeeEmails($confId)
     {       
         //setup repos
@@ -88,6 +90,7 @@ class DefaultController extends Controller
         return $this->render('UiucCmsAdminBundle:Default:mail.html.twig', array('form' => $form->createView()));
     }
 	
+	//display list of users registered
 	public function showAction()
 	{
         $admin = $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN');
@@ -100,6 +103,7 @@ class DefaultController extends Controller
 		}
 	}
     
+	//promote status of selected user
     public function promoteAction($id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -112,6 +116,7 @@ class DefaultController extends Controller
         return $this->redirect($this->generateUrl('uiuc_cms_promote_user'));;
     }
     
+	//demote status of selected user
     public function demoteAction($id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -126,6 +131,7 @@ class DefaultController extends Controller
         return $this->redirect($this->generateUrl('uiuc_cms_promote_user'));;
     }
     
+	//delete user account
     public function removeAction($id)
     {   
         $em = $this->getDoctrine()->getManager();

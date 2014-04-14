@@ -70,7 +70,42 @@ class DefaultControllerTest extends WebTestCase
         $this->client->submit($form);
         
     }
+	//test mail failure
 	
+	public function testMailFail()
+	{
+		$this->authenticate('admin');
+    
+        $crawler = 
+            $this->client->request('GET', '/admin/mail/1');
+            
+        $buttonNode = $crawler->selectButton('Send');
+        $form = $buttonNode->form();
+        $crawler = $this->client->submit($form);
+        
+        $count = $crawler->filter('html:contains("Success")')->count();
+        
+        $this->assertTrue($count == 0);
+	}
+	
+	public function testMailFail2()
+	{
+		$this->authenticate('admin');
+    
+        $crawler = 
+            $this->client->request('GET', '/admin/mail/1');
+            
+        $buttonNode = $crawler->selectButton('Send');
+        $form = $buttonNode->form();
+		
+		$form['form[subject]'] = "Test Sub";
+		
+        $crawler = $this->client->submit($form);
+        
+        $count = $crawler->filter('html:contains("Success")')->count();
+        
+        $this->assertTrue($count == 0);
+	}
     /* test mail object
      *
      */

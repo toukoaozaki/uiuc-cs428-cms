@@ -9,6 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Enrollment
 {
+    const FEE_STATUS_UNPAID = 0;
+    const FEE_STATUS_PAID = 1;
+    const FEE_STATUS_EXEMPT = 2;
+    const FEE_STATUS_UNKNOWN = 99;
+
     /**
      * @var integer
      */
@@ -24,6 +29,21 @@ class Enrollment
      */
     private $attendeeId;
 
+    /**
+     * @var datetime
+     */
+    private $enrollmentDate;
+
+    /**
+     * @var integer
+     */
+    private $coverFeeStatus;
+
+    public function __construct()
+    {
+        $this->setCoverFeeStatus(Enrollment::FEE_STATUS_UNPAID);
+        $this->updateEnrollmentDate();
+    }
 
     /**
      * Get id
@@ -79,5 +99,46 @@ class Enrollment
     public function getAttendeeId()
     {
         return $this->attendeeId;
+    }
+
+    public function getEnrollmentDate()
+    {
+        return $this->enrollmentDate;
+    }
+
+    public function setEnrollmentDate(\DateTime $date)
+    {
+        // enforce Doctrine update by creating new object
+        $timestamp = $date->getTimestamp();
+        $this->enrollmentDate = new \DateTime("@$timestamp");
+        return $this;
+    }
+
+    public function updateEnrollmentDate()
+    {
+        $this->enrollmentDate = new \DateTime(null, new \DateTimeZone('UTC'));
+    }
+
+    private static function filterCoverFeeStatus($status)
+    {
+        switch ($status) {
+            case static::FEE_STATUS_UNPAID:
+            case static::FEE_STATUS_PAID:
+            case static::FEE_STATUS_EXEMPT:
+                return $status;
+            default:
+                return static::FEE_STATUS_UNKNOWN;
+        }
+    }
+
+    public function setCoverFeeStatus($status)
+    {
+        $this->coverFeeStatus = static::filterCoverFeeStatus($status);
+        return $this;
+    }
+
+    public function getCoverFeeStatus()
+    {
+        return $this->coverFeeStatus;
     }
 }

@@ -144,7 +144,6 @@ class ConferenceController extends Controller
         $enrollment = new Enrollment();
         $enrollment->setConferenceId($id);
         $enrollment->setAttendeeId($userId);
-        $enrollment->setCoverFeeStatus(Enrollment::FEE_STATUS_UNPAID);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($enrollment);

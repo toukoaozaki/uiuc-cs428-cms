@@ -54,7 +54,7 @@ class Mail
         $this->body = $text;
     }
     
-    public function sendMail()
+    public function sendMail($mailer)
     {
         $message = Swift_Message::newInstance()
             ->setSubject($this->subject)
@@ -68,7 +68,7 @@ class Mail
         ;
         
         //get Swift_Message bundle working to use
-        //$this->get('mailer')->send($message);
+        $mailer->send($message);
     }   
 }
 

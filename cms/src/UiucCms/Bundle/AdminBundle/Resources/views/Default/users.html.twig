@@ -16,7 +16,7 @@
             <th>Remove</th>
         </tr>
         {% for user in users %}
-            {% if admin == true %}
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
                 {% if user.hasRole("ROLE_SUPER_ADMIN") == false %} 
                     <tr>
                         <td>{{ user.getUserName() }}</td>

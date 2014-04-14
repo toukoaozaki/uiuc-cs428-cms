@@ -93,13 +93,12 @@ class DefaultController extends Controller
 	//display list of users registered
 	public function showAction()
 	{
-        $admin = $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN');
 		$users = $this->getDoctrine()->getRepository('UiucCmsUserBundle:User')->findAll();
 		if(!$users) {
 			throw $this->createNotFoundException('No users found.');
 		}
 		else {
-			return $this->render('UiucCmsAdminBundle:Default:users.html.twig', array('admin' => $admin, 'users' => $users));
+			return $this->render('UiucCmsAdminBundle:Default:users.html.twig', array('users' => $users));
 		}
 	}
     

@@ -25,6 +25,7 @@ class DefaultControllerTest extends WebTestCase
     private $profile_url;
     private $index_url;
     private $create_conf_url;
+    private $view_created_conf_url;
 
     private $validName = "RailTEC UIUC";
     private $shortName = "Ra";
@@ -69,6 +70,11 @@ class DefaultControllerTest extends WebTestCase
             'uiuc_cms_conference_create',
             array(),
             true);
+     
+        $this->view_created_conf_url = $this->router->generate(
+            'uiuc_cms_conference_view_created',
+            array(),
+            true);
       
     }
 
@@ -92,7 +98,6 @@ class DefaultControllerTest extends WebTestCase
         }
         
         $this->client->submit($form);
-        
     }
 
     public function testIndex()
@@ -104,7 +109,7 @@ class DefaultControllerTest extends WebTestCase
             $crawler->filter('html:contains("Conferences:")')->count());
     }
 
-    public function testCreateAdmin()
+    public function testCreatePermissionsAdmin()
     {
         $this->authenticate('admin');
         $crawler = $this->client->request('GET', $this->create_conf_url);
@@ -113,15 +118,32 @@ class DefaultControllerTest extends WebTestCase
                 'html:contains("Create a new conference:")')->count() > 0);
     }
     
-    public function testCreateUser()
+    public function testCreatePermissionsUser()
     {
         $this->authenticate('user');
         $crawler = $this->client->request('GET', $this->create_conf_url);
-        $this->assertFalse(
+        $this->assertTrue(
             $crawler->filter(
-                'html:contains("Create a new conference:")')->count() > 0);
+                'html:contains("Access Denied")')->count() > 0);
     }
 
+    public function testViewCreatedPermissionsAdmin()
+    {
+        $this->authenticate('admin');
+        $crawler = $this->client->request('GET', $this->view_created_conf_url);
+        $this->assertTrue(
+            $crawler->filter(
+                'html:contains("Your Conferences")')->count() > 0);
+    }
+    
+    public function testViewCreatedPermissionsUser()
+    {
+        $this->authenticate('user');
+        $crawler = $this->client->request('GET', $this->view_created_conf_url);
+        $this->assertTrue(
+            $crawler->filter(
+                'html:contains("Access Denied")')->count() > 0);
+    }
     public function testSuccessfulValidator()
     {
         $this->authenticate('admin'); 

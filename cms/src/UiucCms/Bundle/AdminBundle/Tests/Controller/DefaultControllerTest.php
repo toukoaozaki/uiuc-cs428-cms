@@ -170,6 +170,8 @@ class DefaultControllerTest extends WebTestCase
     */
     public function testPromote()
     {
+		$this->authenticate('admin');
+		
         $crawler = $this->client->request('GET', '/user/admin/show');
         $proCount = $crawler->filter('html:contains("Promote")')->count();
         $link = $crawler->filter('a:contains("Promote")')->eq(0)->link();
@@ -194,6 +196,8 @@ class DefaultControllerTest extends WebTestCase
     */
     public function testRemove()
     {
+		$this->authenticate('admin');
+		
         $crawler = $this->client->request('GET', '/user/admin/show');
         $proCount = $crawler->filter('html:contains("Remove")')->count();
         $link = $crawler->filter('a:contains("Remove")')->eq(0)->link();

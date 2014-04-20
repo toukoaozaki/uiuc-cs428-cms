@@ -5,6 +5,25 @@
 	<div class="container" style="text-align:center; width:300px">
 
         Send a mass email:
-        {{ form(form) }}
+        {{ form_start(form) }}
+		{{ form_errors(form) }}
+
+		<div>
+			{{ form_label(form.subject) }}
+			{{ form_errors(form.subject) }}
+			{{ form_widget(form.subject) }}
+		</div>
+
+		<div>
+			{{ form_label(form.body) }}
+			{{ form_errors(form.body) }}
+			{{ form_widget(form.body,{ 'attr': {'size': '5'} }) }}
+		</div>
+
+		<div>
+			{{ form_widget(form.send) }}
+		</div>
+
+		{{ form_end(form) }}
 	</div>
 {% endblock content %}

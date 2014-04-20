@@ -67,20 +67,25 @@ class ConferenceController extends Controller
         $notBlank = new NotBlank();
         $minLength3 = new Length(array('min' => 3));
     
-        // These forms also need highlighting eventually.
-        $notBlank->message = 'Please complete all forms.';
+        $nameNotBlank->message = 'Please enter a name.';
+        $yearNotBlank->message = 'Please enter a year.';
+        $cityNotBlank->message = 'Please enter a city.';
+        $topicNotBlank->message = 'Please enter at least one topic.';
         $minLength3->minMessage = 'Please enter a name of minimum length 3.';
-    
+        $invalidStartDate = 'Please select a date in the future.';
+        $invalidEndDate = 'Please select an end date that occurs after the start date';
+
         $validator = $this->get('validator');
 
         $errorList = array( 
-            $validator->validateValue($conference->getName(), $notBlank),
+            $validator->validateValue($conference->getName(), $nameNotBlank),
             $validator->validateValue($conference->getName(), $minLength3),
-            $validator->validateValue($conference->getYear(), $notBlank),
-            $validator->validateValue($conference->getCity(), $notBlank),
-            $validator->validateValue($conference->getTopics(), $notBlank)
+            $validator->validateValue($conference->getYear(), $yearNotBlank),
+            $validator->validateValue($conference->getCity(), $cityNotBlank),
+            $validator->validateValue($conference->getTopics(), $topicNotBlank)
                           );
        
+
         foreach ($errorList as $error) {
             if (count($error) != 0) {
                 return $this->render(
@@ -88,6 +93,23 @@ class ConferenceController extends Controller
                     array( 'form'  => $form->createView(),
                            'error' => $error[0]->getMessage()));
             }
+        }
+
+    
+        // Check that the conference is set to take place in the future. 
+        // Also see if the end date > start date.
+        if ($conference->getRegisterBeginDate() < time()) {
+                return $this->render(
+                    'UiucCmsConferenceBundle:Conference:create.html.twig',
+                    array( 'form'  => $form->createView(),
+                           'error' => $invalidStartDate));
+        }
+
+        if ($conference->getRegisterBeginDate() > $conference->getRegisterEndDate()) {
+                return $this->render(
+                    'UiucCmsConferenceBundle:Conference:create.html.twig',
+                    array( 'form'  => $form->createView(),
+                           'error' => $invalidEndDate));
         }
 
         $conference->setCreatedBy($this->getUser()->getId());

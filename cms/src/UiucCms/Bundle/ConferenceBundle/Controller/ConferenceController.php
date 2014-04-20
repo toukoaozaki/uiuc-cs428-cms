@@ -64,7 +64,10 @@ class ConferenceController extends Controller
 
         // TODO: get built in validator to work for whole objects.
 
-        $notBlank = new NotBlank();
+        $nameNotBlank = new NotBlank();
+        $yearNotBlank = new NotBlank();
+        $cityNotBlank = new NotBlank();
+        $topicNotBlank = new NotBlank();
         $minLength3 = new Length(array('min' => 3));
     
         $nameNotBlank->message = 'Please enter a name.';
@@ -98,14 +101,14 @@ class ConferenceController extends Controller
     
         // Check that the conference is set to take place in the future. 
         // Also see if the end date > start date.
-        if ($conference->getRegisterBeginDate() < time()) {
+        if ($conference->getRegisterBeginDate()->format('U') < date('U')) {
                 return $this->render(
                     'UiucCmsConferenceBundle:Conference:create.html.twig',
                     array( 'form'  => $form->createView(),
                            'error' => $invalidStartDate));
         }
 
-        if ($conference->getRegisterBeginDate() > $conference->getRegisterEndDate()) {
+        if ($conference->getRegisterBeginDate()->format('U') > $conference->getRegisterEndDate()->format('U')) {
                 return $this->render(
                     'UiucCmsConferenceBundle:Conference:create.html.twig',
                     array( 'form'  => $form->createView(),

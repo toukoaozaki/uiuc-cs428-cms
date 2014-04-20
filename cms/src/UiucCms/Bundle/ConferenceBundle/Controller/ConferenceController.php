@@ -76,7 +76,7 @@ class ConferenceController extends Controller
         $topicNotBlank->message = 'Please enter at least one topic.';
         $minLength3->minMessage = 'Please enter a name of minimum length 3.';
         $invalidStartDate = 'Please select a date in the future.';
-        $invalidEndDate = 'Please select an end date that occurs after the start date';
+        $invalidEndDate = 'Please select an end date after the start date';
 
         $validator = $this->get('validator');
 
@@ -108,7 +108,8 @@ class ConferenceController extends Controller
                            'error' => $invalidStartDate));
         }
 
-        if ($conference->getRegisterBeginDate()->format('U') > $conference->getRegisterEndDate()->format('U')) {
+        if ($conference->getRegisterBeginDate()->format('U') > 
+            $conference->getRegisterEndDate()->format('U')) {
                 return $this->render(
                     'UiucCmsConferenceBundle:Conference:create.html.twig',
                     array( 'form'  => $form->createView(),

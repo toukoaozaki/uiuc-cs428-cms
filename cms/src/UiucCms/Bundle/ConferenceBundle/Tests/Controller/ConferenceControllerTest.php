@@ -16,6 +16,7 @@ use Doctrine\Common\DataFixtures\Loader;
 
 
 use \DateTime;
+use \DateInterval;
 
 class DefaultControllerTest extends WebTestCase
 {
@@ -32,6 +33,10 @@ class DefaultControllerTest extends WebTestCase
     private $validYear = "2014";
     private $validCity = "Champaign";
     private $validTopic = "Trains";
+    private $invalidStartTime;
+    private $lateStartTime; 
+    private $validStartTime; 
+    private $validEndTime;
 
     private function setupFixtures($container)
     {
@@ -50,6 +55,15 @@ class DefaultControllerTest extends WebTestCase
         $loader->addFixture($userFixtures);
         $loader->addFixture($adminFixtures);
         $executor->execute($loader->getFixtures());
+        
+        $this->invalidStartTime = new DateTime('now');
+        $this->lateStartTime = (new DateTime('now'))->
+            add(DateInterval::createFromDateString('10 days'));
+        $this->validStartTime = (new DateTime('now'))->
+            add(DateInterval::createFromDateString('1 days'));
+        $this->validEndTime = (new DateTime('now'))->
+            add(DateInterval::createFromDateString('5 days'));
+
     }
 
     protected function setUp()
@@ -157,6 +171,26 @@ class DefaultControllerTest extends WebTestCase
         $form['conference[year]'] = $this->validYear;
         $form['conference[city]'] = $this->validCity;
         $form['conference[topics]'] = $this->validTopic;
+        $form['conference[register_begin_date][date][month]'] = 
+            (int) $this->validStartTime->format('m');
+        $form['conference[register_begin_date][date][day]'] = 
+            (int) $this->validStartTime->format('d');
+        $form['conference[register_begin_date][date][year]'] = 
+            (int) $this->validStartTime->format('Y');
+        $form['conference[register_begin_date][time][hour]'] = 
+            (int) $this->validStartTime->format('H');
+        $form['conference[register_begin_date][time][minute]'] = 
+            (int) $this->validStartTime->format('i');
+        $form['conference[register_end_date][date][month]'] = 
+            (int) $this->validEndTime->format('m');
+        $form['conference[register_end_date][date][day]'] = 
+            (int) $this->validEndTime->format('d');
+        $form['conference[register_end_date][date][year]'] = 
+            (int) $this->validEndTime->format('Y');
+        $form['conference[register_end_date][time][hour]'] = 
+            (int) $this->validEndTime->format('H');
+        $form['conference[register_end_date][time][minute]'] = 
+            (int) $this->validEndTime->format('i');
 
         $crawler = $this->client->submit($form);
 
@@ -183,7 +217,7 @@ class DefaultControllerTest extends WebTestCase
 
         $this->assertGreaterThan(
             0,
-            $crawler->filter('html:contains("complete all forms")')->count());
+            $crawler->filter('html:contains("enter a name")')->count());
 
     }
   
@@ -226,7 +260,7 @@ class DefaultControllerTest extends WebTestCase
 
         $this->assertGreaterThan(
             0,
-            $crawler->filter('html:contains("complete all forms")')->count());
+            $crawler->filter('html:contains("enter a year")')->count());
 
     }
 
@@ -248,8 +282,94 @@ class DefaultControllerTest extends WebTestCase
 
         $this->assertGreaterThan(
             0,
-            $crawler->filter('html:contains("complete all forms")')->count());
+            $crawler->filter('html:contains("least one topic")')->count());
 
     }
 
+    
+    public function testValidStartDate()
+    {
+        $this->authenticate('admin'); 
+        $crawler = $this->client->request('GET', $this->create_conf_url);
+        $buttonNode = $crawler->selectButton('Create');
+        $form = $buttonNode->form();
+
+        $form->disableValidation();
+
+        $form['conference[name]'] = $this->validName;
+        $form['conference[year]'] = $this->validYear;
+        $form['conference[city]'] = $this->validCity;
+        $form['conference[topics]'] = $this->validTopic;
+    
+        $form['conference[register_begin_date][date][month]'] = 
+            (int) $this->invalidStartTime->format('m');
+        $form['conference[register_begin_date][date][day]'] = 
+            (int) $this->invalidStartTime->format('d');
+        $form['conference[register_begin_date][date][year]'] = 
+            (int) $this->invalidStartTime->format('Y');
+        $form['conference[register_begin_date][time][hour]'] = 
+            (int) $this->invalidStartTime->format('H');
+        $form['conference[register_begin_date][time][minute]'] = 
+            (int) $this->invalidStartTime->format('i');
+        $form['conference[register_end_date][date][month]'] = 
+            (int) $this->validEndTime->format('m');
+        $form['conference[register_end_date][date][day]'] = 
+            (int) $this->validEndTime->format('d');
+        $form['conference[register_end_date][date][year]'] = 
+            (int) $this->validEndTime->format('Y');
+        $form['conference[register_end_date][time][hour]'] = 
+            (int) $this->validEndTime->format('H');
+        $form['conference[register_end_date][time][minute]'] = 
+            (int) $this->validEndTime->format('i');
+         
+
+        $crawler = $this->client->submit($form);
+
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("date in the future")')->count());
+
+    }
+
+    public function testLateStartDate()
+    {
+        $this->authenticate('admin'); 
+        $crawler = $this->client->request('GET', $this->create_conf_url);
+        $buttonNode = $crawler->selectButton('Create');
+        $form = $buttonNode->form();
+
+        $form->disableValidation();
+
+        $form['conference[name]'] = $this->validName;
+        $form['conference[year]'] = $this->validYear;
+        $form['conference[city]'] = $this->validCity;
+        $form['conference[topics]'] = $this->validTopic;
+
+        $form['conference[register_begin_date][date][month]'] = 
+            (int) $this->lateStartTime->format('m');
+        $form['conference[register_begin_date][date][day]'] = 
+            (int) $this->lateStartTime->format('d');
+        $form['conference[register_begin_date][date][year]'] = 
+            (int) $this->lateStartTime->format('Y');
+        $form['conference[register_begin_date][time][hour]'] = 
+            (int) $this->lateStartTime->format('H');
+        $form['conference[register_begin_date][time][minute]'] = 
+            (int) $this->lateStartTime->format('i');
+        $form['conference[register_end_date][date][month]'] = 
+            (int) $this->validEndTime->format('m');
+        $form['conference[register_end_date][date][day]'] = 
+            (int) $this->validEndTime->format('d');
+        $form['conference[register_end_date][date][year]'] = 
+            (int) $this->validEndTime->format('Y');
+        $form['conference[register_end_date][time][hour]'] = 
+            (int) $this->validEndTime->format('H');
+        $form['conference[register_end_date][time][minute]'] = 
+            (int) $this->validEndTime->format('i');
+        $crawler = $this->client->submit($form);
+
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("after the start")')->count());
+
+    }
 }

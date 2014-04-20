@@ -106,7 +106,7 @@ class DefaultControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', $this->index_url);
         $this->assertGreaterThan(
             0,
-            $crawler->filter('html:contains("Conferences:")')->count());
+            $crawler->filter('html:contains("Conferences")')->count());
     }
 
     public function testCreatePermissionsAdmin()

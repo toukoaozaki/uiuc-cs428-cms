@@ -165,6 +165,39 @@ class DefaultControllerTest extends WebTestCase
         $this->assertTrue($count > 0);
     }
 
+
+    public function testMailSent()
+    {
+        $TEST_SUBJ = "Test Sub";
+        $TEST_BODY = "Test Body";
+
+        $this->authenticate('admin');
+        $this->client->enableProfiler();
+
+        $crawler = $this->client->request('GET', '/admin/mail/1');
+            
+        $buttonNode = $crawler->selectButton('Send');
+        $form = $buttonNode->form();
+        
+        $form['form[subject]'] = $TEST_SUBJ;
+        $form['form[body]'] = $TEST_BODY;
+        
+        $this->client->enableProfiler();        
+        $crawler = $this->client->submit($form); 
+        $mailCollector = $this->client->getProfile()->getCollector('swiftmailer');
+
+        // Check that an e-mail was sent
+        $this->assertEquals(1, $mailCollector->getMessageCount());
+
+        $collectedMessages = $mailCollector->getMessages();
+        $message = $collectedMessages[0];
+
+        // Asserting e-mail data
+        $this->assertInstanceOf('Swift_Message', $message);
+        $this->assertEquals($TEST_SUBJ, $message->getSubject());
+        $this->assertEquals($TEST_BODY, $message->getBody()); 
+    }
+
     /* 
         test that admin will not be displayed 
     */

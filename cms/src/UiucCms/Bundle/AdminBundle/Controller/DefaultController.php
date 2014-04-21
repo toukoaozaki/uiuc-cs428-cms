@@ -83,7 +83,11 @@ class DefaultController extends Controller
             $subject = $form["subject"]->getData();
             $body = $form["body"]->getData();
             
-            return $this->render('UiucCmsAdminBundle:Default:sent.html.twig', array('name' => $subject));
+            $mail->setSubject($subject);
+            $mail->setBody($body);
+            $numSent = $mail->sendMail($this->get('mailer'));
+
+            return $this->render('UiucCmsAdminBundle:Default:sent.html.twig', array('name' => $numSent));
 
         }
         

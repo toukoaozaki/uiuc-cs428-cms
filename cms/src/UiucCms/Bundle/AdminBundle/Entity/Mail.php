@@ -56,19 +56,20 @@ class Mail
     
     public function sendMail($mailer)
     {
-        $message = Swift_Message::newInstance()
+        $message = \Swift_Message::newInstance()
+            ->setTo($this->to)
             ->setSubject($this->subject)
             ->setFrom($this->from)
-            ->setBody(
-                $this->renderView(
-                    'UiucCmsAdminBundle:Default:mail.txt.twig',
-                    array('body' => $body)
-                )
-            )
+            ->setBody($this->body)
+                #$this->renderView(
+                #    'UiucCmsAdminBundle:Default:mail.txt.twig',
+                #    array('body' => $body)
+                #)
+            #)
         ;
         
         //get Swift_Message bundle working to use
-        $mailer->send($message);
+        return $mailer->send($message);
     }   
 }
 

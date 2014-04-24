@@ -17,7 +17,7 @@
         {% if enrollment %}
             You have enrolled in this conference at {{ enrollment.enrollmentDate|date('Y-m-d h:i:s') }}.
         {% else %}
-            <li><a href="{{ path('uiuc_cms_conference_enroll', {'id': conference.id }) }}">Enroll in this conference</a>
+            <li><a href="{{ path('uiuc_cms_conference_enrollInfo', {'id': conference.id }) }}">Enroll in this conference</a>
         {% endif %}
         
         <li><a href="{{ path('uiuc_cms_conference_homepage') }}">Back to listings</li>

@@ -3,6 +3,7 @@
 namespace UiucCms\Bundle\ConferenceBundle\Controller;
 
 use UiucCms\Bundle\ConferenceBundle\Form\Type\ConferenceType;
+use UiucCms\Bundle\ConferenceBundle\Form\Type\InfoType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use UiucCms\Bundle\ConferenceBundle\Entity\Conference;
 use UiucCms\Bundle\ConferenceBundle\Entity\Enrollment;
@@ -163,11 +164,16 @@ class ConferenceController extends Controller
     /**
      * Submits an enrollment for a conference.
      */
-    public function enrollAction(Conference $conference)
+    public function enrollAction(Request $request, Conference $conference)
     {
         $user = $this->getUser();
         $userId = $user->getId();
         $confId = $conference->getId();
+        
+        $form = $this->createForm(new InfoType());
+        $form->handleRequest($request);
+        $food = $form['food']->getData();
+        $abstract = $form['abstract']->getData();
         if (null === $this->getEnrollment($user, $conference)) {
             
             $enrollment = new Enrollment();
@@ -175,6 +181,8 @@ class ConferenceController extends Controller
             $enrollment->setAttendeeId($userId);
             $enrollment->updateEnrollmentDate();
             $enrollment->setCoverFeeStatus(Enrollment::FEE_STATUS_UNPAID);
+            $enrollment->setFood($food);
+            $enrollment->setAbstract($abstract);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($enrollment);
@@ -273,4 +281,25 @@ class ConferenceController extends Controller
                   'attendees'  => $attendees));
     }
     
+    /**
+     * Generates a form with the necessary fields for enrollment information.
+     */
+    public function enrollInfoAction(Conference $conference) 
+    {
+        $confId = $conference->getId();
+        $form = $this->createForm(
+            new InfoType(),
+            null,
+            array(
+                'action' => $this->generateUrl(
+                    'uiuc_cms_conference_enroll',
+                    array('id' => $confId)
+                )
+            )
+        );
+     
+        return $this->render(
+            'UiucCmsConferenceBundle:Conference:info.html.twig',
+            array( 'form' => $form->createView(),));
+    }
 }

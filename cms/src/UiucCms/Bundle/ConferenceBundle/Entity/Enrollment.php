@@ -39,6 +39,16 @@ class Enrollment
      */
     private $coverFeeStatus;
 
+    /**
+     * @var string
+     */
+    private $food;
+    
+    /**
+     * @var string
+     */
+    private $paperAbstract;
+    
     public function __construct()
     {
     }
@@ -138,5 +148,29 @@ class Enrollment
     public function getCoverFeeStatus()
     {
         return $this->coverFeeStatus;
+    }
+    
+    public function setFood($food)
+    {
+        $this->food = $food;
+        
+        return $this;
+    }
+    
+    public function getFood()
+    {
+        return $this->food;
+    }
+    
+    public function setAbstract($abstract)
+    {
+        $this->paperAbstract = $abstract;
+        
+        return $this;
+    }
+    
+    public function getAbstract()
+    {
+        return $this->paperAbstract;
     }
 }

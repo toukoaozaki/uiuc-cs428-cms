@@ -18,4 +18,10 @@ UiucCms\Bundle\ConferenceBundle\Entity\Enrollment:
             type: datetime
         coverFeeStatus:
             type: integer
+        food:
+            type: string
+            length: 255
+        paperAbstract:
+            type: string
+            length: 255
     lifecycleCallbacks: {  }

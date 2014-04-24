@@ -1,0 +1,12 @@
+{% form_theme form 'UiucCmsUserBundle:Form:fields.html.twig' %}
+{% extends 'UiucCmsConferenceBundle::layout.html.twig' %}
+
+{% block content %}
+	<div class="container" style="text-align:center; width:300px">
+        {% if error is defined %}
+            <div class="alert alert-danger"> {{ error }} </div>
+        {% endif %}
+        Additional information:
+        {{ form(form) }}
+	</div>
+{% endblock content %}

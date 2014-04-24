@@ -34,5 +34,7 @@ uiuc_cms_conference_manage:
     pattern:  /manage/{id}
     defaults: { _controller: UiucCmsConferenceBundle:Conference:manage }
 
-
+uiuc_cms_conference_enrollInfo:
+    pattern:  /enroll/{id}/enrollInfo
+    defaults: { _controller: UiucCmsConferenceBundle:Conference:enrollInfo }
 

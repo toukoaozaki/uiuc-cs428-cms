@@ -29,6 +29,13 @@ class LoadTestUser implements FixtureInterface, ContainerAwareInterface
 
     public function load(ObjectManager $manager)
     {
+        if (!in_array(
+            $this->container->get('kernel')->getEnvironment(),
+            array('test')
+        )) {
+            // skip in non-test environment
+            return;
+        }
 
         $userManager = $this->container->get('fos_user.user_manager');
 

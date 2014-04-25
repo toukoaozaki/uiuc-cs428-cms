@@ -29,8 +29,11 @@
             {{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}
         </button>
         <div>
+            <a class="btn" href="{{ path('fos_user_resetting_request') }}">
+                {{ 'form.security.login.reset_password'|trans }}
+            </a>
             <a class="btn" href="{{ path('fos_user_registration_register') }}">
-                Don't have an account? Register here!
+                {{ 'form.security.login.register_account'|trans }}
             </a>
         </div>
     </form>

@@ -1,6 +1,9 @@
 imports:
     - { resource: config_dev.yml }
 
+parameters:
+    translator.class: "%uiuc_cms_test_utility.identity_translator.class%"
+
 framework:
     test: ~
     session:

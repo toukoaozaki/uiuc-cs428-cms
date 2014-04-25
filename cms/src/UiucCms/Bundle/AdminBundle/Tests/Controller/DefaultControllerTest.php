@@ -2,7 +2,7 @@
 
 namespace UiucCms\Bundle\AdminBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use UiucCms\Bundle\TestUtilityBundle\TestFixtures\FunctionalTestCase;
 use UiucCms\Bundle\UserBundle\DataFixtures\ORM\Test\LoadTestUser;
 use UiucCms\Bundle\UserBundle\DataFixtures\ORM\Common\LoadSuperuser;
 use UiucCms\Bundle\UserBundle\DataFixtures\ORM\Common\LoadConference;
@@ -14,7 +14,7 @@ use UiucCms\Bundle\AdminBundle\Entity\Mail;
 
 use UiucCms\Bundle\AdminBundle\Controller\DefaultController;
 
-class DefaultControllerTest extends WebTestCase
+class DefaultControllerTest extends FunctionalTestCase
 {
 
     private $client;
@@ -24,18 +24,16 @@ class DefaultControllerTest extends WebTestCase
     {
         $this->client = static::createClient();
         $this->container = $this->client->getContainer();
-        $this->setupFixtures($this->container);
-        $this->router = $this->container->get('router');
-    
+        $this->router = $this->container->get('router');   
     }
-    public function testIndex()
+
+    protected static function getDataFixtures()
     {
-
-        $crawler = $this->client->request('GET', '/hello/Fabien');
-
-        $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
+        $list = parent::getDataFixtures();
+        $list[] = new LoadConference();
+        return $list;
     }
-        
+
     /*
         test that super admin will not be displayed in the list of users that can be promoted
     */
@@ -45,36 +43,11 @@ class DefaultControllerTest extends WebTestCase
 
         $this->assertTrue($crawler->filter('html:contains("admin@domain.com")')->count() == 0); 
     }
-
-    private function authenticate($type)
-    {
-        $crawler = $this->client->request('GET', $this->router->generate(
-            'fos_user_security_login',
-            array(),
-            true));
-        $buttonNode = $crawler->selectButton('Login');
-        $form = $buttonNode->form();
-
-        if ($type == 'user') {
-            $form['_username'] = LoadTestUser::TEST_USERNAME;
-            $form['_password'] = LoadTestUser::TEST_PASSWORD;
-        }
-        else if ($type == 'admin') {
-            $form['_username'] = LoadSuperuser::USERNAME;
-            $form['_password'] = LoadSuperuser::PASSWORD;
-        }
-        else {
-            throw new Exception('Invalid authenticate() parameter.');
-        }
-        
-        $this->client->submit($form);
-        
-    }
     //test mail failure
     
     public function testMailFail()
     {
-        $this->authenticate('admin');
+        $this->authenticateSuperuser($this->client);
     
         $crawler = 
             $this->client->request('GET', '/admin/mail/1');
@@ -90,7 +63,7 @@ class DefaultControllerTest extends WebTestCase
     
     public function testMailFail2()
     {
-        $this->authenticate('admin');
+        $this->authenticateSuperuser($this->client);
     
         $crawler = 
             $this->client->request('GET', '/admin/mail/1');
@@ -134,7 +107,7 @@ class DefaultControllerTest extends WebTestCase
      */
     public function testNoAttendees()
     {
-        $this->authenticate('admin');
+        $this->authenticateSuperuser($this->client);
         $crawler = 
             $this->client->request('GET', '/conf/manage/1');
     
@@ -147,7 +120,7 @@ class DefaultControllerTest extends WebTestCase
      */
     public function testSendMail()
     {
-        $this->authenticate('admin');
+        $this->authenticateSuperuser($this->client);
     
         $crawler = 
             $this->client->request('GET', '/admin/mail/1');
@@ -171,7 +144,7 @@ class DefaultControllerTest extends WebTestCase
         $TEST_SUBJ = "Test Sub";
         $TEST_BODY = "Test Body";
 
-        $this->authenticate('admin');
+        $this->authenticateSuperuser($this->client);
         $this->client->enableProfiler();
 
         $crawler = $this->client->request('GET', '/admin/mail/1');
@@ -203,8 +176,8 @@ class DefaultControllerTest extends WebTestCase
     */
     public function testPromote()
     {
-		$this->authenticate('admin');
-		
+        $this->authenticateSuperuser($this->client);
+    
         $crawler = $this->client->request('GET', '/user/admin/show');
         $proCount = $crawler->filter('html:contains("Promote")')->count();
         $link = $crawler->filter('a:contains("Promote")')->eq(0)->link();
@@ -229,38 +202,12 @@ class DefaultControllerTest extends WebTestCase
     */
     public function testRemove()
     {
-		$this->authenticate('admin');
-		
+        $this->authenticateSuperuser($this->client);
+
         $crawler = $this->client->request('GET', '/user/admin/show');
         $proCount = $crawler->filter('html:contains("Remove")')->count();
         $link = $crawler->filter('a:contains("Remove")')->eq(0)->link();
         $crawler = $this->client->click($link);
         $this->assertTrue($crawler->filter('html:contains("Remove")')->count() == $proCount - 1);
-    }
-    
-    private function setupFixtures($container)
-    {
-        // get entity manager
-        $em = $container->get('doctrine')->getManager();
-        $purger = new ORMPurger($em);
-        $executor = new ORMExecutor($em, $purger);
-        // purge fixtures
-        $executor->purge();
-        // load fixtures
-        $loader = new Loader();
-        $fixtures = new LoadTestUser();
-        $fixtures->setContainer($container);
-        
-        $adminFixtures = new LoadSuperuser();
-        $adminFixtures->setContainer($container);
-        
-        $conferenceFixtures = new LoadConference();
-        $conferenceFixtures->setContainer($container);
-
-        $loader->addFixture($conferenceFixtures);
-        $loader->addFixture($fixtures);
-        $loader->addFixture($adminFixtures);
-
-        $executor->execute($loader->getFixtures());
     }
 }

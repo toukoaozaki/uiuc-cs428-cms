@@ -1,0 +1,4 @@
+# UiucCmsUserBundle:messages.en.yml
+
+form.security.login.reset_password: "Forgot your password?"
+form.security.login.register_account: "Don't have an account? Register here!"

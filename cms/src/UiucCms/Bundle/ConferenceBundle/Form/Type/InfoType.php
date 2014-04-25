@@ -11,12 +11,12 @@ class InfoType extends AbstractType
     {
         $builder->add('food', 'choice', array(
             'choices' => array(
-                'non-vegetarian' => 'non-vegetarian',
-                'vegetarian' => 'vegetarian'
+                'non-vegetarian' => 'Non-vegetarian',
+                'vegetarian' => 'Vegetarian'
             ), 
             'preferred_choices' => array('none'), 
             'empty_value' => 'Choose your food',
-            'empty_data'  => 'none'
+            'empty_data'  => 'None'
             )
         );
         $builder->add('abstract', 'textarea', 

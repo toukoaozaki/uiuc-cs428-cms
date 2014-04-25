@@ -10,3 +10,4 @@ services:
             - "@router"
             - "@payment.plugin_controller"
             - "@doctrine.orm.entity_manager"
+            - "@security.context"

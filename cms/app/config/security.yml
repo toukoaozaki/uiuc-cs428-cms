@@ -16,7 +16,7 @@ security:
             security: false
 
         secured_area:
-            pattern:  ^/(user|conf|admin)/
+            pattern:  ^/(user|conf|admin|payment)/
             form_login:
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
@@ -48,3 +48,7 @@ security:
         - { path: ^/user/login/$, roles: IS_AUTHENTICATED_ANONYMOUSLY } #, requires_channel: https }
         - { path: ^/user/register/$, roles: IS_AUTHENTICATED_ANONYMOUSLY } #, requires_channel: https }
         - { path: ^/user/reset/$, roles: IS_AUTHENTICATED_ANONYMOUSLY } #, requires_channel: https }
+        - { path: ^/payment/demo/$, roles: IS_AUTHENTICATED_ANONYMOUSLY } #, requires_channel: https }
+        - { path: ^/payment/paymentReturn/$, roles: IS_AUTHENTICATED_ANONYMOUSLY } #, requires_channel: https }
+        - { path: ^/payment/start/$, roles: IS_AUTHENTICATED_ANONYMOUSLY } #, requires_channel: https }
+        - { path: ^/payment/complete/$, roles: IS_AUTHENTICATED_ANONYMOUSLY } #, requires_channel: https }

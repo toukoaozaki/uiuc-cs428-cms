@@ -88,4 +88,14 @@ abstract class FunctionalTestCase extends WebTestCase
             LoadSuperuser::PASSWORD
         );
     }
+
+    protected static function getUserUsername()
+    {
+        return LoadTestUser::TEST_USERNAME;
+    }
+
+    protected static function getSuperuserUsername()
+    {
+        return LoadSuperuser::USERNAME;
+    }
 }

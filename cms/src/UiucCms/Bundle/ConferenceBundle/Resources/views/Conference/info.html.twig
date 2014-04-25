@@ -6,7 +6,20 @@
         {% if error is defined %}
             <div class="alert alert-danger"> {{ error }} </div>
         {% endif %}
-        Additional information:
-        {{ form(form) }}
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+        <table class="table table-striped" style="text-align:left;">
+            <tr><h2>Additional Information</h2></tr>
+            <tr>
+                <td> {{ form_label(form.food) }} </td>
+                <td> {{ form_widget(form.food) }} </td>
+            </tr>
+            <tr>
+                <td> {{ form_label(form.abstract) }} </td>
+                <td> {{ form_widget(form.abstract) }} </td>
+            </tr>
+        </table>
+        {{ form_widget(form.enroll) }}
+        {{ form_end(form) }}
 	</div>
 {% endblock content %}

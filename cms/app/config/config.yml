@@ -87,4 +87,4 @@ uiuc_cms_ui_pay_payment:
     server_url: ~
     site_id: %ipay_site_id%
     send_key: "%ipay_send_key%"
-    recv_key: "%ipay_recv_key"
+    recv_key: "%ipay_recv_key%"

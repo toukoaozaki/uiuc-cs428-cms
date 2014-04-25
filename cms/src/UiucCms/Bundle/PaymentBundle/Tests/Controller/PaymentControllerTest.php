@@ -87,7 +87,7 @@ class PaymentControllerTest extends WebTestCase
         );
         $this->assertTrue($this->client->getResponse()->isSuccessful());
         // use "Success" method
-        $form = $crawler->selectButton('Continue')->form();
+        $form = $crawler->selectButton('form.choose_payment.submit')->form();
         $form['jms_choose_payment_method[method]']->select('dummy_success');
         $this->client->submit($form);
         // must be a redirection
@@ -130,7 +130,7 @@ class PaymentControllerTest extends WebTestCase
         );
         $this->assertTrue($this->client->getResponse()->isSuccessful());
         // use "Success" method
-        $form = $crawler->selectButton('Continue')->form();
+        $form = $crawler->selectButton('form.choose_payment.submit')->form();
         $form['jms_choose_payment_method[method]']->select('dummy_failure');
         $this->client->submit($form);
         // must be a redirection

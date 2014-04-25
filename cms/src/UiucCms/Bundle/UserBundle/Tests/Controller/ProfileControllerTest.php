@@ -2,13 +2,13 @@
 
 namespace UiucCms\Bundle\UserBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use UiucCms\Bundle\UserBundle\DataFixtures\ORM\Test\LoadTestUser;
+use UiucCms\Bundle\TestUtilityBundle\TestFixtures\FunctionalTestCase;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
 
-class ProfileControllerTest extends WebTestCase
+class ProfileControllerTest extends FunctionalTestCase
 {
     private $client;
     private $router;
@@ -19,7 +19,6 @@ class ProfileControllerTest extends WebTestCase
     {
         $this->client = static::createClient();
         $this->container = $this->client->getContainer();
-        $this->setupFixtures($this->container);
         $this->router = $this->container->get('router');
         $this->login_url = $this->router->generate(
             'fos_user_security_login',
@@ -44,7 +43,7 @@ class ProfileControllerTest extends WebTestCase
 
     public function testProfilePage()
     {
-        $this->authenticate();
+        static::authenticateUser($this->client);
         $crawler = $this->client->request('GET', $this->profile_url);
         // must succeed
         $this->assertTrue($this->client->getResponse()->isSuccessful());
@@ -69,32 +68,5 @@ class ProfileControllerTest extends WebTestCase
             0,
             $crawler->filter('a[href="'.$this->profile_edit_url.'"]')->count()
         );
-    }
-
-    private function authenticate()
-    {
-        $crawler = $this->client->request('GET', $this->login_url);
-        $buttonNode = $crawler->selectButton('Login');
-        $form = $buttonNode->form();
-
-        $form['_username'] = LoadTestUser::TEST_USERNAME;
-        $form['_password'] = LoadTestUser::TEST_PASSWORD;
-        $this->client->submit($form);
-    }
-
-    private function setupFixtures($container)
-    {
-        // get entity manager
-        $em = $container->get('doctrine')->getManager();
-        $purger = new ORMPurger($em);
-        $executor = new ORMExecutor($em, $purger);
-        // purge fixtures
-        $executor->purge();
-        // load fixtures
-        $loader = new Loader();
-        $fixtures = new LoadTestUser();
-        $fixtures->setContainer($container);
-        $loader->addFixture($fixtures);
-        $executor->execute($loader->getFixtures());
     }
 }

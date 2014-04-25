@@ -2,27 +2,19 @@
 
 namespace UiucCms\Bundle\ConferenceBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use UiucCms\Bundle\TestUtilityBundle\TestFixtures\FunctionalTestCase;
 use UiucCms\Bundle\ConferenceBundle\Form\Type\ConferenceType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use UiucCms\Bundle\ConferenceBundle\Entity\Conference;
 use \Exception;
 
-use UiucCms\Bundle\UserBundle\DataFixtures\ORM\Test\LoadTestUser;
-use UiucCms\Bundle\UserBundle\DataFixtures\ORM\Common\LoadSuperuser;
-use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
-use Doctrine\Common\DataFixtures\Loader;
-
-
 use \DateTime;
 use \DateInterval;
 
-class DefaultControllerTest extends WebTestCase
+class DefaultControllerTest extends FunctionalTestCase
 {
     private $client;
     private $router;
-    private $login_url;
     private $profile_url;
     private $index_url;
     private $create_conf_url;
@@ -39,46 +31,15 @@ class DefaultControllerTest extends WebTestCase
     private $validStartTime; 
     private $validEndTime;
 
-    private function setupFixtures($container)
-    {
-        // get entity manager
-        $em = $container->get('doctrine')->getManager();
-        $purger = new ORMPurger($em);
-        $executor = new ORMExecutor($em, $purger);
-        // purge fixtures
-        $executor->purge();
-        // load fixtures
-        $loader = new Loader();
-        $userFixtures = new LoadTestUser();
-        $userFixtures->setContainer($container);
-        $adminFixtures = new LoadSuperuser();
-        $adminFixtures->setContainer($container);
-        $loader->addFixture($userFixtures);
-        $loader->addFixture($adminFixtures);
-        $executor->execute($loader->getFixtures());
-        
-        $this->invalidStartTime = new DateTime('now');
-        $this->lateStartTime = (new DateTime('now'))->
-            add(DateInterval::createFromDateString('10 days'));
-        $this->validStartTime = (new DateTime('now'))->
-            add(DateInterval::createFromDateString('1 days'));
-        $this->validEndTime = (new DateTime('now'))->
-            add(DateInterval::createFromDateString('5 days'));
-
-    }
-
     protected function setUp()
     {
+        parent::setUp();
+
         $this->client = static::createClient();
         $this->container = $this->client->getContainer();
-        $this->setupFixtures($this->container);
         $this->router = $this->container->get('router');
         $this->index_url = $this->router->generate(
             'uiuc_cms_conference_homepage',
-            array(),
-            true);
-        $this->login_url = $this->router->generate(
-            'fos_user_security_login',
             array(),
             true);
         $this->create_conf_url = $this->router->generate(
@@ -91,33 +52,18 @@ class DefaultControllerTest extends WebTestCase
             array(),
             true);
       
-    }
-
-    
-    private function authenticate($type)
-    {
-        $crawler = $this->client->request('GET', $this->login_url);
-        $buttonNode = $crawler->selectButton('Login');
-        $form = $buttonNode->form();
-
-        if ($type == 'user') {
-            $form['_username'] = LoadTestUser::TEST_USERNAME;
-            $form['_password'] = LoadTestUser::TEST_PASSWORD;
-        }
-        else if ($type == 'admin') {
-            $form['_username'] = LoadSuperuser::USERNAME;
-            $form['_password'] = LoadSuperuser::PASSWORD;
-        }
-        else {
-            throw new Exception('Invalid authenticate() parameter.');
-        }
-        
-        $this->client->submit($form);
+        $this->invalidStartTime = new DateTime('now');
+        $this->lateStartTime = (new DateTime('now'))->
+            add(DateInterval::createFromDateString('10 days'));
+        $this->validStartTime = (new DateTime('now'))->
+            add(DateInterval::createFromDateString('1 days'));
+        $this->validEndTime = (new DateTime('now'))->
+            add(DateInterval::createFromDateString('5 days'));
     }
 
     public function testIndex()
     {
-        $this->authenticate('user');
+        $this->authenticateUser($this->client);
         $crawler = $this->client->request('GET', $this->index_url);
         $this->assertGreaterThan(
             0,
@@ -126,7 +72,7 @@ class DefaultControllerTest extends WebTestCase
 
     public function testCreatePermissionsAdmin()
     {
-        $this->authenticate('admin');
+        $this->authenticateSuperuser($this->client);
         $crawler = $this->client->request('GET', $this->create_conf_url);
         $this->assertTrue(
             $crawler->filter(
@@ -135,7 +81,7 @@ class DefaultControllerTest extends WebTestCase
     
     public function testCreatePermissionsUser()
     {
-        $this->authenticate('user');
+        $this->authenticateUser($this->client);
         $crawler = $this->client->request('GET', $this->create_conf_url);
         $this->assertTrue(
             $crawler->filter(
@@ -144,7 +90,7 @@ class DefaultControllerTest extends WebTestCase
 
     public function testViewCreatedPermissionsAdmin()
     {
-        $this->authenticate('admin');
+        $this->authenticateSuperuser($this->client);
         $crawler = $this->client->request('GET', $this->view_created_conf_url);
         $this->assertTrue(
             $crawler->filter(
@@ -153,7 +99,7 @@ class DefaultControllerTest extends WebTestCase
     
     public function testViewCreatedPermissionsUser()
     {
-        $this->authenticate('user');
+        $this->authenticateUser($this->client);
         $crawler = $this->client->request('GET', $this->view_created_conf_url);
         $this->assertTrue(
             $crawler->filter(
@@ -162,7 +108,7 @@ class DefaultControllerTest extends WebTestCase
 
     public function testSuccessfulValidator()
     {
-        $this->authenticate('admin'); 
+        $this->authenticateSuperuser($this->client); 
         $crawler = $this->client->request('GET', $this->create_conf_url);
         $buttonNode = $crawler->selectButton('Create');
         $form = $buttonNode->form();
@@ -204,7 +150,7 @@ class DefaultControllerTest extends WebTestCase
 
     public function testNoNameValidator()
     {
-        $this->authenticate('admin'); 
+        $this->authenticateSuperuser($this->client); 
         $crawler = $this->client->request('GET', $this->create_conf_url);
         $buttonNode = $crawler->selectButton('Create');
         $form = $buttonNode->form();
@@ -225,7 +171,7 @@ class DefaultControllerTest extends WebTestCase
   
     public function testShortNameValidator()
     {
-        $this->authenticate('admin'); 
+        $this->authenticateSuperuser($this->client); 
         $crawler = $this->client->request('GET', $this->create_conf_url);
         $buttonNode = $crawler->selectButton('Create');
         $form = $buttonNode->form();
@@ -247,7 +193,7 @@ class DefaultControllerTest extends WebTestCase
 
     public function testNoYearValidator()
     {
-        $this->authenticate('admin'); 
+        $this->authenticateSuperuser($this->client); 
         $crawler = $this->client->request('GET', $this->create_conf_url);
         $buttonNode = $crawler->selectButton('Create');
         $form = $buttonNode->form();
@@ -269,7 +215,7 @@ class DefaultControllerTest extends WebTestCase
 
     public function testNoTopicValidator()
     {
-        $this->authenticate('admin'); 
+        $this->authenticateSuperuser($this->client); 
         $crawler = $this->client->request('GET', $this->create_conf_url);
         $buttonNode = $crawler->selectButton('Create');
         $form = $buttonNode->form();
@@ -291,7 +237,7 @@ class DefaultControllerTest extends WebTestCase
     
     public function testValidStartDate()
     {
-        $this->authenticate('admin'); 
+        $this->authenticateSuperuser($this->client); 
         $crawler = $this->client->request('GET', $this->create_conf_url);
         $buttonNode = $crawler->selectButton('Create');
         $form = $buttonNode->form();
@@ -335,7 +281,7 @@ class DefaultControllerTest extends WebTestCase
 
     public function testLateStartDate()
     {
-        $this->authenticate('admin'); 
+        $this->authenticateSuperuser($this->client); 
         $crawler = $this->client->request('GET', $this->create_conf_url);
         $buttonNode = $crawler->selectButton('Create');
         $form = $buttonNode->form();
@@ -377,7 +323,7 @@ class DefaultControllerTest extends WebTestCase
 
     public function testMismatchingYear()
     {
-        $this->authenticate('admin'); 
+        $this->authenticateSuperuser($this->client); 
         $crawler = $this->client->request('GET', $this->create_conf_url);
         $buttonNode = $crawler->selectButton('Create');
         $form = $buttonNode->form();

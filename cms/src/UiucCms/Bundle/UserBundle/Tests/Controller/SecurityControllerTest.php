@@ -25,4 +25,37 @@ class SecurityControllerTest extends WebTestCase
         );
     }
 
+    public function testLoginPageRegisterLink()
+    {
+        $client = static::createClient();
+        $router = $client->getContainer()->get('router');
+        $login_url = $router->generate('fos_user_security_login');
+        $crawler = $client->request('GET', $login_url);
+        // the page must be accessible
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $link = $crawler->selectLink('form.security.login.register_account');
+        // login page must have register link
+        $this->assertNotNull($link);
+        $this->assertEquals(
+            $router->generate('fos_user_registration_register', array(), true),
+            $link->link()->getUri()
+        );
+    }
+
+    public function testLoginPagePasswordResetLink()
+    {
+        $client = static::createClient();
+        $router = $client->getContainer()->get('router');
+        $login_url = $router->generate('fos_user_security_login');
+        $crawler = $client->request('GET', $login_url);
+        // the page must be accessible
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $link = $crawler->selectLink('form.security.login.reset_password');
+        // login page must have register link
+        $this->assertNotNull($link);
+        $this->assertEquals(
+            $router->generate('fos_user_resetting_request', array(), true),
+            $link->link()->getUri()
+        );
+    }
 }

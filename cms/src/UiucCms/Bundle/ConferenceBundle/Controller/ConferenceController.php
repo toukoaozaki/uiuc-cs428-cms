@@ -228,7 +228,9 @@ class ConferenceController extends Controller
                     true
                 )
             );
+            $enrollment->setCurrentOrder($order);
             $em->persist($order);
+            $em->persist($enrollment);
         }
         // see whether the order is complete
         $instr = $order->getPaymentInstruction();

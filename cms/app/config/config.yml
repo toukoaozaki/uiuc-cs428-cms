@@ -80,3 +80,11 @@ fos_user:
 jms_payment_core:
     # warning: changing this will render any existing payment data unreadable
     secret: "%payment_secret%"
+
+uiuc_cms_ui_pay_payment:
+    test_server: %ipay_test%
+    # specifying server url will override regardless of test_server value 
+    server_url: ~
+    site_id: %ipay_site_id%
+    send_key: "%ipay_send_key%"
+    recv_key: "%ipay_recv_key"

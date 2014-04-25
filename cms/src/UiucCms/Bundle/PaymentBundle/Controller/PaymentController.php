@@ -49,7 +49,15 @@ class PaymentController
             null,
             array(
                 'amount' => $order->getAmount(),
-                'currency' => $order->getCurrency()
+                'currency' => $order->getCurrency(),
+                'predefined_data' => array(
+                    'uofi_payment' => array(
+                        'return_url' => $this->router->generate(
+                            'uiuc_cms_payment_complete',
+                            array('order' => $order->getOrderNumber())
+                        ),
+                    ),
+                ),
             )
         );
 

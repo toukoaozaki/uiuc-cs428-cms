@@ -4,11 +4,12 @@ namespace UiucCms\Bundle\ConferenceBundle\Controller;
 
 use UiucCms\Bundle\ConferenceBundle\Form\Type\ConferenceType;
 use UiucCms\Bundle\ConferenceBundle\Form\Type\InfoType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use UiucCms\Bundle\ConferenceBundle\Entity\Conference;
 use UiucCms\Bundle\ConferenceBundle\Entity\Enrollment;
 use UiucCms\Bundle\PaymentBundle\Entity\Order;
+use JMS\Payment\CoreBundle\Model\PaymentInstructionInterface as PaymentInstruction;
 
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -228,7 +229,9 @@ class ConferenceController extends Controller
                     true
                 )
             );
+            $enrollment->setCurrentOrder($order);
             $em->persist($order);
+            $em->persist($enrollment);
         }
         // see whether the order is complete
         $instr = $order->getPaymentInstruction();

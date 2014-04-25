@@ -12,6 +12,7 @@
         City: {{ conference.city }} <br>
         Registration Begins: {{ conference.registerBeginDate|date('Y-m-d h:i:s') }} <br>
         Registration Ends: {{ conference.registerEndDate|date('Y-m-d h:i:s') }} <br>
+        Topics: {{ conference.getTopics() }} <br>
     </p>
     <p>
         {% if enrollment %}

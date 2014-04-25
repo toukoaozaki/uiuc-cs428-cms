@@ -142,6 +142,8 @@ class DefaultControllerTest extends FunctionalTestCase
 
         $crawler = $this->client->submit($form);
 
+        $crawler = $this->client->followRedirect(); 
+
         $this->assertGreaterThan(
             0,
             $crawler->filter('html:contains("Details for")')->count());

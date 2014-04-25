@@ -130,7 +130,13 @@ class ConferenceController extends Controller
 
         $em->persist($conference);
         $em->flush();
-        return $this->manageAction($conference->getId());
+   
+        return $this->redirect(
+            $this->generateUrl(
+                'uiuc_cms_conference_manage',
+                array('id' => $conference->getId())
+            )
+        );
     }
 
     /**

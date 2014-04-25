@@ -20,14 +20,19 @@
         {% if enrollment %}
             You have enrolled in this conference at 
                 {{ enrollment.enrollmentDate|date('Y-m-d h:i:s') }}.
-            
-            <div class="panel panel-default" style="width: 400px;">
-                    <div class="panel-heading">Food Option</div>
-                    <div class="panel-body">{{ enrollment.food }}</div>
-                    <div class="panel-heading">Abstract</div>
-                    <div class="panel-body">{{ enrollment.abstract }}</div>
-                    <div class="panel-heading">Cover Fee</div>
-                    <div class="panel-body">
+                <br>
+            <table class="table table-striped" style="text-align:left; width:500px;">
+                    <tr>
+                        <th>Food Option</th>
+                        <td>{{ enrollment.food }}</td>
+                    </tr>
+                    <tr>
+                        <th>Abstract</th>
+                        <td>{{ enrollment.abstract }}</td>
+                    </tr>
+                    <tr>
+                        <th>Cover Fee</th>
+                        <td>
                         {% if enrollment.coverFeeStatus == constant('FEE_STATUS_UNPAID', enrollment) %}
                             <a href="{{ path('uiuc_cms_conference_pay_fee',
                                         {'id': conference.id}) }}">
@@ -40,8 +45,9 @@
                         {% else %}
                             Unknown; please contact administrator.
                         {% endif %}
-                    </div>
-            </div>
+                    </td>
+                </table>
+            
         {% else %}
             <li><a href="{{ path('uiuc_cms_conference_enrollInfo', 
                 {'id': conference.id }) }}">

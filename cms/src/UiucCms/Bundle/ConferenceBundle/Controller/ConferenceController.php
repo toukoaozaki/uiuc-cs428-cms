@@ -23,7 +23,7 @@ class ConferenceController extends Controller
     /**
      * Queries the database for all conferences and returns a page listing them.
      */
-    public function indexAction()
+    public function listNotEnrolledAction()
     {
         $conferences = $this->getDoctrine()
                             ->getRepository('UiucCmsConferenceBundle:Conference')
@@ -42,7 +42,7 @@ class ConferenceController extends Controller
         }
 
         return $this->render(
-            'UiucCmsConferenceBundle:Conference:index.html.twig', 
+            'UiucCmsConferenceBundle:Conference:listNotEnrolled.html.twig', 
             array('conferences' => $unenrolledConferences, ));
     }
 
@@ -315,7 +315,7 @@ class ConferenceController extends Controller
     /**
      * Queries the database for all conferences that a user is currently enrolled in.
      */
-    public function enrolledInAction()
+    public function listEnrolledAction()
     {
         $conferences = $this->getDoctrine()
                             ->getRepository('UiucCmsConferenceBundle:Conference')
@@ -333,9 +333,8 @@ class ConferenceController extends Controller
             }
         }
         
-        // This could probably use its own page one day
         return $this->render(
-            'UiucCmsConferenceBundle:Conference:index.html.twig', 
+            'UiucCmsConferenceBundle:Conference:listEnrolled.html.twig', 
             array('conferences' => $enrolledConferences, ));
     }
 
@@ -349,7 +348,7 @@ class ConferenceController extends Controller
                             ->findByCreatedBy($this->getUser()->getId());
         
         return $this->render(
-            'UiucCmsConferenceBundle:Conference:view_created.html.twig',
+            'UiucCmsConferenceBundle:Conference:viewCreated.html.twig',
             array('conferences' => $conferences, ));
     }
 

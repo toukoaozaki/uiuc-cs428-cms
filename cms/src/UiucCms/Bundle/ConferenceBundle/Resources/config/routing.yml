@@ -1,6 +1,6 @@
-uiuc_cms_conference_homepage:
+uiuc_cms_conference_list_not_enrolled:
     pattern:  /
-    defaults: { _controller: UiucCmsConferenceBundle:Conference:index }
+    defaults: { _controller: UiucCmsConferenceBundle:Conference:listNotEnrolled }
 
 uiuc_cms_conference_create:
     pattern: /create
@@ -22,12 +22,12 @@ uiuc_cms_conference_create:
     pattern:  /create
     defaults: { _controller: UiucCmsConferenceBundle:Conference:create }
 
-uiuc_cms_conference_view:
+uiuc_cms_conference_list_enrolled:
     pattern:  /enrolled
-    defaults: { _controller: UiucCmsConferenceBundle:Conference:enrolledIn }
+    defaults: { _controller: UiucCmsConferenceBundle:Conference:listEnrolled }
 
 uiuc_cms_conference_view_created:
-    pattern:  /view_created/
+    pattern:  /viewCreated/
     defaults: { _controller: UiucCmsConferenceBundle:Conference:viewCreated }
 
 uiuc_cms_conference_manage:

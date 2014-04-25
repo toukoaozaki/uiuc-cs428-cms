@@ -19,7 +19,8 @@ class InfoType extends AbstractType
             'empty_data'  => 'none'
             )
         );
-        $builder->add('abstract', 'textarea', array('attr' => array('height' => '500')));
+        $builder->add('abstract', 'textarea', 
+            array('attr' => array('cols' => 50, 'rows' => '5')));
         $builder->add('enroll', 'submit');
     }
 

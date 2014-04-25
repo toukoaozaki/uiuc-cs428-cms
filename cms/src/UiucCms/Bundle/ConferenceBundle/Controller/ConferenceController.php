@@ -163,10 +163,15 @@ class ConferenceController extends Controller
             throw $this->createNotFoundException(
                 'No conference found with id: '.$id);
         }
-
-        $data = $query->getArrayResult();
-        $food = $data[0]['food'];
-        $abstract = $data[0]['paperAbstract'];
+        
+        $food = "";
+        $abstract = "";
+        
+        if ($enrollment != null) {
+            $data = $query->getArrayResult();
+            $food = $data[0]['food'];
+            $abstract = $data[0]['paperAbstract'];
+        }
         
         return $this->render(
             'UiucCmsConferenceBundle:Conference:display.html.twig',

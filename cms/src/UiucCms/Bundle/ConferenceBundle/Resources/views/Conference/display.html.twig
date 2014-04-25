@@ -22,11 +22,12 @@
                 {{ enrollment.enrollmentDate|date('Y-m-d h:i:s') }}.
             You have enrolled in this conference at 
                 {{ enrollment.enrollmentDate|date('Y-m-d h:i:s') }}.
-            <div class="panel panel-default" style="text-align: center;">
-                <div class="panel-heading"> Food Option </div>
-                <div class="panel-body">{{ food }}</div>
-                <div class="panel-heading"> Abstract </div>
-                <div class="panel-body">{{ abstract }}</div>
+            
+            <div class="panel panel-default" style="text-align: center; width: 400px;">
+                    <div class="panel-heading"> Food Option </div>
+                    <div class="panel-body">{{ food }}</div>
+                    <div class="panel-heading"> Abstract </div>
+                    <div class="panel-body">{{ abstract }}</div>
             </div>
         {% else %}
             <li><a href="{{ path('uiuc_cms_conference_enrollInfo', 

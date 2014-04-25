@@ -7,6 +7,7 @@ use UiucCms\Bundle\ConferenceBundle\Form\Type\InfoType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use UiucCms\Bundle\ConferenceBundle\Entity\Conference;
 use UiucCms\Bundle\ConferenceBundle\Entity\Enrollment;
+use UiucCms\Bundle\PaymentBundle\Entity\Order;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -143,48 +144,106 @@ class ConferenceController extends Controller
      * Displays a particular conference and all of its fields. Also checks whether or
      * not a user has already enrolled in that particular conference.
      */
-    public function displayAction($id)
+    public function displayAction(Conference $conference)
     {
-        $conference = $this->getDoctrine()
-                           ->getRepository('UiucCmsConferenceBundle:Conference')
-                           ->find($id);
-        
-        $enrollments = $this->getDoctrine()
-                            ->getRepository('UiucCmsConferenceBundle:Enrollment');
+        if (!$conference) {
+            throw $this->createNotFoundException(
+                'No conference found with id: '.$conference->getId()
+            );
+        }
         
         // We want to see if the user has already enrolled in this particular 
         // conference.
         
-        $userId = $this->getUser()->getId();
-        
-        $query = $enrollments->createQueryBuilder('e')
-                             ->where('e.conferenceId = :confId')
-                             ->andWhere('e.attendeeId = :userId')
-                             ->setParameters(['userId' => $userId, 'confId' => $id])
-                             ->getQuery();
-
-        $enrollment = $query->getOneOrNullResult();
+        $user = $this->getUser();
+        $enrollment = $this->getEnrollment($user, $conference);
        
-        if (!$conference) {
-            throw $this->createNotFoundException(
-                'No conference found with id: '.$id);
-        }
-        
-        $food = "";
-        $abstract = "";
-        
-        if ($enrollment != null) {
-            $data = $query->getArrayResult();
-            $food = $data[0]['food'];
-            $abstract = $data[0]['paperAbstract'];
-        }
-        
         return $this->render(
             'UiucCmsConferenceBundle:Conference:display.html.twig',
-            array('conference' => $conference,
-                  'enrollment' => $enrollment,
-                  'food' => $food,
-                  'abstract' => $abstract));
+            array(
+                'conference' => $conference,
+                'enrollment' => $enrollment
+            )
+        );
+    }
+
+    public function payFeesAction(Conference $conference)
+    {
+        if (!$conference) {
+            throw $this->createNotFoundException(
+                'No conference found with id: '.$conference->getId()
+            );
+        }
+
+        $em = $this->container->get('doctrine.orm.entity_manager');  
+        $user = $this->getUser();
+        $enrollment = $this->getEnrollment($user, $conference);
+        if (!$enrollment) {
+            throw $this->createNotFoundException(
+                'User is not enrolled to the conference.'
+            );
+        }
+
+        // check payment status
+        switch ($enrollment->getCoverFeeStatus()) {
+            case Enrollment::FEE_STATUS_UNPAID:
+                break;
+            case Enrollment::FEE_STATUS_PAID:
+            case Enrollment::FEE_STATUS_EXEMPT:
+                // user has already paid. redirect them to the conference
+                return $this->redirect(
+                    $this->generateUrl(
+                        'uiuc_cms_conference_display',
+                        array('id' => $conference->getId())
+                    )
+                );
+            default:
+                throw $this->createNotFoundException(
+                    'Unknown payment status'
+                );
+        }
+        // fee is not paid yet.
+        $order = $enrollment->getCurrentOrder();
+        if (!$order) {
+            // no order was placed yet. create a new order
+            $order = new Order('USD', 119.99);
+            $order->setOwner($user);
+            $order->setReturnUrl(
+                $this->generateUrl(
+                    'uiuc_cms_conference_pay_fee',
+                    array('id' => $conference->getId()),
+                    true
+                )
+            );
+            $em->persist($order);
+        }
+        // see whether the order is complete
+        $instr = $order->getPaymentInstruction();
+        if ($instr && $instr->getState() == PaymentInstruction::STATE_CLOSED) {
+
+            if ($instr->getAmount() == $instr->getDepositedAmount()) {
+                // user has already paid. redirect them to the conference
+                $enrollment->setCoverFeeStatus(Enrollment::FEE_STATUS_PAID);
+                $enrollment->setCurrentOrder(null);
+                $em->persist($enrollment);
+                $em->flush();
+                return $this->redirect(
+                    $this->generateUrl(
+                        'uiuc_cms_conference_display',
+                        array('id' => $conference->getId())
+                    )
+                );
+            } else {
+                // payment instruction is closed. remove it from the order
+                $order->setPaymentInstruction(null);
+                $em->persist($order);
+            }
+        }
+        $em->flush();
+        return $this->forward(
+            'uiuc_cms.payment.controller:choosePaymentAction',
+            array('order' => $order->getOrderNumber())
+        );
     }
 
     /**

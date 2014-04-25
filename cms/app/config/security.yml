@@ -42,7 +42,9 @@ security:
         - { path: ^/conf/create$, roles: ROLE_ADMIN } # This still doesn't stop people from going straight to the create conf page 
         - { path: ^/conf/create/, roles: ROLE_ADMIN } # This still doesn't stop people from going straight to the create conf page 
         - { path: ^/conf/view_created$, roles: ROLE_ADMIN } 
-        - { path: ^/conf/view_created/, roles: ROLE_ADMIN }  
+        - { path: ^/conf/view_created/, roles: ROLE_ADMIN } 
+        - { path: ^/conf/view_abstract$, roles: ROLE_ADMIN }  
+        - { path: ^/conf/view_abstract/, roles: ROLE_ADMIN }  
         - { path: ^/conf/manage$, roles: ROLE_ADMIN } 
         - { path: ^/conf/manage/, roles: ROLE_ADMIN }  
         - { path: ^/user/login/$, roles: IS_AUTHENTICATED_ANONYMOUSLY } #, requires_channel: https }

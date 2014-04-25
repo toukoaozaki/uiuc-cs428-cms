@@ -7,7 +7,7 @@ use Symfony\Component\Translation\TranslatorInterface;
  * Translates message id to itself.
  * Reference: http://braincrafted.com/symfony2-functional-test-translation-key/
  */
-class IdentityTranslator
+class IdentityTranslator implements TranslatorInterface
 {
     public function trans(
         $id,
@@ -41,6 +41,16 @@ class IdentityTranslator
     public function setFallbackLocale($locale)
     {
         // do nothing
+    }
+
+    public function setFallbackLocales($locale)
+    {
+        // do nothing
+    }
+
+    public function getFallbackLocales()
+    {
+        return array();
     }
 
     public function addResource($resource)

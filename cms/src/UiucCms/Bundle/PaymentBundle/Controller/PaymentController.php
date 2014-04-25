@@ -23,19 +23,22 @@ class PaymentController
     private $router;
     private $ppc;
     private $em;
+    private $securityContext;
 
     public function __construct(
         $templating,
         $formFactory,
         $router,
         $ppc,
-        $em
+        $em,
+        $securityContext
     ) {
         $this->templating = $templating;
         $this->formFactory = $formFactory;
         $this->router = $router;
         $this->ppc = $ppc;
         $this->em = $em;
+        $this->securityContext = $securityContext;
     }
 
     /**
@@ -43,7 +46,11 @@ class PaymentController
      */
     public function choosePaymentAction(Request $request, Order $order)
     {
-        // TODO(roh7): figure out whether additional security is required
+        $owner = $order->getOwner();
+        if (null !== $owner && $owner != $this->getUser()) {
+            // user mismatch
+            throw new AccessDeniedHttpException();
+        }
         $form = $this->getFormFactory()->create(
             'jms_choose_payment_method',
             null,
@@ -166,4 +173,14 @@ class PaymentController
     {
         return $this->formFactory;
     }
+
+    protected function getUser()
+    {
+        $token = $this->securityContext->getToken();
+        if (null !== $token) {
+            return $token->getUser();
+        }
+        return null;
+    }
+
 }

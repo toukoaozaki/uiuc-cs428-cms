@@ -183,7 +183,7 @@ class Order
 
     public function setOwner(User $owner)
     {
-        $this->owner = $newOwner;
+        $this->owner = $owner;
         return $this;
     }
 

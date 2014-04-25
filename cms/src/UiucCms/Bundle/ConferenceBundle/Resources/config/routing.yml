@@ -38,3 +38,6 @@ uiuc_cms_conference_enrollInfo:
     pattern:  /enroll/{id}/enrollInfo
     defaults: { _controller: UiucCmsConferenceBundle:Conference:enrollInfo }
 
+uiuc_cms_conference_pay_fee:
+    pattern: /payFees/{id}
+    defaults: { _controller: UiucCmsConferenceBundle:Conference:payFees }

@@ -3,6 +3,7 @@
 namespace UiucCms\Bundle\ConferenceBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use UiucCms\Bundle\PaymentBundle\Entity\Order;
 
 /**
  * Enrollment
@@ -48,6 +49,11 @@ class Enrollment
      * @var string
      */
     private $paperAbstract;
+
+    /**
+     * @var UiucCms\Bundle\PaymentBundle\Entity\Order
+     */
+    private $currentOrder;
     
     public function __construct()
     {
@@ -172,5 +178,16 @@ class Enrollment
     public function getAbstract()
     {
         return $this->paperAbstract;
+    }
+
+    public function setCurrentOrder(Order $order)
+    {
+        $this->currentOrder = $order;
+        return $this;
+    }
+    
+    public function getCurrentOrder()
+    {
+        return $this->currentOrder;
     }
 }

@@ -116,6 +116,7 @@ class PaymentController
         switch ($result->getStatus()) {
             case Result::STATUS_SUCCESS:
                 // payment successful
+                $this->ppc->closePaymentInstruction($instruction);
                 return $this->renderPaymentSuccess($order, $result);
             case Result::STATUS_PENDING:
                 $except = $result->getPluginException();

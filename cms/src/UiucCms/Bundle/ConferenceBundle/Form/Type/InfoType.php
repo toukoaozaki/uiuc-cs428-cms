@@ -11,7 +11,7 @@ class InfoType extends AbstractType
     {
         $builder->add('food', 'choice', array(
             'choices' => array(
-                'non-vegie' => 'non-vegetarian',
+                'non-vegetarian' => 'non-vegetarian',
                 'vegetarian' => 'vegetarian'
             ), 
             'preferred_choices' => array('none'), 

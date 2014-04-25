@@ -5,6 +5,7 @@ namespace UiucCms\Bundle\PaymentBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Payment\CoreBundle\Entity\PaymentInstruction;
+use UiucCms\Bundle\UserBundle\Entity\User;
 
 /**
  * Order in financial transaction. Could refer to material goods or fees
@@ -45,6 +46,17 @@ class Order
     private $currency;
 
     /**
+     * @ORM\ManyToOne(targetEntity="UiucCms\Bundle\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
+     */
+    private $owner;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $returnUrl;
+
+    /**
      * Construct an order.
      */
     public function __construct($currency, $amount, $originalAmount = null)
@@ -64,7 +76,6 @@ class Order
     public function setOrderNumber($orderNumber)
     {
         $this->orderNumber = $orderNumber;
-
         return $this;
     }
 
@@ -87,7 +98,6 @@ class Order
     public function setCurrency($currency)
     {
         $this->currency = $currency;
-
         return $this;
     }
 
@@ -169,5 +179,27 @@ class Order
     public function getPaymentInstruction()
     {
         return $this->paymentInstruction;
+    }
+
+    public function setOwner(User $owner)
+    {
+        $this->owner = $newOwner;
+        return $this;
+    }
+
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    public function setReturnUrl($url)
+    {
+        $this->returnUrl = $url;
+        return $this;
+    }
+
+    public function getReturnUrl()
+    {
+        return $this->returnUrl;
     }
 }

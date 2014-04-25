@@ -188,7 +188,7 @@ class ConferenceController extends Controller
             );
         }
 
-        $em = $this->container->get('doctrine.orm.entity_manager');  
+        $em = $this->container->get('doctrine.orm.entity_manager');
         $user = $this->getUser();
         $enrollment = $this->getEnrollment($user, $conference);
         if (!$enrollment) {
@@ -233,7 +233,6 @@ class ConferenceController extends Controller
         // see whether the order is complete
         $instr = $order->getPaymentInstruction();
         if ($instr && $instr->getState() == PaymentInstruction::STATE_CLOSED) {
-
             if ($instr->getAmount() == $instr->getDepositedAmount()) {
                 // user has already paid. redirect them to the conference
                 $enrollment->setCoverFeeStatus(Enrollment::FEE_STATUS_PAID);

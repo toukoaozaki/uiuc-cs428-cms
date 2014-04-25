@@ -12,9 +12,9 @@
         Year: {{ conference.year }} <br>
         City: {{ conference.city }} <br>
         Registration Begins: 
-            {{ conference.getRegisterBeginDate|date('Y-m-d i:s') }} <br>
+            {{ conference.getRegisterBeginDate|date('Y-m-d') }} <br>
         Registration Ends: 
-            {{ conference.getRegisterEndDate|date('Y-m-d i:s') }} <br>
+            {{ conference.getRegisterEndDate|date('Y-m-d') }} <br>
         Topics: {{ conference.getTopics() }} <br>
     </p>
     <p>

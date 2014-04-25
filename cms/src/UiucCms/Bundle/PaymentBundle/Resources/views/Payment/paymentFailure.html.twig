@@ -15,5 +15,8 @@
         <div>
             ReasonCode: {{ result.reasonCode }}
         </div>
+        <a href="{{ return_url }}">
+            {{ 'payment.complete.return'|trans }}
+        </a>
     </div>
 {% endblock body %}

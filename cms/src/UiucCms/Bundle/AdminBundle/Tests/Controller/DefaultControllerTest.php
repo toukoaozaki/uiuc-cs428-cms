@@ -176,7 +176,7 @@ class DefaultControllerTest extends FunctionalTestCase
     */
     public function testPromote()
     {
-		$this->testStatusHelper("Promote");
+		$this->statusHelper("Promote");
 		
     }
     
@@ -197,13 +197,13 @@ class DefaultControllerTest extends FunctionalTestCase
     */
     public function testRemove()
     {
-		$this->testStatusHelper("Remove");
+		$this->statusHelper("Remove");
 
     }
 	/*
 		Helper method for testing status changes
 	*/
-	public function testStatusHelper($command)
+	protected function statusHelper($command)
 	{
 		$this->authenticateSuperuser($this->client);
 

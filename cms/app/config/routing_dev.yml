@@ -12,3 +12,7 @@ _configurator:
 
 _main:
     resource: routing.yml
+
+_payment_demo:
+    resource: "@UiucCmsPaymentBundle/Resources/config/routing_dev.yml"
+    prefix:   /payment

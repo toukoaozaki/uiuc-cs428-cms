@@ -10,10 +10,13 @@
             Order #{{ order.orderNumber }}
         </div>
         <div>
+            Transaction #{{ result.financialTransaction.referenceNumber }}
+        </div>
+        <div>
             Payment amount:  {{ order.amount|number_format(2) }} {{ order.currency }}
         </div>
         <a href="{{ return_url }}">
-            Return
+            {{ 'payment.complete.return'|trans }}
         </a>
     </div>
 {% endblock body %}

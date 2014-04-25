@@ -30,6 +30,9 @@ class DemoController extends Controller
             $amount = (string)$data['amount'];
             $message = $amount;
             $order = new Order('USD', $amount);
+            $order->setReturnUrl(
+                $this->get('router')->generate('uiuc_cms_payment_demo')
+            );
             $em = $this->get('doctrine.orm.entity_manager');
             $em->persist($order);
             $em->flush();

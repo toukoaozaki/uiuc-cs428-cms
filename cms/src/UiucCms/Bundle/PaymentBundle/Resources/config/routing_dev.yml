@@ -1,0 +1,3 @@
+uiuc_cms_payment_demo:
+    pattern:  /demo/
+    defaults: { _controller: UiucCmsPaymentBundle:Demo:demoPayment }

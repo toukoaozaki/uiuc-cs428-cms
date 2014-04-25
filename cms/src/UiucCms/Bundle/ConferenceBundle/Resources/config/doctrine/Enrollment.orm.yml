@@ -24,4 +24,11 @@ UiucCms\Bundle\ConferenceBundle\Entity\Enrollment:
         paperAbstract:
             type: string
             length: 255
+    oneToOne:
+        currentOrder:
+            targetEntity: UiucCms\Bundle\PaymentBundle\Entity\Order
+            joinColumn:
+                name: currentOrderNumber
+                referencedColumnName: orderNumber
+
     lifecycleCallbacks: {  }

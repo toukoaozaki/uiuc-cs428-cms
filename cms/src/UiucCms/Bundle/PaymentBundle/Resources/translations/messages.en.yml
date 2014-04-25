@@ -5,3 +5,5 @@ form.choose_payment.submit: "Continue"
 form.label.uofi_payment: "University of Illinois iPay"
 form.label.dummy_success: "Success"
 form.label.dummy_failure: "Failure"
+
+payment.complete.return: "Return"

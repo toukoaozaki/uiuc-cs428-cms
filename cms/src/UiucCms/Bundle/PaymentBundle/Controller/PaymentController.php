@@ -140,6 +140,7 @@ class PaymentController
             array(
                 'order' => $order,
                 'result' => $result,
+                'return_url' => $order->getReturnUrl()
             )
         );
     }
@@ -151,7 +152,7 @@ class PaymentController
             array(
                 'order' => $order,
                 'result' => $result,
-                'return_url' => 'http://www.google.com'
+                'return_url' => $order->getReturnUrl()
             )
         );
     }

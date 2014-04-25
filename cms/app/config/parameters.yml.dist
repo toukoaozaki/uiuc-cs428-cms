@@ -14,3 +14,8 @@ parameters:
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
     payment_secret:    "%secret%"
+
+    ipay_test: true
+    ipay_site_id: -1  # changeme 
+    ipay_send_key: changeme
+    ipay_recv_key: changeme

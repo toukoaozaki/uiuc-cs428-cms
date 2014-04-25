@@ -76,6 +76,7 @@ class ConferenceController extends Controller
         $cityNotBlank->message = 'Please enter a city.';
         $topicNotBlank->message = 'Please enter at least one topic.';
         $minLength3->minMessage = 'Please enter a name of minimum length 3.';
+        $invalidYear = 'Year must be after registration opening';
         $invalidStartDate = 'Please select a date in the future.';
         $invalidEndDate = 'Please select an end date after the start date';
 
@@ -115,6 +116,14 @@ class ConferenceController extends Controller
                     'UiucCmsConferenceBundle:Conference:create.html.twig',
                     array( 'form'  => $form->createView(),
                            'error' => $invalidEndDate));
+        }
+
+        if ((int)$conference->getYear() < 
+            $conference->getRegisterBeginDate()->format('Y')) {
+                return $this->render(
+                    'UiucCmsConferenceBundle:Conference:create.html.twig',
+                    array( 'form'  => $form->createView(),
+                           'error' => $invalidYear));
         }
 
         $conference->setCreatedBy($this->getUser()->getId());

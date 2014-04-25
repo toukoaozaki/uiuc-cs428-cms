@@ -33,6 +33,7 @@ class DefaultControllerTest extends WebTestCase
     private $validYear = "2014";
     private $validCity = "Champaign";
     private $validTopic = "Trains";
+    private $invalidYear = "2013";
     private $invalidStartTime;
     private $lateStartTime; 
     private $validStartTime; 
@@ -158,6 +159,7 @@ class DefaultControllerTest extends WebTestCase
             $crawler->filter(
                 'html:contains("Access Denied")')->count() > 0);
     }
+
     public function testSuccessfulValidator()
     {
         $this->authenticate('admin'); 
@@ -370,6 +372,48 @@ class DefaultControllerTest extends WebTestCase
         $this->assertGreaterThan(
             0,
             $crawler->filter('html:contains("after the start")')->count());
+
+    }
+
+    public function testMismatchingYear()
+    {
+        $this->authenticate('admin'); 
+        $crawler = $this->client->request('GET', $this->create_conf_url);
+        $buttonNode = $crawler->selectButton('Create');
+        $form = $buttonNode->form();
+
+        $form->disableValidation();
+
+        $form['conference[name]'] = $this->validName;
+        $form['conference[year]'] = $this->invalidYear;
+        $form['conference[city]'] = $this->validCity;
+        $form['conference[topics]'] = $this->validTopic;
+        $form['conference[register_begin_date][date][month]'] = 
+            (int) $this->validStartTime->format('m');
+        $form['conference[register_begin_date][date][day]'] = 
+            (int) $this->validStartTime->format('d');
+        $form['conference[register_begin_date][date][year]'] = 
+            (int) $this->validStartTime->format('Y');
+        $form['conference[register_begin_date][time][hour]'] = 
+            (int) $this->validStartTime->format('H');
+        $form['conference[register_begin_date][time][minute]'] = 
+            (int) $this->validStartTime->format('i');
+        $form['conference[register_end_date][date][month]'] = 
+            (int) $this->validEndTime->format('m');
+        $form['conference[register_end_date][date][day]'] = 
+            (int) $this->validEndTime->format('d');
+        $form['conference[register_end_date][date][year]'] = 
+            (int) $this->validEndTime->format('Y');
+        $form['conference[register_end_date][time][hour]'] = 
+            (int) $this->validEndTime->format('H');
+        $form['conference[register_end_date][time][minute]'] = 
+            (int) $this->validEndTime->format('i');
+
+        $crawler = $this->client->submit($form);
+
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("Year must be")')->count());
 
     }
 }

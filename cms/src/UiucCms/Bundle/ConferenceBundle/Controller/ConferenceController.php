@@ -367,7 +367,7 @@ class ConferenceController extends Controller
                             ->findByConferenceId($id);
         
         $attendees = array();
-        
+
         foreach ($enrollments as $enrollment) {
             $attendee = $users->find($enrollment->getAttendeeId());
             array_push($attendees, $attendee);
@@ -399,4 +399,30 @@ class ConferenceController extends Controller
             'UiucCmsConferenceBundle:Conference:info.html.twig',
             array( 'form' => $form->createView(),));
     }
+
+    /**
+     * Be able to view enrolled people's abstracts.
+     */
+    public function viewEnrolledAbstractAction($confId, $attendId)
+    {
+        
+        $attendee = $this->getDoctrine()
+                          ->getRepository('UiucCmsUserBundle:User')
+                          ->find($attendId);
+
+        $conference = $this->getDoctrine()
+                            ->getRepository('UiucCmsConferenceBundle:Conference')
+                            ->find($confId);
+
+        $enrollment = $this->getEnrollment($attendee, $conference);
+
+
+        return $this->render(
+            'UiucCmsConferenceBundle:Conference:view_abstract.html.twig', 
+            array('enrollment' => $enrollment, 
+                  'attendee' => $attendee));
+
+    }
+
+
 }

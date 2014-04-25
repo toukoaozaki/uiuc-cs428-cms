@@ -1,0 +1,23 @@
+{% extends 'UiucCmsConferenceBundle::layout.html.twig' %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header" style="text-align:left">
+        <h1>
+            Details for {{ attendee.firstName }} {{ attendee.lastName }}'s Enrollment
+        </h1>
+    </div>
+    <p class="lead">
+        Food: {{ enrollment.getFood }} <br>
+        Abstract:
+        <div style="word-wrap: break-word; width: 800px">
+            {{ enrollment.getAbstract }} <br>
+        </div>
+    </p>
+
+    <li><a href="{{ path('uiuc_cms_conference_manage', 
+        {'id': enrollment.conferenceId} ) }}">
+        Back your conference
+    </li>
+</div>
+{% endblock content %}

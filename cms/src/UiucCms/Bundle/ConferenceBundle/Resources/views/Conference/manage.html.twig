@@ -25,7 +25,9 @@
             No one has enrolled for this conference yet.
         {% else %}
             {% for attendee in attendees %}
-                <p> {{ attendee.firstName }} {{ attendee.lastName }}
+                <p> <li><a href="{{ path('uiuc_cms_conference_view_abstract',
+                    {'confId': conference.id, 'attendId': attendee.id}) }}"> {{ attendee.firstName }} {{ attendee.lastName }}
+                    </li>
             {% endfor %}
         {% endif %}
     </p>

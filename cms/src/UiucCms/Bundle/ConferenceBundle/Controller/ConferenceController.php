@@ -155,10 +155,16 @@ class ConferenceController extends Controller
                 'No conference found with id: '.$id);
         }
 
+        $data = $query->getArrayResult();
+        $food = $data[0]['food'];
+        $abstract = $data[0]['paperAbstract'];
+        
         return $this->render(
             'UiucCmsConferenceBundle:Conference:display.html.twig',
             array('conference' => $conference,
-                  'enrollment' => $enrollment));
+                  'enrollment' => $enrollment,
+                  'food' => $food,
+                  'abstract' => $abstract));
     }
 
     /**

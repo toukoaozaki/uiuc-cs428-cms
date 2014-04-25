@@ -28,7 +28,11 @@
                     </tr>
                     <tr>
                         <th>Abstract</th>
-                        <td>{{ enrollment.abstract }}</td>
+                        <td>
+                            <div style="word-wrap: break-word; width: 800px">
+                                {{ enrollment.getAbstract }}
+                            </div>
+                        </td>
                     </tr>
                     <tr>
                         <th>Cover Fee</th>

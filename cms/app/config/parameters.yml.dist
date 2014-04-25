@@ -19,3 +19,11 @@ parameters:
     ipay_site_id: -1  # changeme 
     ipay_send_key: changeme
     ipay_recv_key: changeme
+    ipay_cfoapal:
+        - chart: ~ 
+          fund: ~
+          organization: ~
+          account: ~
+          program: ~
+          activity: ~
+          location: ~

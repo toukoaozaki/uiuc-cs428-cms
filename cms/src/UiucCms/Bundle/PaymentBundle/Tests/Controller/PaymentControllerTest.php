@@ -82,6 +82,26 @@ class PaymentControllerTest extends FunctionalTestCase
         $this->assertFalse($this->client->getResponse()->isSuccessful());
     }
 
+    public function testChoosePaymentMethodUnauthorized()
+    {
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $order = $em->find(
+            'UiucCms\Bundle\PaymentBundle\Entity\Order',
+            LoadTestOrder::TEST_ORDER_NUMBER
+        );
+        $order->setOwner($this->getUser(self::getUserUsername()));
+        $em->persist($order);
+        // access should be restricted to the owner of the order, if exists
+        $this->client->request(
+            'GET',
+            $this->router->generate(
+                'uiuc_cms_payment_start',
+                array('order' => LoadTestOrder::TEST_ORDER_NUMBER)
+            )
+        );
+        $this->assertFalse($this->client->getResponse()->isSuccessful());
+    }
+
     public function testPaymentSuccess()
     {
         $crawler = $this->client->request(
@@ -166,5 +186,11 @@ class PaymentControllerTest extends FunctionalTestCase
                 'html:contains("'.LoadTestOrder::TEST_ORDER_CURRENCY.'")'
             )->count()
         );
+    }
+
+    private function getUser($username)
+    {
+        $manager = $this->container->get('fos_user.user_manager');
+        return $manager->findUserByUsername($username);
     }
 }

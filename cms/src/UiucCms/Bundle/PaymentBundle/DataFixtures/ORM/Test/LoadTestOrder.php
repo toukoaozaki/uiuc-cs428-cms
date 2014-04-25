@@ -28,6 +28,14 @@ class LoadTestOrder implements FixtureInterface, ContainerAwareInterface
 
     public function load(ObjectManager $manager)
     {
+        if (!in_array(
+            $this->container->get('kernel')->getEnvironment(),
+            array('test')
+        )) {
+            // skip in non-test environment
+            return;
+        }
+
         // Create a new order for testing
         $order = new Order(self::TEST_ORDER_CURRENCY, self::TEST_ORDER_AMOUNT);
         $order->setOrderNumber(self::TEST_ORDER_NUMBER);

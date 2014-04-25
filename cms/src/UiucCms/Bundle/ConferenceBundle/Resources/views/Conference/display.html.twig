@@ -18,10 +18,8 @@
     </p>
     <p>
         {% if enrollment %}
-<<<<<<< HEAD
             You have enrolled in this conference at 
                 {{ enrollment.enrollmentDate|date('Y-m-d h:i:s') }}.
-=======
             You have enrolled in this conference at {{ enrollment.enrollmentDate|date('Y-m-d h:i:s') }}.
             <div class="panel panel-default" style="text-align: center;">
                 <div class="panel-heading"> Food Option </div>
@@ -29,7 +27,6 @@
                 <div class="panel-heading"> Abstract </div>
                 <div class="panel-body">{{ abstract }}</div>
             </div>
->>>>>>> 952d22578a9a18571c396337bdf079a4aed46565
         {% else %}
             <li><a href="{{ path('uiuc_cms_conference_enrollInfo', 
                 {'id': conference.id }) }}">

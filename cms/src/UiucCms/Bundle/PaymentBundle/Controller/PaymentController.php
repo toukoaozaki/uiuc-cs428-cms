@@ -113,7 +113,7 @@ class PaymentController
             case Result::STATUS_PENDING:
                 $except = $result->getPluginException();
                 if ($except instanceof ActionRequiredException) {
-                    $action = $ex->getAction();
+                    $action = $except->getAction();
 
                     if ($action instanceof VisitUrl) {
                         // need user to visit the requested page

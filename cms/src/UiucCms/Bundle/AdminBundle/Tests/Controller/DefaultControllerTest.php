@@ -176,13 +176,8 @@ class DefaultControllerTest extends FunctionalTestCase
     */
     public function testPromote()
     {
-        $this->authenticateSuperuser($this->client);
-    
-        $crawler = $this->client->request('GET', '/user/admin/show');
-        $proCount = $crawler->filter('html:contains("Promote")')->count();
-        $link = $crawler->filter('a:contains("Promote")')->eq(0)->link();
-        $crawler = $this->client->click($link);
-        $this->assertTrue($crawler->filter('html:contains("Promote")')->count() == $proCount - 1);  
+		$this->testStatusHelper("Promote");
+		
     }
     
     /*
@@ -202,12 +197,21 @@ class DefaultControllerTest extends FunctionalTestCase
     */
     public function testRemove()
     {
-        $this->authenticateSuperuser($this->client);
+		$this->testStatusHelper("Remove");
+
+    }
+	/*
+		Helper method for testing status changes
+	*/
+	public function testStatusHelper($command)
+	{
+		$this->authenticateSuperuser($this->client);
 
         $crawler = $this->client->request('GET', '/user/admin/show');
-        $proCount = $crawler->filter('html:contains("Remove")')->count();
-        $link = $crawler->filter('a:contains("Remove")')->eq(0)->link();
+        $proCount = $crawler->filter('html:contains("'. $command .'")')->count();
+        $link = $crawler->filter('a:contains("'. $command .'")')->eq(0)->link();
         $crawler = $this->client->click($link);
-        $this->assertTrue($crawler->filter('html:contains("Remove")')->count() == $proCount - 1);
-    }
+        $this->assertTrue($crawler->filter('html:contains("'. $command .'")')->count() == $proCount - 1);
+	
+	}
 }

@@ -61,6 +61,31 @@ class DefaultControllerTest extends FunctionalTestCase
             add(DateInterval::createFromDateString('5 days'));
     }
 
+    private function populateDateForm($form, $startDate, $endDate)
+    {
+        $form['conference[register_begin_date][date][month]'] = 
+            (int) $startDate->format('m');
+        $form['conference[register_begin_date][date][day]'] = 
+            (int) $startDate->format('d');
+        $form['conference[register_begin_date][date][year]'] = 
+            (int) $startDate->format('Y');
+        $form['conference[register_begin_date][time][hour]'] = 
+            (int) $startDate->format('H');
+        $form['conference[register_begin_date][time][minute]'] = 
+            (int) $startDate->format('i');
+        $form['conference[register_end_date][date][month]'] = 
+            (int) $endDate->format('m');
+        $form['conference[register_end_date][date][day]'] = 
+            (int) $endDate->format('d');
+        $form['conference[register_end_date][date][year]'] = 
+            (int) $endDate->format('Y');
+        $form['conference[register_end_date][time][hour]'] = 
+            (int) $endDate->format('H');
+        $form['conference[register_end_date][time][minute]'] = 
+            (int) $endDate->format('i');
+        return $form;
+    }
+
     public function testIndex()
     {
         $this->authenticateUser($this->client);
@@ -119,27 +144,12 @@ class DefaultControllerTest extends FunctionalTestCase
         $form['conference[year]'] = $this->validYear;
         $form['conference[city]'] = $this->validCity;
         $form['conference[topics]'] = $this->validTopic;
-        $form['conference[register_begin_date][date][month]'] = 
-            (int) $this->validStartTime->format('m');
-        $form['conference[register_begin_date][date][day]'] = 
-            (int) $this->validStartTime->format('d');
-        $form['conference[register_begin_date][date][year]'] = 
-            (int) $this->validStartTime->format('Y');
-        $form['conference[register_begin_date][time][hour]'] = 
-            (int) $this->validStartTime->format('H');
-        $form['conference[register_begin_date][time][minute]'] = 
-            (int) $this->validStartTime->format('i');
-        $form['conference[register_end_date][date][month]'] = 
-            (int) $this->validEndTime->format('m');
-        $form['conference[register_end_date][date][day]'] = 
-            (int) $this->validEndTime->format('d');
-        $form['conference[register_end_date][date][year]'] = 
-            (int) $this->validEndTime->format('Y');
-        $form['conference[register_end_date][time][hour]'] = 
-            (int) $this->validEndTime->format('H');
-        $form['conference[register_end_date][time][minute]'] = 
-            (int) $this->validEndTime->format('i');
-
+    
+        $form = $this->populateDateForm(
+            $form, 
+            $this->validStartTime, 
+            $this->validEndTime);
+    
         $crawler = $this->client->submit($form);
 
         $crawler = $this->client->followRedirect(); 
@@ -250,28 +260,11 @@ class DefaultControllerTest extends FunctionalTestCase
         $form['conference[year]'] = $this->validYear;
         $form['conference[city]'] = $this->validCity;
         $form['conference[topics]'] = $this->validTopic;
-    
-        $form['conference[register_begin_date][date][month]'] = 
-            (int) $this->invalidStartTime->format('m');
-        $form['conference[register_begin_date][date][day]'] = 
-            (int) $this->invalidStartTime->format('d');
-        $form['conference[register_begin_date][date][year]'] = 
-            (int) $this->invalidStartTime->format('Y');
-        $form['conference[register_begin_date][time][hour]'] = 
-            (int) $this->invalidStartTime->format('H');
-        $form['conference[register_begin_date][time][minute]'] = 
-            (int) $this->invalidStartTime->format('i');
-        $form['conference[register_end_date][date][month]'] = 
-            (int) $this->validEndTime->format('m');
-        $form['conference[register_end_date][date][day]'] = 
-            (int) $this->validEndTime->format('d');
-        $form['conference[register_end_date][date][year]'] = 
-            (int) $this->validEndTime->format('Y');
-        $form['conference[register_end_date][time][hour]'] = 
-            (int) $this->validEndTime->format('H');
-        $form['conference[register_end_date][time][minute]'] = 
-            (int) $this->validEndTime->format('i');
-         
+   
+        $form = $this->populateDateForm(
+            $form, 
+            $this->invalidStartTime, 
+            $this->validEndTime);
 
         $crawler = $this->client->submit($form);
 
@@ -295,26 +288,11 @@ class DefaultControllerTest extends FunctionalTestCase
         $form['conference[city]'] = $this->validCity;
         $form['conference[topics]'] = $this->validTopic;
 
-        $form['conference[register_begin_date][date][month]'] = 
-            (int) $this->lateStartTime->format('m');
-        $form['conference[register_begin_date][date][day]'] = 
-            (int) $this->lateStartTime->format('d');
-        $form['conference[register_begin_date][date][year]'] = 
-            (int) $this->lateStartTime->format('Y');
-        $form['conference[register_begin_date][time][hour]'] = 
-            (int) $this->lateStartTime->format('H');
-        $form['conference[register_begin_date][time][minute]'] = 
-            (int) $this->lateStartTime->format('i');
-        $form['conference[register_end_date][date][month]'] = 
-            (int) $this->validEndTime->format('m');
-        $form['conference[register_end_date][date][day]'] = 
-            (int) $this->validEndTime->format('d');
-        $form['conference[register_end_date][date][year]'] = 
-            (int) $this->validEndTime->format('Y');
-        $form['conference[register_end_date][time][hour]'] = 
-            (int) $this->validEndTime->format('H');
-        $form['conference[register_end_date][time][minute]'] = 
-            (int) $this->validEndTime->format('i');
+        $form = $this->populateDateForm(
+            $form, 
+            $this->lateStartTime, 
+            $this->validEndTime);
+
         $crawler = $this->client->submit($form);
 
         $this->assertGreaterThan(
@@ -336,26 +314,11 @@ class DefaultControllerTest extends FunctionalTestCase
         $form['conference[year]'] = $this->invalidYear;
         $form['conference[city]'] = $this->validCity;
         $form['conference[topics]'] = $this->validTopic;
-        $form['conference[register_begin_date][date][month]'] = 
-            (int) $this->validStartTime->format('m');
-        $form['conference[register_begin_date][date][day]'] = 
-            (int) $this->validStartTime->format('d');
-        $form['conference[register_begin_date][date][year]'] = 
-            (int) $this->validStartTime->format('Y');
-        $form['conference[register_begin_date][time][hour]'] = 
-            (int) $this->validStartTime->format('H');
-        $form['conference[register_begin_date][time][minute]'] = 
-            (int) $this->validStartTime->format('i');
-        $form['conference[register_end_date][date][month]'] = 
-            (int) $this->validEndTime->format('m');
-        $form['conference[register_end_date][date][day]'] = 
-            (int) $this->validEndTime->format('d');
-        $form['conference[register_end_date][date][year]'] = 
-            (int) $this->validEndTime->format('Y');
-        $form['conference[register_end_date][time][hour]'] = 
-            (int) $this->validEndTime->format('H');
-        $form['conference[register_end_date][time][minute]'] = 
-            (int) $this->validEndTime->format('i');
+ 
+        $form = $this->populateDateForm(
+            $form, 
+            $this->validStartTime, 
+            $this->validEndTime);
 
         $crawler = $this->client->submit($form);
 

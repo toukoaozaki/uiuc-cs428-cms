@@ -20,7 +20,8 @@
         {% if enrollment %}
             You have enrolled in this conference at 
                 {{ enrollment.enrollmentDate|date('Y-m-d h:i:s') }}.
-            You have enrolled in this conference at {{ enrollment.enrollmentDate|date('Y-m-d h:i:s') }}.
+            You have enrolled in this conference at 
+                {{ enrollment.enrollmentDate|date('Y-m-d h:i:s') }}.
             <div class="panel panel-default" style="text-align: center;">
                 <div class="panel-heading"> Food Option </div>
                 <div class="panel-body">{{ food }}</div>

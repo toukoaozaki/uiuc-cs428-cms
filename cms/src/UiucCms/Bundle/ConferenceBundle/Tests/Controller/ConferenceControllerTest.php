@@ -63,26 +63,18 @@ class DefaultControllerTest extends FunctionalTestCase
 
     private function populateDateForm($form, $startDate, $endDate)
     {
-        $form['conference[register_begin_date][date][month]'] = 
+        $form['conference[register_begin_date][month]'] = 
             (int) $startDate->format('m');
-        $form['conference[register_begin_date][date][day]'] = 
+        $form['conference[register_begin_date][day]'] = 
             (int) $startDate->format('d');
-        $form['conference[register_begin_date][date][year]'] = 
+        $form['conference[register_begin_date][year]'] = 
             (int) $startDate->format('Y');
-        $form['conference[register_begin_date][time][hour]'] = 
-            (int) $startDate->format('H');
-        $form['conference[register_begin_date][time][minute]'] = 
-            (int) $startDate->format('i');
-        $form['conference[register_end_date][date][month]'] = 
+        $form['conference[register_end_date][month]'] = 
             (int) $endDate->format('m');
-        $form['conference[register_end_date][date][day]'] = 
+        $form['conference[register_end_date][day]'] = 
             (int) $endDate->format('d');
-        $form['conference[register_end_date][date][year]'] = 
+        $form['conference[register_end_date][year]'] = 
             (int) $endDate->format('Y');
-        $form['conference[register_end_date][time][hour]'] = 
-            (int) $endDate->format('H');
-        $form['conference[register_end_date][time][minute]'] = 
-            (int) $endDate->format('i');
         return $form;
     }
 

@@ -12,8 +12,8 @@ class ConferenceType extends AbstractType
         $builder->add('name', 'text');
         $builder->add('year', 'integer');
         $builder->add('city', 'text');
-        $builder->add('register_begin_date', 'datetime');
-        $builder->add('register_end_date', 'datetime');
+        $builder->add('register_begin_date', 'date');
+        $builder->add('register_end_date', 'date');
         $builder->add('topics', 'text');
         $builder->add('create', 'submit');
     }

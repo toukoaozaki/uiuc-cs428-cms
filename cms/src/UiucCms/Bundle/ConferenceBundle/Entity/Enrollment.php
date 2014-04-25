@@ -180,7 +180,7 @@ class Enrollment
         return $this->paperAbstract;
     }
 
-    public function setCurrentOrder(Order $order)
+    public function setCurrentOrder(Order $order = null)
     {
         $this->currentOrder = $order;
         return $this;

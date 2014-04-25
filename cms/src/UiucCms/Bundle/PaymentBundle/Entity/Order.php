@@ -181,7 +181,7 @@ class Order
         return $this->paymentInstruction;
     }
 
-    public function setOwner(User $owner)
+    public function setOwner(User $owner = null)
     {
         $this->owner = $owner;
         return $this;

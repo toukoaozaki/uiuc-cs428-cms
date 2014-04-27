@@ -226,7 +226,7 @@ class ConferenceController extends Controller
         $order = $enrollment->getCurrentOrder();
         if (!$order) {
             // no order was placed yet. create a new order
-            $order = new Order('USD', 119.99);
+            $order = new Order('USD', $conference->getCoverFee());
             $order->setOwner($user);
             $order->setReturnUrl(
                 $this->generateUrl(

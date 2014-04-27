@@ -1,11 +1,13 @@
 <!--Header-->
 
-<div class="full-width-wrapper" id="header">
-	<div class="full-width-wrapper" id="abstract-bg">
-		<div class="fixed-width-wrapper" id="banner">
-			{% image '../app/Resources/images/logo.png' %}
-				<img src={{ asset_url }} alt="RailTEC University of Illinois At Urbana Champaign" width="507" height="86">
-			{% endimage %}
-		</div>
-	</div>
-</div>
+{% block javascripts %}
+	{% javascripts debug=true '../app/Resources/js/*' %}
+			<script type="text/javascript" src="{{ asset_url }}"></script>
+		{% endjavascripts %}
+	{% endblock %}
+        
+	{% block stylesheets %}
+		{% stylesheets '../app/Resources/css/*' filter='cssrewrite' %} 
+			<link rel="stylesheet" href="{{ asset_url }}" />
+	{% endstylesheets %}
+{% endblock %}

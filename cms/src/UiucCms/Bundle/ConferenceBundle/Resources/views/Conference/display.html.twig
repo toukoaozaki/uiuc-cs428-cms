@@ -20,53 +20,54 @@
         Topics: {{ conference.getTopics() }} <br>
     </p>
     <p>
-        {% if enrollment != null %}
-            You have enrolled in this conference at 
-                {{ enrollment.enrollmentDate|date('Y-m-d h:i:s') }}.
-                <br>
-            <table class="table table-striped" style="text-align:left; width:500px;">
-                    <tr>
-                        <th>Food Option</th>
-                        <td>{{ enrollment.food }}</td>
-                    </tr>
-                    <tr>
-                        <th>Abstract</th>
-                        <td>
-                            <div style="word-wrap: break-word; width: 800px">
-                                {{ enrollment.getAbstract }}
-                            </div>
+        {% if enrollment is defined %}
+            {% if enrollment != null %}
+                You have enrolled in this conference at 
+                    {{ enrollment.enrollmentDate|date('Y-m-d h:i:s') }}.
+                    <br>
+                <table class="table table-striped" style="text-align:left; width:500px;">
+                        <tr>
+                            <th>Food Option</th>
+                            <td>{{ enrollment.food }}</td>
+                        </tr>
+                        <tr>
+                            <th>Abstract</th>
+                            <td>
+                                <div style="word-wrap: break-word; width: 800px">
+                                    {{ enrollment.getAbstract }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Cover Fee</th>
+                            <td>
+                            {% if enrollment.coverFeeStatus == constant('FEE_STATUS_UNPAID', enrollment) %}
+                                <a href="{{ path('uiuc_cms_conference_pay_fee',
+                                            {'id': conference.id}) }}">
+                                    Pay now
+                                </a>
+                            {% elseif enrollment.coverFeeStatus == constant('FEE_STATUS_PAID', enrollment) %}
+                                Paid
+                            {% elseif enrollment.coverFeeStatus == constant('FEE_STATUS_EXEMPT', enrollment) %}
+                                Exempt
+                            {% else %}
+                                Unknown; please contact administrator.
+                            {% endif %}
                         </td>
-                    </tr>
-                    <tr>
-                        <th>Cover Fee</th>
-                        <td>
-                        {% if enrollment.coverFeeStatus == constant('FEE_STATUS_UNPAID', enrollment) %}
-                            <a href="{{ path('uiuc_cms_conference_pay_fee',
-                                        {'id': conference.id}) }}">
-                                Pay now
-                            </a>
-                        {% elseif enrollment.coverFeeStatus == constant('FEE_STATUS_PAID', enrollment) %}
-                            Paid
-                        {% elseif enrollment.coverFeeStatus == constant('FEE_STATUS_EXEMPT', enrollment) %}
-                            Exempt
-                        {% else %}
-                            Unknown; please contact administrator.
-                        {% endif %}
-                    </td>
-                </table>
-            
-        {% else %}
-            {% if conference.registerEndDate|date('U') >= "now"|date('U') %}
-                <li><a href="{{ path('uiuc_cms_conference_enrollInfo', 
-                    {'id': conference.id }) }}">
-                        Enroll in this conference
-                    </a>
-                </li>
+                    </table>
+                
             {% else %}
-                Registration has closed.
+                {% if conference.registerEndDate|date('U') >= "now"|date('U') %}
+                    <li><a href="{{ path('uiuc_cms_conference_enrollInfo', 
+                        {'id': conference.id }) }}">
+                            Enroll in this conference
+                        </a>
+                    </li>
+                {% else %}
+                    Registration has closed.
+                {% endif %}
             {% endif %}
-        {% endif %}
-        
+        {% endif %} 
         <br>
         <li><a href="{{ path('uiuc_cms_conference_list_not_enrolled') }}">Back to listings</li>
     </p>

@@ -39,6 +39,8 @@ security:
         - { path: ^/admin/$, roles: ROLE_ADMIN }     
         - { path: ^/user/admin$, roles: ROLE_ADMIN }
         - { path: ^/user/admin/, roles: ROLE_ADMIN }
+        - { path: ^/admin/mail$, roles: ROLE_ADMIN }
+        - { path: ^/admin/mail/, roles: ROLE_ADMIN }
         - { path: ^/conf/create$, roles: ROLE_ADMIN } # This still doesn't stop people from going straight to the create conf page 
         - { path: ^/conf/create/, roles: ROLE_ADMIN } # This still doesn't stop people from going straight to the create conf page 
         - { path: ^/conf/viewCreated$, roles: ROLE_ADMIN } 

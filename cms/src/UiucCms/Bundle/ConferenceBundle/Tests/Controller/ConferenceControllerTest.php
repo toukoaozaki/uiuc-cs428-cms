@@ -11,7 +11,7 @@ use \Exception;
 use \DateTime;
 use \DateInterval;
 
-class DefaultControllerTest extends FunctionalTestCase
+class ConferenceControllerTest extends FunctionalTestCase
 {
     private $client;
     private $router;

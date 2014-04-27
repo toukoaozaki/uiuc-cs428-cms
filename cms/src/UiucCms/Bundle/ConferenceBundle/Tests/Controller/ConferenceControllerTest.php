@@ -19,6 +19,7 @@ class DefaultControllerTest extends FunctionalTestCase
     private $index_url;
     private $create_conf_url;
     private $view_created_conf_url;
+    private $test_conf_url;
 
     private $validName = "RailTEC UIUC";
     private $shortName = "Ra";
@@ -51,7 +52,11 @@ class DefaultControllerTest extends FunctionalTestCase
             'uiuc_cms_conference_view_created',
             array(),
             true);
-      
+        $this->test_conf_url = $this->router->generate(
+            'uiuc_cms_conference_display',
+            array( "id" => 1 ),
+            true);
+
         $this->invalidStartTime = new DateTime('now');
         $this->lateStartTime = (new DateTime('now'))->
             add(DateInterval::createFromDateString('10 days'));
@@ -319,4 +324,14 @@ class DefaultControllerTest extends FunctionalTestCase
             $crawler->filter('html:contains("Year must be")')->count());
 
     }
+    
+    public function testRegistrationClosed()
+    {
+        $this->authenticateUser($this->client);
+        $crawler = $this->client->request('GET', $this->test_conf_url);
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("Registration has closed")')->count());
+    }
+
 }

@@ -162,7 +162,8 @@ class ConferenceController extends Controller
 
     /**
      * Displays a particular conference and all of its fields. Also checks whether or
-     * not a user has already enrolled in that particular conference.
+     * not a user has already enrolled in that particular conference. Additionally,
+     * checks whether or not registration is full.
      */
     public function displayAction(Conference $conference)
     {
@@ -172,9 +173,18 @@ class ConferenceController extends Controller
             );
         }
         
+        // We must check whether or not registration is full.
+        $enrollments = $this->getDoctrine()
+                            ->getRepository('UiucCmsConferenceBundle:Enrollment');
+        $query = $enrollments->createQueryBuilder('e')
+                             ->where('e.conferenceId = :confId')
+                             ->setParameters(['confId' => $conference->getId()])
+                             ->getQuery();
+        $currentEnrollments = count($query->getResult());
+        $isFull = ($currentEnrollments >= $conference->getMaxEnrollment()); 
+        
         // We want to see if the user has already enrolled in this particular 
         // conference.
-        
         $user = $this->getUser();
         $enrollment = $this->getEnrollment($user, $conference);
        
@@ -182,7 +192,8 @@ class ConferenceController extends Controller
             'UiucCmsConferenceBundle:Conference:display.html.twig',
             array(
                 'conference' => $conference,
-                'enrollment' => $enrollment
+                'enrollment' => $enrollment,
+                'isFull' => $isFull
             )
         );
     }
@@ -269,7 +280,7 @@ class ConferenceController extends Controller
 
     /**
      * Submits an enrollment for a conference. First checks to see if registration
-     * is still open.
+     * is still open. Also checks to see if there is still room for registration.
      */
     public function enrollAction(Request $request, Conference $conference)
     {
@@ -281,6 +292,24 @@ class ConferenceController extends Controller
                 )
             );
         }
+
+        $enrollments = $this->getDoctrine()
+                            ->getRepository('UiucCmsConferenceBundle:Enrollment');
+        $query = $enrollments->createQueryBuilder('e')
+                             ->where('e.conferenceId = :confId')
+                             ->setParameters(['confId' => $conference->getId()])
+                             ->getQuery();
+        $currentEnrollments = count($query->getResult());
+        if ($currentEnrollments >= $conference->getMaxEnrollment()) 
+        {
+            return $this->redirect(
+                $this->generateUrl(
+                    'uiuc_cms_conference_display',
+                    array('id' => $conference->getId())
+                )
+            );
+        }
+                                   
 
         $user = $this->getUser();
         $userId = $user->getId();

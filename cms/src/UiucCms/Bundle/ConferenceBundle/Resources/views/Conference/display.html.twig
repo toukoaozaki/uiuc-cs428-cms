@@ -58,11 +58,15 @@
                 
             {% else %}
                 {% if conference.registerEndDate|date('U') >= "now"|date('U') %}
-                    <li><a href="{{ path('uiuc_cms_conference_enrollInfo', 
-                        {'id': conference.id }) }}">
-                            Enroll in this conference
-                        </a>
-                    </li>
+                    {% if isFull == true %}
+                        Conference is full.
+                    {% else %}
+                        <li><a href="{{ path('uiuc_cms_conference_enrollInfo', 
+                            {'id': conference.id }) }}">
+                                Enroll in this conference
+                            </a>
+                        </li>
+                    {% endif %}
                 {% else %}
                     Registration has closed.
                 {% endif %}

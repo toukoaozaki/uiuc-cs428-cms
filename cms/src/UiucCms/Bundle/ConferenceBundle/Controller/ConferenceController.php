@@ -262,10 +262,20 @@ class ConferenceController extends Controller
     }
 
     /**
-     * Submits an enrollment for a conference.
+     * Submits an enrollment for a conference. First checks to see if registration
+     * is still open.
      */
     public function enrollAction(Request $request, Conference $conference)
     {
+        if ($conference->getRegisterEndDate()->format('U') < date('U')) {
+            return $this->redirect(
+                $this->generateUrl(
+                    'uiuc_cms_conference_display',
+                    array('id' => $conference->getId())
+                )
+            );
+        }
+
         $user = $this->getUser();
         $userId = $user->getId();
         $confId = $conference->getId();
@@ -385,6 +395,16 @@ class ConferenceController extends Controller
      */
     public function enrollInfoAction(Conference $conference) 
     {
+        if ($conference->getRegisterEndDate()->format('U') < date('U')) {
+            return $this->render(
+                'UiucCmsConferenceBundle:Conference:display.html.twig',
+                array(
+                    'conference' => $conference,
+                    'error' => "Registration has closed."
+                )
+            );
+        }
+
         $confId = $conference->getId();
         $form = $this->createForm(
             new InfoType(),

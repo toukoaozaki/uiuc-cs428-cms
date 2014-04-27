@@ -2,6 +2,9 @@
 
 {% block content %}
 <div class="container">
+    {% if error is defined %}
+        <div class="alert alert-danger"> {{ error }} </div>
+    {% endif %}
     <div class="page-header" style="text-align:left">
         <h1>
             Details for {{ conference.name }}
@@ -17,7 +20,7 @@
         Topics: {{ conference.getTopics() }} <br>
     </p>
     <p>
-        {% if enrollment %}
+        {% if enrollment != null %}
             You have enrolled in this conference at 
                 {{ enrollment.enrollmentDate|date('Y-m-d h:i:s') }}.
                 <br>
@@ -53,11 +56,15 @@
                 </table>
             
         {% else %}
-            <li><a href="{{ path('uiuc_cms_conference_enrollInfo', 
-                {'id': conference.id }) }}">
-                    Enroll in this conference
-                </a>
-            </li>
+            {% if conference.registerEndDate|date('U') >= "now"|date('U') %}
+                <li><a href="{{ path('uiuc_cms_conference_enrollInfo', 
+                    {'id': conference.id }) }}">
+                        Enroll in this conference
+                    </a>
+                </li>
+            {% else %}
+                Registration has closed.
+            {% endif %}
         {% endif %}
         
         <br>

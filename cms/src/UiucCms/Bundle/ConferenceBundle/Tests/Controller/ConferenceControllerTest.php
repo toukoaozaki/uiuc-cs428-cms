@@ -20,6 +20,8 @@ class DefaultControllerTest extends FunctionalTestCase
     private $create_conf_url;
     private $view_created_conf_url;
     private $test_conf_url;
+    private $direct_enroll_url;
+    private $enrolled_in_url;
 
     private $validName = "RailTEC UIUC";
     private $shortName = "Ra";
@@ -56,6 +58,14 @@ class DefaultControllerTest extends FunctionalTestCase
             'uiuc_cms_conference_display',
             array( "id" => 1 ),
             true);
+        $this->direct_enroll_url = $this->router->generate(
+            'uiuc_cms_conference_enrollInfo',
+            array( "id" => 1 ),
+            true);
+        $this->enrolled_in_url = $this->router->generate(
+            'uiuc_cms_conference_list_enrolled',
+            array(),
+            true);
 
         $this->invalidStartTime = new DateTime('now');
         $this->lateStartTime = (new DateTime('now'))->
@@ -90,6 +100,9 @@ class DefaultControllerTest extends FunctionalTestCase
         $this->assertGreaterThan(
             0,
             $crawler->filter('html:contains("Conferences")')->count());
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("Rails Conference")')->count());
     }
 
     public function testCreatePermissionsAdmin()
@@ -332,6 +345,24 @@ class DefaultControllerTest extends FunctionalTestCase
         $this->assertGreaterThan(
             0,
             $crawler->filter('html:contains("Registration has closed")')->count());
+    }
+
+    public function testDirectRegistrationClosed()
+    {
+        $this->authenticateUser($this->client);
+        $crawler = $this->client->request('GET', $this->test_conf_url);
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("Registration has closed")')->count());
+    }
+
+    public function testEnrolledInConferences()
+    {
+        $this->authenticateUser($this->client);
+        $crawler = $this->client->request('GET', $this->enrolled_in_url);
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("You are not enrolled")')->count());
     }
 
 }

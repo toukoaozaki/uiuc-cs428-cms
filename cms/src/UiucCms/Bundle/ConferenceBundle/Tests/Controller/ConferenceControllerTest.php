@@ -39,7 +39,7 @@ class DefaultControllerTest extends FunctionalTestCase
         $this->container = $this->client->getContainer();
         $this->router = $this->container->get('router');
         $this->index_url = $this->router->generate(
-            'uiuc_cms_conference_homepage',
+            'uiuc_cms_conference_list_not_enrolled',
             array(),
             true);
         $this->create_conf_url = $this->router->generate(

@@ -2,9 +2,9 @@
 
 {% block javascripts %}
 	{% javascripts debug=true '../app/Resources/js/*' %}
-			<script type="text/javascript" src="{{ asset_url }}"></script>
-		{% endjavascripts %}
-	{% endblock %}
+		<script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+{% endblock %}
         
 	{% block stylesheets %}
 		{% stylesheets '../app/Resources/css/*' filter='cssrewrite' %} 

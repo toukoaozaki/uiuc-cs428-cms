@@ -220,4 +220,60 @@ class Conference
     {
         return $this->createdBy;
     }
+    /**
+     * @var integer
+     */
+    private $maxEnrollment;
+
+    /**
+     * @var float
+     */
+    private $coverFee;
+
+
+    /**
+     * Set maxEnrollment
+     *
+     * @param integer $maxEnrollment
+     * @return Conference
+     */
+    public function setMaxEnrollment($maxEnrollment)
+    {
+        $this->maxEnrollment = $maxEnrollment;
+
+        return $this;
+    }
+
+    /**
+     * Get maxEnrollment
+     *
+     * @return integer 
+     */
+    public function getMaxEnrollment()
+    {
+        return $this->maxEnrollment;
+    }
+
+    /**
+     * Set coverFee
+     *
+     * @param float $coverFee
+     * @return Conference
+     */
+    public function setCoverFee($coverFee)
+    {
+        $this->coverFee = $coverFee;
+
+        return $this;
+    }
+
+    /**
+     * Get coverFee
+     *
+     * @return float 
+     */
+    public function getCoverFee()
+    {
+        return $this->coverFee;
+    }
 }

@@ -29,4 +29,8 @@ UiucCms\Bundle\ConferenceBundle\Entity\Conference:
         topics:
             type: string
             length: 255
+        maxEnrollment:
+            type: integer
+        coverFee:
+            type: float
     lifecycleCallbacks: {  }

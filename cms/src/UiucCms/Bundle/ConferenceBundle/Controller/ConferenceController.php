@@ -85,12 +85,16 @@ class ConferenceController extends Controller
         $cityNotBlank = new NotBlank();
         $topicNotBlank = new NotBlank();
         $minLength3 = new Length(array('min' => 3));
-    
+        $maxNotBlank = new NotBlank();
+        $coverNotBlank = new NotBlank();
+
         $nameNotBlank->message = 'Please enter a name.';
         $yearNotBlank->message = 'Please enter a year.';
         $cityNotBlank->message = 'Please enter a city.';
         $topicNotBlank->message = 'Please enter at least one topic.';
         $minLength3->minMessage = 'Please enter a name of minimum length 3.';
+        $maxNotBlank->message = 'Please provide the maximum number of registration slots.';
+        $coverNotBlank->message = 'Please provide the cover fee.';
         $invalidYear = 'Year must be after registration opening';
         $invalidStartDate = 'Please select a date in the future.';
         $invalidEndDate = 'Please select an end date after the start date';
@@ -102,7 +106,9 @@ class ConferenceController extends Controller
             $validator->validateValue($conference->getName(), $minLength3),
             $validator->validateValue($conference->getYear(), $yearNotBlank),
             $validator->validateValue($conference->getCity(), $cityNotBlank),
-            $validator->validateValue($conference->getTopics(), $topicNotBlank)
+            $validator->validateValue($conference->getTopics(), $topicNotBlank),
+            $validator->validateValue($conference->getMaxEnrollment(), $maxNotBlank),
+            $validator->validateValue($conference->getCoverFee(), $coverNotBlank),
                           );
        
 

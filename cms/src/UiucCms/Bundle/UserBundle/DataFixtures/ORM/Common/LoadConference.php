@@ -36,7 +36,8 @@ class LoadConference implements FixtureInterface, ContainerAwareInterface
         $conference->setRegisterEndDate(new \DateTime("2012-07-09 11:14:15.638277"));
         $conference->setTopics("HCI");
         $conference->setCreatedBy(2);
-        
+        $conference->setMaxEnrollment(5);
+        $conference->setCoverFee(119.50);
 
         $manager->persist($conference);
         $manager->flush();

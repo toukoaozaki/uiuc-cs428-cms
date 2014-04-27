@@ -28,6 +28,8 @@ class DefaultControllerTest extends FunctionalTestCase
     private $validYear = "2014";
     private $validCity = "Champaign";
     private $validTopic = "Trains";
+    private $validMaxEnrollment = "5";
+    private $validCoverFee = "10.99";
     private $invalidYear = "2013";
     private $invalidStartTime;
     private $lateStartTime; 
@@ -154,7 +156,9 @@ class DefaultControllerTest extends FunctionalTestCase
         $form['conference[year]'] = $this->validYear;
         $form['conference[city]'] = $this->validCity;
         $form['conference[topics]'] = $this->validTopic;
-    
+        $form['conference[max_enrollment]'] = $this->validMaxEnrollment;
+        $form['conference[cover_fee]'] = $this->validCoverFee;
+
         $form = $this->populateDateForm(
             $form, 
             $this->validStartTime, 
@@ -182,6 +186,8 @@ class DefaultControllerTest extends FunctionalTestCase
         $form['conference[year]'] = $this->validYear;
         $form['conference[city]'] = $this->validCity;
         $form['conference[topics]'] = $this->validTopic;
+        $form['conference[max_enrollment]'] = $this->validMaxEnrollment;
+        $form['conference[cover_fee]'] = $this->validCoverFee;
 
         $crawler = $this->client->submit($form);
 
@@ -204,6 +210,8 @@ class DefaultControllerTest extends FunctionalTestCase
         $form['conference[year]'] = $this->validYear;
         $form['conference[city]'] = $this->validCity;
         $form['conference[topics]'] = $this->validTopic;
+        $form['conference[max_enrollment]'] = $this->validMaxEnrollment;
+        $form['conference[cover_fee]'] = $this->validCoverFee;
 
         $crawler = $this->client->submit($form);
 
@@ -225,6 +233,8 @@ class DefaultControllerTest extends FunctionalTestCase
         $form['conference[name]'] = $this->validName;
         $form['conference[city]'] = $this->validCity;
         $form['conference[topics]'] = $this->validTopic;
+        $form['conference[max_enrollment]'] = $this->validMaxEnrollment;
+        $form['conference[cover_fee]'] = $this->validCoverFee;
 
         $crawler = $this->client->submit($form);
 
@@ -247,6 +257,8 @@ class DefaultControllerTest extends FunctionalTestCase
         $form['conference[name]'] = $this->validName;
         $form['conference[year]'] = $this->validYear;
         $form['conference[city]'] = $this->validCity;
+        $form['conference[max_enrollment]'] = $this->validMaxEnrollment;
+        $form['conference[cover_fee]'] = $this->validCoverFee;
 
         $crawler = $this->client->submit($form);
 
@@ -270,6 +282,8 @@ class DefaultControllerTest extends FunctionalTestCase
         $form['conference[year]'] = $this->validYear;
         $form['conference[city]'] = $this->validCity;
         $form['conference[topics]'] = $this->validTopic;
+        $form['conference[max_enrollment]'] = $this->validMaxEnrollment;
+        $form['conference[cover_fee]'] = $this->validCoverFee;
    
         $form = $this->populateDateForm(
             $form, 
@@ -297,6 +311,8 @@ class DefaultControllerTest extends FunctionalTestCase
         $form['conference[year]'] = $this->validYear;
         $form['conference[city]'] = $this->validCity;
         $form['conference[topics]'] = $this->validTopic;
+        $form['conference[max_enrollment]'] = $this->validMaxEnrollment;
+        $form['conference[cover_fee]'] = $this->validCoverFee;
 
         $form = $this->populateDateForm(
             $form, 
@@ -324,6 +340,8 @@ class DefaultControllerTest extends FunctionalTestCase
         $form['conference[year]'] = $this->invalidYear;
         $form['conference[city]'] = $this->validCity;
         $form['conference[topics]'] = $this->validTopic;
+        $form['conference[max_enrollment]'] = $this->validMaxEnrollment;
+        $form['conference[cover_fee]'] = $this->validCoverFee;
  
         $form = $this->populateDateForm(
             $form, 

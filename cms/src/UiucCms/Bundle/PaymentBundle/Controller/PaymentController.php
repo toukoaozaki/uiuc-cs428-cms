@@ -130,6 +130,7 @@ class PaymentController
                 }
                 // unknown exception
             default:
+                $this->ppc->closePaymentInstruction($instruction);
                 return $this->renderPaymentFailure($order, $result);
         }
     }

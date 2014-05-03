@@ -146,7 +146,7 @@ class ConferenceController extends Controller
                     array( 'form'  => $form->createView(),
                            'error' => $invalidYear));
         }
-
+        // set the maintainer
         $conference->setCreatedBy($this->getUser()->getId());
 
         $em->persist($conference);
@@ -258,18 +258,18 @@ class ConferenceController extends Controller
                 $enrollment->setCoverFeeStatus(Enrollment::FEE_STATUS_PAID);
                 $enrollment->setCurrentOrder(null);
                 $em->persist($enrollment);
-                $em->flush();
-                return $this->redirect(
-                    $this->generateUrl(
-                        'uiuc_cms_conference_display',
-                        array('id' => $conference->getId())
-                    )
-                );
             } else {
                 // payment instruction is closed. remove it from the order
                 $order->setPaymentInstruction(null);
                 $em->persist($order);
             }
+            $em->flush();
+            return $this->redirect(
+                $this->generateUrl(
+                    'uiuc_cms_conference_display',
+                    array('id' => $conference->getId())
+                )
+            );
         }
         $em->flush();
         return $this->forward(
@@ -309,7 +309,6 @@ class ConferenceController extends Controller
                 )
             );
         }
-                                   
 
         $user = $this->getUser();
         $userId = $user->getId();

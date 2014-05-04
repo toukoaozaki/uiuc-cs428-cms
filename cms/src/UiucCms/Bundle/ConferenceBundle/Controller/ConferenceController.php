@@ -1,5 +1,4 @@
 <?php
-
 namespace UiucCms\Bundle\ConferenceBundle\Controller;
 
 use UiucCms\Bundle\ConferenceBundle\Form\Type\ConferenceType;
@@ -67,29 +66,6 @@ class ConferenceController extends Controller
             'enrollments' => $enrollments,
             'enrolled' => $enrolled,
         );
-    }
-
-    public function listNotEnrolledAction()
-    {
-        $conferences = $this->getDoctrine()
-                            ->getRepository('UiucCmsConferenceBundle:Conference')
-                            ->findAll();
-        
-        $user = $this->getUser();
-
-        $unenrolledConferences = array();
-
-        foreach ($conferences as $key => $conference) {
-            $enrollment = $this->getEnrollment($user, $conference);
-
-            if ($enrollment == null) {
-                array_push($unenrolledConferences, $conference);
-            }
-        }
-
-        return $this->render(
-            'UiucCmsConferenceBundle:Conference:listNotEnrolled.html.twig', 
-            array('conferences' => $unenrolledConferences, ));
     }
 
     /**
@@ -532,6 +508,4 @@ class ConferenceController extends Controller
                   'attendee' => $attendee));
 
     }
-
-
 }

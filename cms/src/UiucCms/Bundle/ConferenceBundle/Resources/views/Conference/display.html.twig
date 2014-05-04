@@ -27,7 +27,7 @@
                     <br>
                 <table class="table table-striped" style="text-align:left; width:500px;">
                         <tr>
-                            <th>Food Option</th>
+                            <th>{{ 'conf.food_pref.label' }}</th>
                             <td>{{ enrollment.food }}</td>
                         </tr>
                         <tr>
@@ -44,14 +44,14 @@
                             {% if enrollment.coverFeeStatus == constant('FEE_STATUS_UNPAID', enrollment) %}
                                 <a href="{{ path('uiuc_cms_conference_pay_fee',
                                             {'id': conference.id}) }}">
-                                    Pay now
+                                    {{ 'conf.fee.pay_now.label'|trans }}
                                 </a>
                             {% elseif enrollment.coverFeeStatus == constant('FEE_STATUS_PAID', enrollment) %}
-                                Paid
+                                {{ 'conf.fee.status.paid'|trans }}
                             {% elseif enrollment.coverFeeStatus == constant('FEE_STATUS_EXEMPT', enrollment) %}
-                                Exempt
+                                {{ 'conf.fee.status.exempt'|trans }}
                             {% else %}
-                                Unknown; please contact administrator.
+                                {{ 'conf.fee.status.unknown'|trans }}
                             {% endif %}
                         </td>
                     </table>
@@ -59,16 +59,16 @@
             {% else %}
                 {% if isOpen %}
                     {% if isFull %}
-                        Conference is full.
+                        {{ 'conf.status.full'|trans }}
                     {% else %}
                         <li><a href="{{ path('uiuc_cms_conference_enrollInfo', 
                             {'id': conference.id }) }}">
-                                Enroll in this conference
+                                {{ 'conf.enroll.label'|trans }}
                             </a>
                         </li>
                     {% endif %}
                 {% else %}
-                    Registration has closed.
+                    {{ 'conf.status.closed'|trans }}
                 {% endif %}
             {% endif %}
         {% endif %} 

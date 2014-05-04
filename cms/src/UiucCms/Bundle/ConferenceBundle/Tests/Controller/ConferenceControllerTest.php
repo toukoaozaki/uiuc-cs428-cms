@@ -356,15 +356,6 @@ class ConferenceControllerTest extends FunctionalTestCase
         $crawler = $this->client->request('GET', $this->test_conf_url);
         $this->assertGreaterThan(
             0,
-            $crawler->filter('html:contains("Registration has closed")')->count());
-    }
-
-    public function testDirectRegistrationClosed()
-    {
-        $this->authenticateUser($this->client);
-        $crawler = $this->client->request('GET', $this->test_conf_url);
-        $this->assertGreaterThan(
-            0,
-            $crawler->filter('html:contains("Registration has closed")')->count());
+            $crawler->filter('html:contains("conf.status.closed")')->count());
     }
 }

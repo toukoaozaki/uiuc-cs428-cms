@@ -1,0 +1,11 @@
+
+
+conf.food_pref.label: "Food preferences"
+
+conf.fee.pay_now.label: "Pay now"
+conf.fee.status.paid: "Paid"
+conf.fee.status.exempt: "Exempt"
+conf.fee.status.unknown: "Unknown; please contact administrator"
+conf.status.full: "Conference is full."
+conf.status.closed: "Registration is closed."
+conf.enroll.label: "Enroll in this conference"

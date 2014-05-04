@@ -88,18 +88,8 @@ class ConferenceControllerTest extends FunctionalTestCase
 
     private function populateDateForm($form, $startDate, $endDate)
     {
-        $form['conference[register_begin_date][month]'] = 
-            (int) $startDate->format('m');
-        $form['conference[register_begin_date][day]'] = 
-            (int) $startDate->format('d');
-        $form['conference[register_begin_date][year]'] = 
-            (int) $startDate->format('Y');
-        $form['conference[register_end_date][month]'] = 
-            (int) $endDate->format('m');
-        $form['conference[register_end_date][day]'] = 
-            (int) $endDate->format('d');
-        $form['conference[register_end_date][year]'] = 
-            (int) $endDate->format('Y');
+        $form['conference[register_begin_date]'] = $startDate->format('Y-m-d');
+        $form['conference[register_end_date]'] = $endDate->format('Y-m-d');
         return $form;
     }
 

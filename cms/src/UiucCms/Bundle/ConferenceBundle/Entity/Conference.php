@@ -44,6 +44,15 @@ class Conference
      */
     private $topics;
 
+    /**
+     * @var integer
+     */
+    private $maxEnrollment;
+
+    /**
+     * @var float
+     */
+    private $coverFee;
 
     /**
      * Get id
@@ -220,16 +229,6 @@ class Conference
     {
         return $this->createdBy;
     }
-    /**
-     * @var integer
-     */
-    private $maxEnrollment;
-
-    /**
-     * @var float
-     */
-    private $coverFee;
-
 
     /**
      * Set maxEnrollment

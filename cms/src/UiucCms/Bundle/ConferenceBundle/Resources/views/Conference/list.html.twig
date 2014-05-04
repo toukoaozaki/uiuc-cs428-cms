@@ -1,0 +1,41 @@
+{% extends 'UiucCmsConferenceBundle::layout.html.twig' %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>
+            Conferences
+        </h1>
+    </div>
+    {% if conferences is empty %}
+        <span>No conferences are currently available.</span>
+    {% else %}
+        <ul class="conf-list">
+            {% for conference in conferences %}
+                <li id="conf-list-entry-{{ conference.id }}" class="conf-list-entry">
+                    <div class="conf-list-header">
+                        <span class="h4 conf-list-name">{{ conference.name }}</span>
+                        <span class="conf-list-status">
+                            {% if enrolled[conference.id] %}
+                                Enrolled
+                            {% elseif conference.registerEndDate|date('U') < "now"|date('U') %}
+                                Closed
+                            {% elseif enrollments[conference.id] >= conference.maxEnrollment %}
+                                Full
+                            {% else %}
+                                Open
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="conf-list-summary small">
+                        {{ conference.year }}, {{ conference.city }}
+                    </div>
+                    <a href="{{ path('uiuc_cms_conference_display', {'id': conference.id}) }}">
+                        Details
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+{% endblock content %}

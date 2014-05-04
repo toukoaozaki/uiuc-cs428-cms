@@ -21,22 +21,12 @@
                         <a href="{{ path('fos_user_profile_show') }}">Profile</a>
                     </li>
                     <li class="{% if user_active_menu is defined and user_active_menu == 'conf' %}active{% endif %}">
-                    <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Conferences<b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="{{ path('uiuc_cms_conference_list_not_enrolled') }}">Join a conference</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ path('uiuc_cms_conference_list_enrolled') }}">View enrolled conferences</a>
-                                    </li>
-                                </ul>
-                    </li>            
+                        <a href="{{ path('uiuc_cms_conference_list') }}">Conferences</a>
                     </li>
                     {% block admin_opt %}
                         {% if is_granted('ROLE_ADMIN') %}
                             <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown">Admin<b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="{{ path('uiuc_cms_conference_create') }}">
                                             Create a conference
@@ -45,9 +35,8 @@
                                         Manage conferences
                                     </a></li>
                                     <li><a href="{{ path('uiuc_cms_promote_user') }}">
-                                        Manage Users
+                                        Manage users
                                     </a></li>
-                                    <li class="divider"></li>
                                 </ul>
                             </li>
                         {% endif %}

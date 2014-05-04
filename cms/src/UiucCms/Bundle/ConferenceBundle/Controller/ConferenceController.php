@@ -7,6 +7,7 @@ use UiucCms\Bundle\ConferenceBundle\Form\Type\InfoType;
 use UiucCms\Bundle\ConferenceBundle\Entity\Conference;
 use UiucCms\Bundle\ConferenceBundle\Entity\Enrollment;
 use UiucCms\Bundle\PaymentBundle\Entity\Order;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\Payment\CoreBundle\Model\PaymentInstructionInterface as PaymentInstruction;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -22,7 +23,52 @@ class ConferenceController extends Controller
 {
     /**
      * Queries the database for all conferences and returns a page listing them.
+     *
+     * @Template
      */
+    public function listAction()
+    {
+        $user = $this->getUser();
+        $conferences = $this->getDoctrine()
+            ->getRepository('UiucCmsConferenceBundle:Conference')
+            ->findAll();
+
+        $enrollments = array();
+        $enrolled = array();
+
+        // setup defaults
+        foreach ($conferences as $conf) {
+            $enrollments[$conf->getId()] = 0;
+            $enrolled[$conf->getId()] = false;
+        }
+
+        // find enrollment information
+        $enrollmentRepo = $this->getDoctrine()
+            ->getRepository('UiucCmsConferenceBundle:Enrollment');
+        $query = $enrollmentRepo->createQueryBuilder('e')
+            ->select('e.conferenceId, count(e.attendeeId)')
+            ->groupBy('e.conferenceId')
+            ->getQuery();
+        foreach ($query->getResult() as $row) {
+            $enrollments[$row['conferenceId']] = $row[1];
+        }
+        // find enrollments of current user
+        $query = $enrollmentRepo->createQueryBuilder('e')
+            ->select('e.conferenceId')
+            ->where('e.attendeeId=:userId')
+            ->setParameters(['userId' => $user->getId()])
+            ->getQuery();
+        foreach ($query->getResult() as $row) {
+            $enrolled[$row['conferenceId']] = true;
+        }
+
+        return array(
+            'conferences' => $conferences,
+            'enrollments' => $enrollments,
+            'enrolled' => $enrolled,
+        );
+    }
+
     public function listNotEnrolledAction()
     {
         $conferences = $this->getDoctrine()
@@ -48,6 +94,8 @@ class ConferenceController extends Controller
 
     /**
      * Generates a form with the necessary fields to create a conference.
+     *
+     * @Template
      */
     public function createAction() 
     {
@@ -59,9 +107,7 @@ class ConferenceController extends Controller
             array('action' => $this->generateUrl('uiuc_cms_conference_submit'),)
         );
      
-        return $this->render(
-            'UiucCmsConferenceBundle:Conference:create.html.twig',
-            array( 'form' => $form->createView(),));
+        return array('form' => $form->createView());
     }
     
     /**
@@ -177,10 +223,11 @@ class ConferenceController extends Controller
         $enrollments = $this->getDoctrine()
                             ->getRepository('UiucCmsConferenceBundle:Enrollment');
         $query = $enrollments->createQueryBuilder('e')
+                             ->select('count(e.attendeeId)')
                              ->where('e.conferenceId = :confId')
                              ->setParameters(['confId' => $conference->getId()])
                              ->getQuery();
-        $currentEnrollments = count($query->getResult());
+        $currentEnrollments = $query->getResult();
         $isFull = ($currentEnrollments >= $conference->getMaxEnrollment()); 
         
         // We want to see if the user has already enrolled in this particular 

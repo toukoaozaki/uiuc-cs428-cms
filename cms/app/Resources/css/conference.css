@@ -1,0 +1,26 @@
+.conf-list
+{
+    padding: 0;
+    list-style-type: none;
+}
+
+.conf-list-entry
+{
+    display: block;
+    width: 400px;
+    padding: 4px;
+    border-style: solid;
+    border-color: #ddd;
+    border-width: 1px;
+    border-radius: 4px 4px 4px 4px;
+    margin-bottom: 1px;
+}
+
+.conf-list-name
+{
+}
+
+.conf-list-status
+{
+    float: right;
+}

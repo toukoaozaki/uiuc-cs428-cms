@@ -7,7 +7,7 @@
     {% endif %}
     <div class="page-header" style="text-align:left">
         <h1>
-            Details for {{ conference.name }}
+            {{ conference.name }}
         </h1>
     </div>
     <p class="lead">
@@ -17,7 +17,7 @@
             {{ conference.registerBeginDate|date('Y-m-d') }} <br>
         Registration Ends: 
             {{ conference.registerEndDate|date('Y-m-d') }} <br>
-        Topics: {{ conference.getTopics() }} <br>
+        Topics: {{ conference.topics }} <br>
     </p>
     <p>
         {% if enrollment is defined %}
@@ -34,7 +34,7 @@
                             <th>Abstract</th>
                             <td>
                                 <div style="word-wrap: break-word; width: 800px">
-                                    {{ enrollment.getAbstract }}
+                                    {{ enrollment.abstract }}
                                 </div>
                             </td>
                         </tr>
@@ -73,7 +73,7 @@
             {% endif %}
         {% endif %} 
         <br>
-        <li><a href="{{ path('uiuc_cms_conference_list_not_enrolled') }}">Back to listings</li>
+        <a href="{{ path('uiuc_cms_conference_list') }}">Back to listings</a>
     </p>
 </div>
 {% endblock content %}

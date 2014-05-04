@@ -43,8 +43,8 @@ class DefaultControllerTest extends FunctionalTestCase
 
         $this->assertTrue($crawler->filter('html:contains("admin@domain.com")')->count() == 0); 
     }
-    //test mail failure
     
+    //test mail can't send because nothing is filled out
     public function testMailFail()
     {
         $this->authenticateSuperuser($this->client);
@@ -61,6 +61,7 @@ class DefaultControllerTest extends FunctionalTestCase
         $this->assertTrue($count > 0);
     }
     
+	//test mail doesn't send because body is not filled out
     public function testMailFail2()
     {
         $this->authenticateSuperuser($this->client);
@@ -138,7 +139,8 @@ class DefaultControllerTest extends FunctionalTestCase
         $this->assertTrue($count > 0);
     }
 
-
+	/* checks that mail is successfully sent to target user
+	*/
     public function testMailSent()
     {
         $TEST_SUBJ = "Test Sub";
@@ -179,18 +181,7 @@ class DefaultControllerTest extends FunctionalTestCase
 		$this->statusHelper("Promote");
 		
     }
-    
-    /*
-        test that demoted admin will be displayed in other admin
-    */
-    public function testDemote()
-    {
-        //$crawler = $this->client->request('GET', '/user/admin/show');
-        //$proCount = $crawler->filter('html:contains("Demote")')->count();
-        //$link = $crawler->filter('a:contains("Demote")')->eq(0)->link();
-        //$crawler = $this->client->click($link);
-        //$this->assertTrue($crawler->filter('html:contains("Demote")')->count() == $proCount - 1);
-    }
+
     
     /*
         test that deleted user will not be displayed

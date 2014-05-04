@@ -1,31 +1,15 @@
 <?php
-namespace UiucCms\Bundle\UserBundle\DataFixtures\ORM\Common;
+namespace UiucCms\Bundle\ConferenceBundle\DataFixtures\ORM\Test;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use UiucCms\Bundle\TestUtilityBundle\DataFixtures\ORM\FixtureBase;
 
 use UiucCms\Bundle\ConferenceBundle\Entity\Conference;
 use UiucCms\Bundle\ConferenceBundle\Entity\Enrollment;
 
-class LoadConference implements FixtureInterface, ContainerAwareInterface
+class LoadConference extends FixtureBase
 {
-
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
-    }
-
-    public function load(ObjectManager $manager)
+    protected function doLoad(ObjectManager $manager)
     {
         $conference = new Conference();
         

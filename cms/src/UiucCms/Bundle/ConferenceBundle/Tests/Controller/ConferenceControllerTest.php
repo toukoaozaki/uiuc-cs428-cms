@@ -6,6 +6,7 @@ use UiucCms\Bundle\TestUtilityBundle\TestFixtures\FunctionalTestCase;
 use UiucCms\Bundle\ConferenceBundle\Form\Type\ConferenceType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use UiucCms\Bundle\ConferenceBundle\Entity\Conference;
+use UiucCms\Bundle\ConferenceBundle\DataFixtures\ORM\Test\LoadConference;
 use \Exception;
 
 use \DateTime;
@@ -76,6 +77,13 @@ class ConferenceControllerTest extends FunctionalTestCase
             add(DateInterval::createFromDateString('1 days'));
         $this->validEndTime = (new DateTime('now'))->
             add(DateInterval::createFromDateString('5 days'));
+    }
+
+    protected static function getDataFixtures()
+    {
+        $list = parent::getDataFixtures();
+        $list[] = new LoadConference();
+        return $list;
     }
 
     private function populateDateForm($form, $startDate, $endDate)

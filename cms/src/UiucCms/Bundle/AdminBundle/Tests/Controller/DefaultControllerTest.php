@@ -5,7 +5,7 @@ namespace UiucCms\Bundle\AdminBundle\Tests\Controller;
 use UiucCms\Bundle\TestUtilityBundle\TestFixtures\FunctionalTestCase;
 use UiucCms\Bundle\UserBundle\DataFixtures\ORM\Test\LoadTestUser;
 use UiucCms\Bundle\UserBundle\DataFixtures\ORM\Common\LoadSuperuser;
-use UiucCms\Bundle\UserBundle\DataFixtures\ORM\Common\LoadConference;
+use UiucCms\Bundle\ConferenceBundle\DataFixtures\ORM\Test\LoadConference;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;

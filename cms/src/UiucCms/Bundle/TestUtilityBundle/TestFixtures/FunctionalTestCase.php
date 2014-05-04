@@ -3,7 +3,6 @@ namespace UiucCms\Bundle\TestUtilityBundle\TestFixtures;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use UiucCms\Bundle\UserBundle\DataFixtures\ORM\Test\LoadTestUser;
-use UiucCms\Bundle\UserBundle\DataFixtures\ORM\Common\LoadConference;
 use UiucCms\Bundle\UserBundle\DataFixtures\ORM\Common\LoadSuperuser;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
@@ -39,7 +38,6 @@ abstract class FunctionalTestCase extends WebTestCase
         return array(
             new LoadTestUser(),
             new LoadSuperUser(),
-            new LoadConference(),
         );
     }
 

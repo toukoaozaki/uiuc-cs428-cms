@@ -1,12 +1,10 @@
 <?php
 namespace UiucCms\Bundle\UserBundle\DataFixtures\ORM\Test;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use UiucCms\Bundle\TestUtilityBundle\DataFixtures\ORM\FixtureBase;
 
-class LoadTestUser implements FixtureInterface, ContainerAwareInterface
+class LoadTestUser extends FixtureBase
 {
     const TEST_USERNAME = 'test';
     const TEST_EMAIL = 'test@uiuc.edu';
@@ -14,29 +12,9 @@ class LoadTestUser implements FixtureInterface, ContainerAwareInterface
     const TEST_FIRST_NAME = 'John';
     const TEST_LAST_NAME = 'Doe';
 
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
 
-    /**
-     * {@inheritDoc}
-     */
-    public function setContainer(ContainerInterface $container = null)
+    protected function doLoad(ObjectManager $manager)
     {
-        $this->container = $container;
-    }
-
-    public function load(ObjectManager $manager)
-    {
-        if (!in_array(
-            $this->container->get('kernel')->getEnvironment(),
-            array('test')
-        )) {
-            // skip in non-test environment
-            return;
-        }
-
         $userManager = $this->container->get('fos_user.user_manager');
 
         // Create a new user
@@ -52,4 +30,3 @@ class LoadTestUser implements FixtureInterface, ContainerAwareInterface
         $manager->flush();
     }
 }
-?>

@@ -229,7 +229,11 @@ class ConferenceController extends Controller
                              ->getQuery();
         $currentEnrollments = $query->getResult();
         $isFull = ($currentEnrollments >= $conference->getMaxEnrollment()); 
-        
+       
+        // Registration must also be open (check begin and end dates)
+        $isOpen = (($conference->getRegisterBeginDate()->format('U') < date('U')) &&
+            ($conference->getRegisterEndDate()->format('U') >= date('U')));
+
         // We want to see if the user has already enrolled in this particular 
         // conference.
         $user = $this->getUser();
@@ -240,7 +244,8 @@ class ConferenceController extends Controller
             array(
                 'conference' => $conference,
                 'enrollment' => $enrollment,
-                'isFull' => $isFull
+                'isFull' => $isFull,
+                'isOpen' => $isOpen
             )
         );
     }
@@ -331,7 +336,8 @@ class ConferenceController extends Controller
      */
     public function enrollAction(Request $request, Conference $conference)
     {
-        if ($conference->getRegisterEndDate()->format('U') < date('U')) {
+        if ($conference->getRegisterBeginDate()->format('U') > date('U') ||
+            $conference->getRegisterEndDate()->format('U') < date('U')) {
             return $this->redirect(
                 $this->generateUrl(
                     'uiuc_cms_conference_display',

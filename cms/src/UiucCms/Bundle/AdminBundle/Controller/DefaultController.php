@@ -57,6 +57,7 @@ class DefaultController extends Controller
         return $userEmails;
     }
     
+	//creates a form to allow admin to fill in email content and send it
     public function mailAction($id, Request $request)
     {
         $mail = new Mail();

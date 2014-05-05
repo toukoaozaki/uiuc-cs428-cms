@@ -165,7 +165,7 @@ class PaymentControllerTest extends FunctionalTestCase
         // the result page should be a failure
         $this->assertGreaterThan(
             0,
-            $crawler->filter('html:contains("failed")')->count()
+            $crawler->filter('html:contains("Failed")')->count()
         );
         // the result page must have order number, amount, currency
         $this->assertGreaterThan(

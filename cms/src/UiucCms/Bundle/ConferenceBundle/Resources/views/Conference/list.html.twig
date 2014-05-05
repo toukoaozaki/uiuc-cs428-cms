@@ -20,6 +20,8 @@
                                 Enrolled
                             {% elseif conference.registerEndDate|date('U') < "now"|date('U') %}
                                 Closed
+                            {% elseif conference.registerBeginDate|date('U') > "now"|date('U') %}
+                                Coming soon
                             {% elseif enrollments[conference.id] >= conference.maxEnrollment %}
                                 Full
                             {% else %}

@@ -146,7 +146,7 @@ class ConferenceController extends Controller
     
         // Check that the conference is set to take place in the future. 
         // Also see if the end date > start date.
-        if ($conference->getRegisterBeginDate()->format('U') < date('U')) {
+        if ($conference->getRegisterEndDate()->format('U') < date('U')) {
                 return $this->render(
                     'UiucCmsConferenceBundle:Conference:create.html.twig',
                     array( 'form'  => $form->createView(),
@@ -203,7 +203,7 @@ class ConferenceController extends Controller
                              ->where('e.conferenceId = :confId')
                              ->setParameters(['confId' => $conference->getId()])
                              ->getQuery();
-        $currentEnrollments = $query->getResult();
+        $currentEnrollments = $query->getResult()[0][1];
         $isFull = ($currentEnrollments >= $conference->getMaxEnrollment()); 
        
         // Registration must also be open (check begin and end dates)
@@ -450,7 +450,8 @@ class ConferenceController extends Controller
 
         return $this->render('UiucCmsConferenceBundle:Conference:manage.html.twig',
             array('conference' => $conference, 
-                  'attendees'  => $attendees));
+                  'attendees'  => $attendees)
+        );
     }
     
     /**
@@ -482,7 +483,11 @@ class ConferenceController extends Controller
      
         return $this->render(
             'UiucCmsConferenceBundle:Conference:info.html.twig',
-            array( 'form' => $form->createView(),));
+            array(
+                'form' => $form->createView(),
+                'conference' => $conference,
+            )
+        );
     }
 
     /**

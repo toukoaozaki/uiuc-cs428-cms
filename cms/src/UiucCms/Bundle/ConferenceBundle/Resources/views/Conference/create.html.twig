@@ -2,11 +2,15 @@
 {% extends 'UiucCmsConferenceBundle::layout.html.twig' %}
 
 {% block content %}
-	<div class="container" style="text-align:center; width:300px">
+	<div class="container">
+      <div class="page-header">
+          <h1>Create a New Conference</h1>
+      </div>
+      <div style="width: 300px;">
         {% if error is defined %}
             <div class="alert alert-danger"> {{ error }} </div>
         {% endif %}
-        Create a new conference:
         {{ form(form) }}
+      </div>
 	</div>
 {% endblock content %}

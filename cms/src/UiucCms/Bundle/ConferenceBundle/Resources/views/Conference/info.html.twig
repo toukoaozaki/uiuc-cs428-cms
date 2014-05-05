@@ -2,14 +2,17 @@
 {% extends 'UiucCmsConferenceBundle::layout.html.twig' %}
 
 {% block content %}
-	<div class="container" style="text-align:center; width:300px">
+	<div class="container">
+    <div class="page-header">
+        <h1>Enroll in {{ conference.name }}</h1>
+    </div>
+    <div style="width: 350px">
         {% if error is defined %}
             <div class="alert alert-danger"> {{ error }} </div>
         {% endif %}
         {{ form_start(form) }}
         {{ form_errors(form) }}
         <table class="table table-striped" style="text-align:left;">
-            <tr><h2>Additional Information</h2></tr>
             <tr>
                 <td> {{ form_label(form.food) }} </td>
                 <td> {{ form_widget(form.food) }} </td>
@@ -21,5 +24,6 @@
         </table>
         {{ form_widget(form.enroll) }}
         {{ form_end(form) }}
+    </div>
 	</div>
 {% endblock content %}

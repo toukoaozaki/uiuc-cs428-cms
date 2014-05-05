@@ -32,7 +32,7 @@ class ConferenceControllerTest extends FunctionalTestCase
     private $validMaxEnrollment = "5";
     private $validCoverFee = "10.99";
     private $invalidYear = "2013";
-    private $invalidStartTime;
+    private $invalidEndTime;
     private $lateStartTime; 
     private $validStartTime; 
     private $validEndTime;
@@ -47,32 +47,37 @@ class ConferenceControllerTest extends FunctionalTestCase
         $this->index_url = $this->router->generate(
             'uiuc_cms_conference_list',
             array(),
-            true);
+            true
+        );
         $this->create_conf_url = $this->router->generate(
             'uiuc_cms_conference_create',
             array(),
-            true);
+            true
+        );
      
         $this->view_created_conf_url = $this->router->generate(
             'uiuc_cms_conference_view_created',
             array(),
-            true);
+            true
+        );
         $this->test_conf_url = $this->router->generate(
             'uiuc_cms_conference_display',
             array( "id" => 1 ),
-            true);
+            true
+        );
         $this->direct_enroll_url = $this->router->generate(
             'uiuc_cms_conference_enrollInfo',
             array( "id" => 1 ),
-            true);
+            true
+        );
 
-        $this->invalidStartTime = new DateTime('now');
-        $this->lateStartTime = (new DateTime('now'))->
-            add(DateInterval::createFromDateString('10 days'));
-        $this->validStartTime = (new DateTime('now'))->
-            add(DateInterval::createFromDateString('1 days'));
-        $this->validEndTime = (new DateTime('now'))->
-            add(DateInterval::createFromDateString('5 days'));
+        $this->invalidEndTime = (new DateTime('now'))
+            ->add(DateInterval::createFromDateString('-1 days'));
+        $this->lateStartTime = (new DateTime('now'))
+            ->add(DateInterval::createFromDateString('10 days'));
+        $this->validStartTime = (new DateTime('now'));
+        $this->validEndTime = (new DateTime('now'))
+            ->add(DateInterval::createFromDateString('5 days'));
     }
 
     protected static function getDataFixtures()
@@ -107,7 +112,7 @@ class ConferenceControllerTest extends FunctionalTestCase
         $crawler = $this->client->request('GET', $this->create_conf_url);
         $this->assertTrue(
             $crawler->filter(
-                'html:contains("Create a new conference:")')->count() > 0);
+                'html:contains("Create a New Conference")')->count() > 0);
     }
     
     public function testCreatePermissionsUser()
@@ -263,7 +268,7 @@ class ConferenceControllerTest extends FunctionalTestCase
     }
 
     
-    public function testValidStartDate()
+    public function testInvalidStartDate()
     {
         $this->authenticateSuperuser($this->client); 
         $crawler = $this->client->request('GET', $this->create_conf_url);
@@ -281,8 +286,8 @@ class ConferenceControllerTest extends FunctionalTestCase
    
         $form = $this->populateDateForm(
             $form, 
-            $this->invalidStartTime, 
-            $this->validEndTime);
+            $this->validStartTime, 
+            $this->invalidEndTime);
 
         $crawler = $this->client->submit($form);
 

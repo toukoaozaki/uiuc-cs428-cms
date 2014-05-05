@@ -464,7 +464,7 @@ class ConferenceController extends Controller
                 'UiucCmsConferenceBundle:Conference:display.html.twig',
                 array(
                     'conference' => $conference,
-                    'error' => "Registration is closed."
+                    'error' => "conf.status.closed"
                 )
             );
         }

@@ -363,4 +363,13 @@ class ConferenceControllerTest extends FunctionalTestCase
             0,
             $crawler->filter('html:contains("conf.status.closed")')->count());
     }
+    
+    public function testDirectRegistrationClosed()
+    {
+        $this->authenticateUser($this->client);
+        $crawler = $this->client->request('GET', $this->direct_enroll_url);
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("conf.status.closed")')->count());
+    }
 }

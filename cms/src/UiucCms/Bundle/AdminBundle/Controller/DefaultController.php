@@ -8,36 +8,31 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
-    public function indexAction($name)
-    {
-        return $this->render('UiucCmsAdminBundle:Default:index.html.twig', array('name' => $name));
-    }
-    
-	//gets email of current logged in user
+    //gets email of current logged in user
     private function getUserEmail()
     {
         $userId = $this->getUser()->getId();
         
         $userRepo = $this->getDoctrine()
-                        ->getRepository('UiucCmsUserBundle:User');
+            ->getRepository('UiucCmsUserBundle:User');
                         
         $user = $userRepo->find($userId);
         
         return $user->getEmail();
     }
     
-	//get emails of all attendees of the conference
+    //get emails of all attendees of the conference
     private function getAttendeeEmails($confId)
     {       
         //setup repos
         $enrollmentRepo = $this->getDoctrine()
-                            ->getRepository('UiucCmsConferenceBundle:Enrollment');
+            ->getRepository('UiucCmsConferenceBundle:Enrollment');
                             
         $enrollments = $enrollmentRepo->findBy(
-                            array('conferenceId' => $confId));
-                            
+            array('conferenceId' => $confId)
+        );
         $userRepo = $this->getDoctrine()
-                        ->getRepository('UiucCmsUserBundle:User');
+            ->getRepository('UiucCmsUserBundle:User');
         
         //accumulator
         $userEmails = array();
@@ -45,8 +40,7 @@ class DefaultController extends Controller
         //loop through enrollment. for each enrollment,
         //if conference_id = $confId, add it to accumulator
         
-        foreach ($enrollments as $enrollment)
-        {
+        foreach ($enrollments as $enrollment) {
             $attendeeId = $enrollment->getAttendeeId();
             $user = $userRepo->find($attendeeId);
             
@@ -57,7 +51,7 @@ class DefaultController extends Controller
         return $userEmails;
     }
     
-	//creates a form to allow admin to fill in email content and send it
+    //creates a form to allow admin to fill in email content and send it
     public function mailAction($id, Request $request)
     {
         $mail = new Mail();
@@ -77,10 +71,8 @@ class DefaultController extends Controller
             
         $form->handleRequest($request);
         
-        if ($form->isValid())
-        {
-            //mailing stuffs here
-            
+        if ($form->isValid()) {
+            // setup mail object then send
             $subject = $form["subject"]->getData();
             $body = $form["body"]->getData();
             
@@ -88,62 +80,79 @@ class DefaultController extends Controller
             $mail->setBody($body);
             $numSent = $mail->sendMail($this->get('mailer'));
 
-            return $this->render('UiucCmsAdminBundle:Default:sent.html.twig', array('name' => $numSent));
-
+            return $this->render(
+                'UiucCmsAdminBundle:Default:sent.html.twig',
+                array('name' => $numSent)
+            );
         }
         
-        return $this->render('UiucCmsAdminBundle:Default:mail.html.twig', array('form' => $form->createView()));
+        return $this->render(
+            'UiucCmsAdminBundle:Default:mail.html.twig',
+            array('form' => $form->createView())
+        );
     }
-	
-	//display list of users registered
-	public function showAction()
-	{
-		$users = $this->getDoctrine()->getRepository('UiucCmsUserBundle:User')->findAll();
-		if(!$users) {
-			throw $this->createNotFoundException('No users found.');
-		}
-		else {
-			return $this->render('UiucCmsAdminBundle:Default:users.html.twig', array('users' => $users));
-		}
-	}
+  
+    //display list of users registered
+    public function showAction()
+    {
+        $users = $this->getDoctrine()
+            ->getRepository('UiucCmsUserBundle:User')->findAll();
+        if (!$users) {
+            throw $this->createNotFoundException('No users found.');
+        } else {
+            return $this->render(
+                'UiucCmsAdminBundle:Default:users.html.twig',
+                array('users' => $users)
+            );
+        }
+    }
     
-	//promote status of selected user
+    //promote status of selected user
     public function promoteAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $user = $this->getDoctrine()->getRepository('UiucCmsUserBundle:User')->find($id);
+        $user = $this->getDoctrine()
+            ->getRepository('UiucCmsUserBundle:User')->find($id);
         $user->addRole("ROLE_ADMIN");
         
         $em->persist($user);
         $em->flush();
         
-        return $this->redirect($this->generateUrl('uiuc_cms_promote_user'));;
+        return $this->redirect(
+            $this->generateUrl('uiuc_cms_promote_user')
+        );
     }
     
-	//demote status of selected user
+    //demote status of selected user
     public function demoteAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $user = $this->getDoctrine()->getRepository('UiucCmsUserBundle:User')->find($id);
-        if($user->hasRole("ROLE_ADMIN")) {
+        $user = $this->getDoctrine()
+            ->getRepository('UiucCmsUserBundle:User')->find($id);
+        if ($user->hasRole("ROLE_ADMIN")) {
             $user->removeRole("ROLE_ADMIN");
         
             $em->persist($user);
             $em->flush();
         }
         
-        return $this->redirect($this->generateUrl('uiuc_cms_promote_user'));;
+        return $this->redirect(
+            $this->generateUrl('uiuc_cms_promote_user')
+        );
     }
     
-	//delete user account
+    //delete user account
     public function removeAction($id)
     {   
         $em = $this->getDoctrine()->getManager();
-        $user = $this->getDoctrine()->getRepository('UiucCmsUserBundle:User')->find($id);
+        $user = $this->getDoctrine()
+            ->getRepository('UiucCmsUserBundle:User')->find($id);
         
         $em->remove($user);
         $em->flush();
         
-        return $this->redirect($this->generateUrl('uiuc_cms_promote_user'));;
+        return $this->redirect(
+            $this->generateUrl('uiuc_cms_promote_user')
+        );
     }
 }

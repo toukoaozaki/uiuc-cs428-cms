@@ -17,7 +17,7 @@
             {{ conference.getRegisterEndDate|date('Y-m-d') }} <br>
         Topics: {{ conference.getTopics() }} <br>
     </p>
-    <p>
+    <div>
         <h2>
             Attendees:
         </h2>
@@ -27,21 +27,28 @@
             {% for attendee in attendees %}
                 <p> <li><a href="{{ path('uiuc_cms_conference_view_abstract',
                     {'confId': conference.id, 'attendId': attendee.id}) }}"> {{ attendee.firstName }} {{ attendee.lastName }}
+                    </a>
                     </li>
             {% endfor %}
         {% endif %}
-    </p>
-    <p>
+    </div>
+    <div>
+        <h2>
+            Actions:
+        </h2>
         {% if attendees is empty %}
         {% else %}
             <li><a href="{{ path('uiuc_cms_admin_mail', 
                 {'id': conference.id}) }}">
                     Send mass email
+                </a>
             </li>
         {% endif %}
-        <li><a href="{{ path('uiuc_cms_conference_view_created') }}">
-            Back to your conferences
+        <li>
+            <a href="{{ path('uiuc_cms_conference_view_created') }}">
+                Back to your conferences
+            </a>
         </li>
-    </p>
+    </div>
 </div>
 {% endblock content %}

@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container">
-    <div class="page-header" style="text-align:center">
+    <div class="page-header">
         <h1>
             Your Conferences
         </h1>
@@ -12,14 +12,17 @@
             <h3>
                 There are no conferences.
             </h3>
-        {% else %}  
-            {% for conference in conferences %}
-                <li>
-                    <a href="{{ path('uiuc_cms_conference_manage', 
-                                {'id': conference.id}) }}">
-                        {{ conference.name }}
-                </li><br>
-            {% endfor %}
+        {% else %}
+            <ul>
+                {% for conference in conferences %}
+                    <li>
+                        <a href="{{ path('uiuc_cms_conference_manage', 
+                                    {'id': conference.id}) }}">
+                            {{ conference.name }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
         {% endif %}
     </p>
 </div>

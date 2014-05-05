@@ -41,10 +41,13 @@ class DefaultControllerTest extends FunctionalTestCase
     {
         $crawler = $this->client->request('GET', '/user/admin/show');
 
-        $this->assertTrue($crawler->filter('html:contains("admin@domain.com")')->count() == 0); 
+        $this->assertEquals(
+            0,
+            $crawler->filter('html:contains("admin@domain.com")')->count()
+        ); 
     }
     
-    //test mail can't send because nothing is filled out
+    // test mail can't send because nothing is filled out
     public function testMailFail()
     {
         $this->authenticateSuperuser($this->client);
@@ -61,7 +64,7 @@ class DefaultControllerTest extends FunctionalTestCase
         $this->assertTrue($count > 0);
     }
     
-	//test mail doesn't send because body is not filled out
+    // test mail doesn't send because body is not filled out
     public function testMailFail2()
     {
         $this->authenticateSuperuser($this->client);
@@ -80,8 +83,9 @@ class DefaultControllerTest extends FunctionalTestCase
         
         $this->assertTrue($count > 0);
     }
-    /* test mail object
-     *
+
+    /**
+     * test mail object
      */
     public function testMailObject()
     {
@@ -139,8 +143,9 @@ class DefaultControllerTest extends FunctionalTestCase
         $this->assertTrue($count > 0);
     }
 
-	/* checks that mail is successfully sent to target user
-	*/
+    /**
+     * Checks that mail is successfully sent to target user
+     */
     public function testMailSent()
     {
         $TEST_SUBJ = "Test Sub";
@@ -173,36 +178,36 @@ class DefaultControllerTest extends FunctionalTestCase
         $this->assertEquals($TEST_BODY, $message->getBody()); 
     }
 
-    /* 
-        test that admin will not be displayed 
-    */
+    /**
+     * Tests that admin will not be displayed 
+     */
     public function testPromote()
     {
-		$this->statusHelper("Promote");
-		
+        $this->statusHelper("Promote");
     }
 
-    
-    /*
-        test that deleted user will not be displayed
-    */
+    /**
+     * Test that deleted user will not be displayed
+     */
     public function testRemove()
     {
-		$this->statusHelper("Remove");
-
+        $this->statusHelper("Remove");
     }
-	/*
-		Helper method for testing status changes
-	*/
-	protected function statusHelper($command)
-	{
-		$this->authenticateSuperuser($this->client);
+
+    /**
+     * Helper method for testing status changes
+     */
+    protected function statusHelper($command)
+    {
+        $this->authenticateSuperuser($this->client);
 
         $crawler = $this->client->request('GET', '/user/admin/show');
         $proCount = $crawler->filter('html:contains("'. $command .'")')->count();
         $link = $crawler->filter('a:contains("'. $command .'")')->eq(0)->link();
         $crawler = $this->client->click($link);
-        $this->assertTrue($crawler->filter('html:contains("'. $command .'")')->count() == $proCount - 1);
-	
-	}
+        $this->assertEquals(
+            $proCount - 1,
+            $crawler->filter('html:contains("'. $command .'")')->count()
+        );
+    }
 }

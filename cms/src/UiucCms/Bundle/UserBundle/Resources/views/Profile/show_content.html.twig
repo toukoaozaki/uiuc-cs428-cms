@@ -1,12 +1,12 @@
-<div class="container fos_user_user_show" style="text-align: center; width: 400px;">
+<div class="fos_user_user_show" style="width: 350px;">
     <div class="panel panel-default">
        <div class="panel-heading">{{ 'profile.show.username'|trans({}, 'FOSUserBundle') }}</div>
        <div class="panel-body">{{ user.username }}</div>
        <div class="panel-heading">{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}</div>
        <div class="panel-body">{{ user.email }}</div>
-       <div class="panel-heading">First name</div>
+       <div class="panel-heading">{{ 'profile.show.firstname'|trans }}</div>
        <div class="panel-body">{{ user.firstName }}</div>
-       <div class="panel-heading">Last name</div>
+       <div class="panel-heading">{{ 'profile.show.lastname'|trans }}</div>
        <div class="panel-body">{{ user.lastName }}</div>
        <div class="panel-footer">
           <ul class="nav nav-pills">

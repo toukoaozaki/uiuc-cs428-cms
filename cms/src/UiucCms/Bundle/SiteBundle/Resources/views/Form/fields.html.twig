@@ -1,0 +1,41 @@
+{# src/UiucCms/Bundle/UserBundle/Resources/views/Form/fields.html.twig #}
+{% block form_row %}
+{% spaceless %}
+    <div class="form-group">
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+    </div>
+{% endspaceless %}
+{% endblock form_row %}
+
+{% block form_widget_simple %}
+    {% set type = type|default('text') %}
+    <input class="form-control" type="{{ type }}"
+        {{ block('widget_attributes') }}
+            {% if value is not empty %}value="{{ value }}"
+        {% endif %}
+    ></input>
+{% endblock form_widget_simple %}
+
+{% block textarea_widget %}
+{% spaceless %}
+    <textarea class="form-control"
+            {{ block('widget_attributes') }}>
+        {{ value }}
+    </textarea>
+{% endspaceless %}
+{% endblock textarea_widget %}
+
+{% block button_widget %}
+{% spaceless %}
+    {% if label is empty %}
+        {% set label = name|humanize %}
+    {% endif %}
+    <button type="{{ type|default('button') }}"
+            class="btn btn-default"
+            {{ block('button_attributes') }}>
+        {{ label|trans({}, translation_domain) }}
+    </button>
+{% endspaceless %}
+{% endblock button_widget %}

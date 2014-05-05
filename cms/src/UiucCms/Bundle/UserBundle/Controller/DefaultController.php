@@ -14,12 +14,4 @@ class DefaultController extends Controller
             array('admin' => $admin,
             'user'  => $this->getUser()));
     }
-
-    public function profileAction()
-    {
-        return $this->render(
-            'UiucCmsUserBundle:Default:index.html.twig',
-            array('user' => $this->getUser())
-        );
-    }
 }

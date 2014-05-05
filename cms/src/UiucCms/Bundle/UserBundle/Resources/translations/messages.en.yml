@@ -2,3 +2,9 @@
 
 form.security.login.reset_password: "Forgot your password?"
 form.security.login.register_account: "Don't have an account? Register here!"
+
+form.firstname: "First name:"
+form.lastname: "Last name:"
+
+profile.show.firstname: "First name"
+profile.show.lastname: "Last name"

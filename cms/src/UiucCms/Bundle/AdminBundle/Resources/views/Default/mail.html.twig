@@ -1,29 +1,34 @@
-{% form_theme form 'UiucCmsUserBundle:Form:fields.html.twig' %}
+{% form_theme form 'UiucCmsSiteBundle:Form:fields.html.twig' %}
 {% extends 'UiucCmsConferenceBundle::layout.html.twig' %}
 
 {% block content %}
-	<div class="container" style="text-align:center; width:300px">
+	<div class="container">
+    <div class="page-header">
+        <h1>Send Mass Email</h1>
+    </div>
 
-        Send a mass email:
-        {{ form_start(form) }}
-		{{ form_errors(form) }}
+    <div style="width:300px">
 
-		<div>
-			{{ form_label(form.subject) }}
-			{{ form_errors(form.subject) }}
-			{{ form_widget(form.subject) }}
-		</div>
+      {{ form_start(form) }}
+      {{ form_errors(form) }}
 
-		<div>
-			{{ form_label(form.body) }}
-			{{ form_errors(form.body) }}
-			{{ form_widget(form.body,{ 'attr': {'cols': '40', 'rows': '15'} }) }}
-		</div>
+      <div class="form-group">
+        {{ form_label(form.subject) }}
+        {{ form_errors(form.subject) }}
+        {{ form_widget(form.subject) }}
+      </div>
 
-		<div>
-			{{ form_widget(form.send) }}
-		</div>
+      <div class="form-group">
+        {{ form_label(form.body) }}
+        {{ form_errors(form.body) }}
+        {{ form_widget(form.body,{ 'attr': {'rows': '15'} }) }}
+      </div>
 
-		{{ form_end(form) }}
-	</div>
+      <div>
+        {{ form_widget(form.send) }}
+      </div>
+
+      {{ form_end(form) }}
+    </div>
+  </div>
 {% endblock content %}

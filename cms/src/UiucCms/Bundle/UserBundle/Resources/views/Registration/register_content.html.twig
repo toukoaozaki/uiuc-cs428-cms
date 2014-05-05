@@ -1,11 +1,13 @@
-{% form_theme form 'UiucCmsUserBundle:Form:fields.html.twig' %}
+{% form_theme form 'UiucCmsSiteBundle:Form:fields.html.twig' %}
 
-<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
-    {{ form_widget(form) }}
-    {#{{ form_row(form._token) }}#}
-    <div>
-        <button type="submit" class="btn" id="_submit" name="_submit">
-            {{ 'registration.submit'|trans({}, 'FOSUserBundle') }}
-        </button>
-    </div>
-</form>
+<div style="width: 300px">
+    <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+        {{ form_widget(form) }}
+        {#{{ form_row(form._token) }}#}
+        <div>
+            <button type="submit" class="btn btn-default" id="_submit" name="_submit">
+                {{ 'registration.submit'|trans({}, 'FOSUserBundle') }}
+            </button>
+        </div>
+    </form>
+</div>

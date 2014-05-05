@@ -1,7 +1,3 @@
-uiuc_cms_admin_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: UiucCmsAdminBundle:Default:index }
-    
 uiuc_cms_admin_promote:
     pattern:    /admin/promote/{id}
     defaults: { _controller: UiucCmsAdminBundle:Default:promote }

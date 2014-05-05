@@ -1,16 +1,20 @@
-{% extends '::base.html.twig' %}
+{% form_theme form 'UiucCmsSiteBundle:Form:fields.html.twig' %}
+{% extends 'UiucCmsPaymentBundle::layout.html.twig' %}
 
-{% block body %}
+{% block content %}
     <!-- this is a hack; TODO: control this in form rendering -->
     <style type="text/css">
         div#jms_choose_payment_method div label.required {
             display: none;
         }
     </style>
-    <div class="container" style="width:400px;">
-        <h3>
-            Order details
-        </h3>
+    <div class="container">
+        <div class="page-header">
+            <h1>
+                Order details
+            </h1>
+        </div>
+        <div style="width: 400px;">
         <div>
             Order #{{ order.orderNumber }}
         </div>
@@ -23,9 +27,10 @@
         <form {{ form_enctype(form) }} method="POST">
             {{ form_widget(form.method) }}
             {{ form_widget(form) }}
-            <button type="submit" class="btn" id="_submit" name="_submit">
+            <button type="submit" class="btn btn-default" id="_submit" name="_submit">
                 {{ 'form.choose_payment.submit'|trans }}
             </button>
         </form>
+        </div>
     </div>
-{% endblock body %}
+{% endblock content %}

@@ -1,22 +1,29 @@
-{% extends '::base.html.twig' %}
+{% extends 'UiucCmsPaymentBundle::layout.html.twig' %}
 
-{% block body %}
-    <div class="container" style="width:400px;">
-        <h3>Payment failed</h3>
-        <div>
-            Order #{{ order.orderNumber }}
+{% block content %}
+    <div class="container">
+        <div class="page-header">
+            <h1>
+                Payment Failed
+            </h1>
         </div>
-        <div>
-            Payment amount:  {{ order.amount|number_format(2) }} {{ order.currency }}
+        <div style="width: 400px;">
+            <h3>Payment failed</h3>
+            <div>
+                Order #{{ order.orderNumber }}
+            </div>
+            <div>
+                Payment amount:  {{ order.amount|number_format(2) }} {{ order.currency }}
+            </div>
+            <div>
+                Status: {{ result.status }}
+            </div>
+            <div>
+                ReasonCode: {{ result.reasonCode }}
+            </div>
+            <a href="{{ return_url }}" class="btn btn-default">
+                {{ 'payment.complete.return'|trans }}
+            </a>
         </div>
-        <div>
-            Status: {{ result.status }}
-        </div>
-        <div>
-            ReasonCode: {{ result.reasonCode }}
-        </div>
-        <a href="{{ return_url }}">
-            {{ 'payment.complete.return'|trans }}
-        </a>
     </div>
 {% endblock body %}

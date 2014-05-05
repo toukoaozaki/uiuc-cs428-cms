@@ -370,7 +370,7 @@ class ConferenceController extends Controller
         );
     }
 
-    private function getEnrollment($user, $conference)
+    private function getEnrollment($user, Conference $conference)
     {
         $enrollments = $this->getDoctrine()
                             ->getRepository('UiucCmsConferenceBundle:Enrollment');

@@ -94,6 +94,9 @@ class ConferenceControllerTest extends FunctionalTestCase
         return $form;
     }
 
+    /**
+     * Checks to see that the index page properly lists conferences.
+     */
     public function testIndex()
     {
         $this->authenticateUser($this->client);
@@ -106,6 +109,9 @@ class ConferenceControllerTest extends FunctionalTestCase
             $crawler->filter('html:contains("Rails Conference")')->count());
     }
 
+    /**
+     * Checks to see that admins have permission to create conferences.
+     */
     public function testCreatePermissionsAdmin()
     {
         $this->authenticateSuperuser($this->client);
@@ -115,6 +121,9 @@ class ConferenceControllerTest extends FunctionalTestCase
                 'html:contains("Create a New Conference")')->count() > 0);
     }
     
+    /**
+     * Checks to see that access is denied for users trying to create a conference.
+     */
     public function testCreatePermissionsUser()
     {
         $this->authenticateUser($this->client);
@@ -124,6 +133,9 @@ class ConferenceControllerTest extends FunctionalTestCase
                 'html:contains("Access Denied")')->count() > 0);
     }
 
+    /**
+     * Checks to see that an admin can view their created conferences.
+     */
     public function testViewCreatedPermissionsAdmin()
     {
         $this->authenticateSuperuser($this->client);
@@ -133,6 +145,9 @@ class ConferenceControllerTest extends FunctionalTestCase
                 'html:contains("Your Conferences")')->count() > 0);
     }
     
+    /**
+     * Checks to see that a user cant access the page for listing created conferences.
+     */
     public function testViewCreatedPermissionsUser()
     {
         $this->authenticateUser($this->client);
@@ -142,6 +157,9 @@ class ConferenceControllerTest extends FunctionalTestCase
                 'html:contains("Access Denied")')->count() > 0);
     }
 
+    /**
+     * Tests that the validator passes for expected output.
+     */
     public function testSuccessfulValidator()
     {
         $this->authenticateSuperuser($this->client); 
@@ -173,6 +191,9 @@ class ConferenceControllerTest extends FunctionalTestCase
 
     }
 
+    /**
+     * Tests the validator for making sure a name has been provided.
+     */
     public function testNoNameValidator()
     {
         $this->authenticateSuperuser($this->client); 
@@ -196,6 +217,9 @@ class ConferenceControllerTest extends FunctionalTestCase
 
     }
   
+    /**
+     * Tests the validator for making sure a name is long enough.
+     */
     public function testShortNameValidator()
     {
         $this->authenticateSuperuser($this->client); 
@@ -220,6 +244,9 @@ class ConferenceControllerTest extends FunctionalTestCase
 
     }
 
+    /**
+     * Tests the validator for making sure a year is set.
+     */
     public function testNoYearValidator()
     {
         $this->authenticateSuperuser($this->client); 
@@ -243,7 +270,9 @@ class ConferenceControllerTest extends FunctionalTestCase
 
     }
 
-
+    /**
+     * Tests the validator for making sure a topic is set.
+     */
     public function testNoTopicValidator()
     {
         $this->authenticateSuperuser($this->client); 
@@ -267,7 +296,9 @@ class ConferenceControllerTest extends FunctionalTestCase
 
     }
 
-    
+    /**
+     * Tests the validator for catching conference set to occur in the past.
+     */
     public function testInvalidStartDate()
     {
         $this->authenticateSuperuser($this->client); 
@@ -297,6 +328,10 @@ class ConferenceControllerTest extends FunctionalTestCase
 
     }
 
+    /**
+     * Tests the validator for catching registration starting dates that occur
+     * after the registration end date.
+     */
     public function testLateStartDate()
     {
         $this->authenticateSuperuser($this->client); 
@@ -326,6 +361,10 @@ class ConferenceControllerTest extends FunctionalTestCase
 
     }
 
+    /**
+     * Test the validator to check if the years match for registration and
+     * when the conference is set to happen.
+     */
     public function testMismatchingYear()
     {
         $this->authenticateSuperuser($this->client); 
@@ -355,6 +394,9 @@ class ConferenceControllerTest extends FunctionalTestCase
 
     }
     
+    /**
+     * Checks to see if registration closing logic works.
+     */
     public function testRegistrationClosed()
     {
         $this->authenticateUser($this->client);
@@ -364,6 +406,9 @@ class ConferenceControllerTest extends FunctionalTestCase
             $crawler->filter('html:contains("conf.status.closed")')->count());
     }
     
+    /**
+     * Checks to see if using a direct url to enroll in a closed conference fails.
+     */
     public function testDirectRegistrationClosed()
     {
         $this->authenticateUser($this->client);

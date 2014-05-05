@@ -226,6 +226,9 @@ class ConferenceController extends Controller
         );
     }
 
+    /**
+     * Prepares a Payment to be passed off to the Payment bundle to handle.
+     */
     public function payFeesAction(Conference $conference)
     {
         if (!$conference) {
